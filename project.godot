@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Champion of the arena"
-run/main_scene="uid://bnql251dsvtbd"
+run/main_scene="uid://dgdqc6av2vkrv"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Globals="*res://Globals.gd"
 
 [rendering]
 

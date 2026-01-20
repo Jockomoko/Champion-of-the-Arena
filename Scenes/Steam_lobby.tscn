@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://dgdqc6av2vkrv"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+offset_left = 294.0
+offset_top = 3.0
+offset_right = 1146.0
+offset_bottom = 644.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+
+[node name="TopHBOX" type="HBoxContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/TopHBOX"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer"]
+layout_mode = 2
+
+[node name="LobbyName" type="Label" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Lobby Name"
+
+[node name="LobbyNameTextBox" type="TextEdit" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer2/VBoxContainer/TopHBOX"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Lobby Name"
+
+[node name="StartMargin" type="MarginContainer" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 10
+
+[node name="Start" type="Button" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2/VBoxContainer/StartMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Start"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Panel" type="Panel" parent="MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 11.0
+offset_right = 757.0
+offset_bottom = 432.0
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Lobby Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Left side" type="MarginContainer" parent="."]
+offset_top = 1.0
+offset_right = 310.0
+offset_bottom = 645.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Left side"]
+layout_mode = 2
+
+[node name="CreateMargin" type="MarginContainer" parent="Left side/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Create" type="Button" parent="Left side/VBoxContainer/CreateMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Create
+"
+
+[node name="JoinMargin" type="MarginContainer" parent="Left side/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Join" type="Button" parent="Left side/VBoxContainer/JoinMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Join
+"
+
+[node name="PlayersMargin" type="MarginContainer" parent="Left side/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="Left side/VBoxContainer/PlayersMargin"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Left side/VBoxContainer/PlayersMargin/Panel"]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 308.0
+
+[node name="Label" type="Label" parent="Left side/VBoxContainer/PlayersMargin/Panel/VBoxContainer2"]
+layout_mode = 2
+text = "Players"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Left side/VBoxContainer/PlayersMargin/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeaveMargin" type="MarginContainer" parent="Left side/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Leave" type="Button" parent="Left side/VBoxContainer/LeaveMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Leave lobby
+"
