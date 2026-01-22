@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://dgdqc6av2vkrv"]
+[gd_scene load_steps=2 format=3 uid="uid://dgdqc6av2vkrv"]
+
+[ext_resource type="Script" uid="uid://2oqicymlfitf" path="res://Scenes/steam_lobby.gd" id="1_vkhil"]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_vkhil")
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 offset_left = 294.0
@@ -32,7 +35,8 @@ text = "Lobby Name"
 
 [node name="LobbyNameTextBox" type="TextEdit" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_vertical = 3
+text = "Default name"
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer2/VBoxContainer/TopHBOX"]
 layout_mode = 2
@@ -42,10 +46,10 @@ theme_override_constants/margin_top = 25
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2/VBoxContainer"]
+[node name="SteamName" type="Label" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-text = "Lobby Name"
+text = "Steam Name"
 
 [node name="StartMargin" type="MarginContainer" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2/VBoxContainer"]
 layout_mode = 2
@@ -55,7 +59,7 @@ theme_override_constants/margin_top = 10
 [node name="Start" type="Button" parent="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2/VBoxContainer/StartMargin"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Start"
+text = "Start Game"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
 layout_mode = 2
@@ -84,7 +88,7 @@ text = "Lobby Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/Panel/VBoxContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer2/VBoxContainer/MarginContainer/Panel/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -147,7 +151,7 @@ text = "Players"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Left side/VBoxContainer/PlayersMargin/Panel/VBoxContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Left side/VBoxContainer/PlayersMargin/Panel/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -163,3 +167,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Leave lobby
 "
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/TopHBOX/MarginContainer2/VBoxContainer/StartMargin/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Left side/VBoxContainer/CreateMargin/Create" to="." method="_on_create_pressed"]
+[connection signal="pressed" from="Left side/VBoxContainer/JoinMargin/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Left side/VBoxContainer/LeaveMargin/Leave" to="." method="_on_leave_pressed"]
