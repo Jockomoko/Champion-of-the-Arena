@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2xtwn0w40ncd"]
+
+[ext_resource type="Script" uid="uid://duvs40esamo2h" path="res://Scripts/Components/InventoryComponent.gd" id="1_vgwlc"]
+[ext_resource type="Script" uid="uid://2ux2ktyp1vxd" path="res://Scripts/Components/HealthComponent.gd" id="2_ps0s2"]
+[ext_resource type="Script" uid="uid://cuxf7gcv3feum" path="res://Scripts/Components/StatsComponent.gd" id="3_ps0s2"]
+[ext_resource type="Script" uid="uid://djvj6t88ph0bn" path="res://Scripts/Components/EquipmentCompnent.gd" id="4_sydnp"]
+
+[node name="Champions" type="Node2D"]
+script = ExtResource("1_vgwlc")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_ps0s2")
+metadata/_custom_type_script = "uid://2ux2ktyp1vxd"
+
+[node name="StatsComponent" type="Node" parent="."]
+script = ExtResource("3_ps0s2")
+metadata/_custom_type_script = "uid://cuxf7gcv3feum"
+
+[node name="EquipmentComponent" type="Node" parent="."]
+script = ExtResource("4_sydnp")
+metadata/_custom_type_script = "uid://djvj6t88ph0bn"

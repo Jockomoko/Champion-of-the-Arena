@@ -11,13 +11,24 @@ config_version=5
 [application]
 
 config/name="Champion of the arena"
-run/main_scene="uid://dgdqc6av2vkrv"
+run/main_scene="uid://blhsmi7s1n30t"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*res://Globals.gd"
+SteamController="*res://Controllers/SteamController.gd"
+GameController="*res://Controllers/GameController.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/scale_mode="integer"
+
+[editor_plugins]
+
+enabled=PackedStringArray()
 
 [rendering]
 

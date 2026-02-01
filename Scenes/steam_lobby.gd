@@ -126,8 +126,11 @@ func leave_lobby():
 			Globals.LOBBY_MEMBERS.clear()
 
 func _on_start_pressed() -> void:
-	pass
-
+	if Globals.LOBBY_MEMBERS.size() > 1:
+		display_message("No other players in you lobby")
+		return
+	display_message("Starting game")
+	get_tree().change_scene_to_file("res://Scenes/gameScene/CityScene.tscn")
 
 func _on_create_pressed() -> void:
 	create_lobby()
