@@ -1,18 +1,33 @@
 extends Node2D
 
-@onready var texture_button: TextureButton = $TextureButton
+@onready var start_btn: TextureButton = $Buttons/Start_btn
+@onready var quit_btn: TextureButton = $Buttons/Quit_btn
 
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
 
-func _on_texture_button_pressed() -> void:
+func _on_quit_btn_pressed() -> void:
+	get_tree().quit()
+
+func _rotate_button(button: TextureButton, angle: float) -> void:
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(button, "rotation", angle, 0.15)
+
+
+func _on_quit_btn_mouse_entered():
+	_rotate_button(quit_btn, 0.1)
+
+func _on_quit_btn_mouse_exited():
+	_rotate_button(quit_btn, 0.0)
+
+func _on_start_btn_mouse_entered():
+	_rotate_button(start_btn, 0.1)
+
+func _on_start_btn_mouse_exited():
+	_rotate_button(start_btn, 0.0)
+
+func _on_start_btn_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Steam_lobby.tscn")
-
-
-func _on_texture_button_mouse_entered() -> void:
-	texture_button.set_rotation(0.1)
-
-
-func _on_texture_button_mouse_exited() -> void:
-	texture_button.set_rotation(0.0)

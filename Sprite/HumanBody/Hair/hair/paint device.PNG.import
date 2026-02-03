@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cngn0s81prt10"
-path="res://.godot/imported/left-arm.PNG-ac6cda143b1a2fc0166de6fae79be56c.ctex"
+uid="uid://b5t3d1fa4twn7"
+path="res://.godot/imported/paint device.PNG-2d2101ca1551d4ae555b34fab5d836a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/newcharacter/left-arm.PNG"
-dest_files=["res://.godot/imported/left-arm.PNG-ac6cda143b1a2fc0166de6fae79be56c.ctex"]
+source_file="res://Sprite/HumanBody/Hair/hair/paint device.PNG"
+dest_files=["res://.godot/imported/paint device.PNG-2d2101ca1551d4ae555b34fab5d836a8.ctex"]
 
 [params]
 

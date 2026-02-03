@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br8s3loajxlep"
-path="res://.godot/imported/Kopia av Cloud.PNG-b4a338689c32b0b2fcd9056375c89cfd.ctex"
+uid="uid://2i1d7bxrd5sr"
+path="res://.godot/imported/Arena.PNG-de9a78ca86975ed99b1720b7ee2aa3f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/gameScene/start meny/Kopia av Cloud.PNG"
-dest_files=["res://.godot/imported/Kopia av Cloud.PNG-b4a338689c32b0b2fcd9056375c89cfd.ctex"]
+source_file="res://Sprite/Arena.PNG"
+dest_files=["res://.godot/imported/Arena.PNG-de9a78ca86975ed99b1720b7ee2aa3f7.ctex"]
 
 [params]
 

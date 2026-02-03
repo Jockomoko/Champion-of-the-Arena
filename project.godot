@@ -19,12 +19,14 @@ config/icon="res://icon.svg"
 
 SteamController="*res://Controllers/SteamController.gd"
 GameController="*res://Controllers/GameController.gd"
+Globals="*res://Scripts/Globals/Globals.gd"
+ItemDataBase="*res://Scripts/Singeltons/ItemDataBase.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/stretch/scale_mode="integer"
+window/size/mode=3
 
 [editor_plugins]
 

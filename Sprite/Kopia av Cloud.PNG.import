@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blp76x4sv5c2c"
-path="res://.godot/imported/Målarlager 1.PNG-f4c616a9b7f29c0c6dc7280cf971b5cc.ctex"
+uid="uid://br8s3loajxlep"
+path="res://.godot/imported/Kopia av Cloud.PNG-79823810cca0c43915090be2b87246c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/gameScene/start meny/Målarlager 1.PNG"
-dest_files=["res://.godot/imported/Målarlager 1.PNG-f4c616a9b7f29c0c6dc7280cf971b5cc.ctex"]
+source_file="res://Sprite/Kopia av Cloud.PNG"
+dest_files=["res://.godot/imported/Kopia av Cloud.PNG-79823810cca0c43915090be2b87246c7.ctex"]
 
 [params]
 

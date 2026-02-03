@@ -1,14 +1,14 @@
-# ItemDatabase.gd
 extends Node
 class_name ItemDatabase
 
-# Dictionary to hold all items
-var items: Dictionary = {}
+# item_id : Item
+var items: Dictionary[String, Item] = {}
 
-func _ready():
-	# Preload items
-	items["iron_sword"] = preload("res://Scripts/Items/iron_sword.tres")
+func _ready() -> void:
+	_register_items()
 
-# Get an item by ID
-func get_item(item_id: String):
-	return items.get(item_id, null)
+func _register_items() -> void:
+	items["iron_sword"] = preload("res://Scripts/Resourcse/iron_sword.tres")
+
+func get_item(item_id: String) -> Item:
+	return items.get(item_id)
