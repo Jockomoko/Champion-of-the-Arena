@@ -130,7 +130,7 @@ func _on_start_pressed() -> void:
 		display_message("No other players in you lobby")
 		return
 	display_message("Starting game")
-	get_tree().change_scene_to_file("res://Scenes/gameScene/CityScene.tscn")
+	get_tree().change_scene_to_file("res://Scenes/gameScene/CityScene/CityScene.tscn")
 
 func _on_create_pressed() -> void:
 	create_lobby()
