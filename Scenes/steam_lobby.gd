@@ -3,7 +3,7 @@ extends Node2D
 #For more info watch https://www.youtube.com/watch?v=si50G3S1XGU
 
 enum lobby_status {Private, Friends, Public, Invisible}
-enum search_disctance {Close, Default, Far, Worlwide}
+enum search_disctance {Close, Default, Far, Worldwide}
 
 var max_player_amount = 6
 
@@ -137,7 +137,7 @@ func _on_create_pressed() -> void:
 
 
 func _on_join_pressed() -> void:
-	Steam.addRequestLobbyListDistanceFilter(search_disctance.Worlwide)
+	Steam.addRequestLobbyListDistanceFilter(search_disctance.Worldwide)
 	display_message("Searing for lobbies...")
 	
 	Steam.requestLobbyList()

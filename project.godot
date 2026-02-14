@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Champion of the arena"
-run/main_scene="uid://blhsmi7s1n30t"
+run/main_scene="uid://bc60jvwfj41cy"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
@@ -26,7 +26,7 @@ ItemDataBase="*res://Scripts/Singeltons/ItemDataBase.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
+window/size/initial_position_type=3
 
 [editor_plugins]
 

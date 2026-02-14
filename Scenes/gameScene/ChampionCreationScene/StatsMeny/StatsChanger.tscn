@@ -1,0 +1,111 @@
+[gd_scene load_steps=4 format=3 uid="uid://ijsge7t485at"]
+
+[ext_resource type="Script" uid="uid://ddjwn7v0jh2gs" path="res://Scenes/gameScene/ChampionCreationScene/StatsMeny/stats_changer.gd" id="1_p5lxi"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_6v7rw"]
+[ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="2_uo62j"]
+
+[node name="StatsChanger" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_p5lxi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Stat_Name_txt" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 362
+text = "StatsName"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_6v7rw")
+min_font_size = 9
+max_font_size = 512
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="minus_btn2" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_uo62j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AutoSizeLabel" type="Label" parent="VBoxContainer/HBoxContainer/minus_btn2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 394
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_6v7rw")
+max_font_size = 512
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Stat_amout_txt" type="Label" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 394
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 1
+script = ExtResource("2_6v7rw")
+max_font_size = 512
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="minus_btn" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_uo62j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AutoSizeLabel" type="Label" parent="VBoxContainer/HBoxContainer/minus_btn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 394
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_6v7rw")
+max_font_size = 512
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
