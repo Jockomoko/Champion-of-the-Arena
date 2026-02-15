@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bltraj15k4ffq"]
+[gd_scene load_steps=5 format=3 uid="uid://bltraj15k4ffq"]
 
 [ext_resource type="Script" uid="uid://duvs40esamo2h" path="res://Scripts/Components/InventoryComponent.gd" id="1_q3lat"]
 [ext_resource type="Script" uid="uid://dkd6qjf4agmjc" path="res://Player/player.gd" id="1_tok1r"]
 [ext_resource type="Script" uid="uid://ccdao58d04e8r" path="res://Scripts/Components/GloryComponent.gd" id="2_tok1r"]
+[ext_resource type="Script" uid="uid://d2fpamrpqtxxb" path="res://Scripts/Components/TeamComponent.gd" id="4_ddoul"]
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_tok1r")
@@ -14,3 +15,7 @@ metadata/_custom_type_script = "uid://ccdao58d04e8r"
 [node name="InventoryComponent" type="Node" parent="."]
 script = ExtResource("1_q3lat")
 metadata/_custom_type_script = "uid://duvs40esamo2h"
+
+[node name="TeamComponent" type="Node" parent="."]
+script = ExtResource("4_ddoul")
+metadata/_custom_type_script = "uid://d2fpamrpqtxxb"

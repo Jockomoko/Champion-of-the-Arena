@@ -12,11 +12,11 @@ class_name StatsComponent
 # ------------------------------
 # Base stats
 @export var base_stats: Dictionary = {
-	"attack": 10,
+	"attack": 5,
 	"defense": 5,
-	"health": 20,
-	"speed": 2,
-	"mana": 10
+	"health": 5,
+	"speed": 5,
+	"mana": 5
 }
 
 # Modifiers applied from equipment, buffs, etc.

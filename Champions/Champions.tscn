@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://lg5l2od61pcj" path="res://Champions/champions.gd" id="1_7qa8m"]
 [ext_resource type="Script" uid="uid://2ux2ktyp1vxd" path="res://Scripts/Components/HealthComponent.gd" id="2_ps0s2"]
 [ext_resource type="Script" uid="uid://cuxf7gcv3feum" path="res://Scripts/Components/StatsComponent.gd" id="3_ps0s2"]
-[ext_resource type="Script" uid="uid://djvj6t88ph0bn" path="res://Scripts/Components/EquipmentCompnent.gd" id="4_sydnp"]
+[ext_resource type="Script" uid="uid://djvj6t88ph0bn" path="res://Scripts/Components/EquipmentComponent.gd" id="4_sydnp"]
 [ext_resource type="Texture2D" uid="uid://fy2mnbh1o5ub" path="res://Sprite/HumanBody/right-leg.PNG" id="5_6wd55"]
 [ext_resource type="Texture2D" uid="uid://ddf65lwn8tx25" path="res://Sprite/HumanBody/left-leg.PNG" id="6_8qeas"]
 [ext_resource type="Texture2D" uid="uid://dkcqajgnplnuw" path="res://Sprite/HumanBody/right-arm.PNG" id="7_x4n2h"]
@@ -543,8 +543,8 @@ rotation = -0.0056397854
 modification_stack = SubResource("SkeletonModificationStack2D_es7mb")
 
 [node name="B_hip" type="Bone2D" parent="Bones/Skeleton2D"]
-rotation = -0.006899069
-scale = Vector2(1, 1.0800015)
+rotation = -0.0068990686
+scale = Vector2(1, 1.0800016)
 rest = Transform2D(0.9999762, -0.00689902, 0.007450944, 1.0799747, 30, -333)
 auto_calculate_length_and_angle = false
 length = 107.449265
@@ -553,7 +553,7 @@ bone_angle = -88.40007
 [node name="B_body" type="Bone2D" parent="Bones/Skeleton2D/B_hip"]
 position = Vector2(-1.0321541, -14.668701)
 rotation = -0.0013651997
-scale = Vector2(0.99982893, 0.99982893)
+scale = Vector2(0.9998289, 0.9998289)
 rest = Transform2D(0.99999905, -0.0013651992, 0.0013651992, 0.99999905, -1.0321541, -14.668701)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -562,7 +562,7 @@ bone_angle = 0.0
 [node name="B_head" type="Bone2D" parent="Bones/Skeleton2D/B_hip/B_body"]
 position = Vector2(4.990834, -528.6968)
 rotation = -0.029869277
-scale = Vector2(0.99982697, 0.99982697)
+scale = Vector2(0.9998269, 0.9998269)
 rest = Transform2D(0.9995539, -0.029864833, 0.029864833, 0.9995539, 5.2202654, -528.68463)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -605,7 +605,7 @@ remote_path = NodePath("../../../../../body/Body")
 [node name="B_legL" type="Bone2D" parent="Bones/Skeleton2D/B_hip"]
 position = Vector2(-149.99031, -21.928154)
 rotation = 0.043660156
-scale = Vector2(0.99985147, 0.99985147)
+scale = Vector2(0.9998514, 0.9998514)
 rest = Transform2D(0.99904704, 0.043646287, -0.043646287, 0.99904704, -149.99031, -21.928154)
 auto_calculate_length_and_angle = false
 length = 16.0

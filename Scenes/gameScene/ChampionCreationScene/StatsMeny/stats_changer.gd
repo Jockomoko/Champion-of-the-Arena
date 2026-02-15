@@ -1,9 +1,14 @@
 extends Control
 class_name Stat_Changer
 
+signal stat_added(Stat_Changer)
+signal stat_removed(Stat_Changer)
+
+@onready var add_btn: TextureButton = $VBoxContainer/HBoxContainer/add_btn
+@onready var minus_btn: TextureButton = $VBoxContainer/HBoxContainer/minus_btn
+
 @onready var stat_amout_txt: AutoSizeLabel = $VBoxContainer/HBoxContainer/Stat_amout_txt
 @onready var stat_name_txt: AutoSizeLabel = $VBoxContainer/Stat_Name_txt
-
 
 var amount: int
 var statName: String
@@ -25,3 +30,11 @@ func _ready() -> void:
 func _apply() -> void:
 	stat_name_txt.text = statName
 	stat_amout_txt.text = str(amount)
+
+
+func _on_minus_btn_pressed() -> void:
+	stat_removed.emit(self)
+
+
+func _on_add_btn_pressed() -> void:
+	stat_added.emit(self)
