@@ -30,4 +30,4 @@ func _on_start_btn_mouse_exited():
 	_rotate_button(start_btn, 0.0)
 
 func _on_start_btn_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Steam_lobby.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Lobby/LobbyScene.tscn")

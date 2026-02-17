@@ -1,0 +1,105 @@
+[gd_scene load_steps=4 format=3 uid="uid://de1r1njqponmy"]
+
+[ext_resource type="Script" uid="uid://0pr0u8moajix" path="res://Scenes/Lobby/lobby_scene.gd" id="1_ayjqp"]
+[ext_resource type="Texture2D" uid="uid://35fyop5ogfcc" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 1.PNG" id="1_ysnny"]
+[ext_resource type="Texture2D" uid="uid://dkrm3mv746gfe" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 3.PNG" id="2_ayjqp"]
+
+[node name="LobbyScene" type="Node2D"]
+script = ExtResource("1_ayjqp")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Background" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4408.0
+offset_top = -2274.0
+offset_right = -1890.0
+offset_bottom = -957.9999
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.7495146, 2.7209446)
+texture = ExtResource("1_ysnny")
+stretch_mode = 2
+
+[node name="Sign" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = -2423.0
+offset_top = -567.0
+offset_right = -1632.0
+offset_bottom = 183.0
+scale = Vector2(2.1623807, 2.1693425)
+texture = ExtResource("2_ayjqp")
+
+[node name="GridContainer" type="GridContainer" parent="Control/Sign"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.181
+anchor_top = 0.076
+anchor_right = 0.659
+anchor_bottom = 0.475
+offset_left = -1.5258789e-05
+offset_right = 155.00098
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 3
+
+[node name="Player1" type="Control" parent="Control/Sign/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player2" type="Control" parent="Control/Sign/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player3" type="Control" parent="Control/Sign/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player4" type="Control" parent="Control/Sign/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player5" type="Control" parent="Control/Sign/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player6" type="Control" parent="Control/Sign/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-44.999756, -34)
+scale = Vector2(2.1257982, 1.8648353)
+zoom = Vector2(0.385, 0.385)
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -2179.0906
+offset_top = -298.96933
+offset_right = -979.0906
+offset_bottom = 501.03067

@@ -1,19 +1,19 @@
 extends Node
-class_name ArenaPlayerController
+class_name PlayerController
 
-@export var player_id: int = 0
-@export var player_name: String = "Player"
+@export var player_id: int = Globals.STEAM_ID
+@export var player_name: String = Globals.STEAM_NAME
 
-@onready var glory: GloryComponent = $GloryComponent
-@onready var inventory: InventoryComponent = $InventoryComponent
+var glory := GloryComponent.new()
+var inventory := InventoryComponent.new()
+var team := TeamComponent.new()
 
 signal player_won
 signal player_lost
 
 func _ready():
-	# Register with global GameController
-	GameController.register_player(self)
-
+	team.TeamComponent()
+	
 	# React to glory changes
 	glory.arena_won.connect(_on_arena_won)
 	glory.arena_lost.connect(_on_arena_lost)

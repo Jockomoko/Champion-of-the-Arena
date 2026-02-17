@@ -9,4 +9,5 @@ var LOBBY_ID: int = 0
 var LOBBY_MEMBERS: Array = []
 var LOBBY_INVITE_ARG: bool = false
 
+#saved champions path
 const SAVED_CHAMPION_PATH = "user://champion_stats.json"

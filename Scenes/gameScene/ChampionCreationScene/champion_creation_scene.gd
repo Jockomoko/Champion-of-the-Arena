@@ -10,9 +10,11 @@ const STATS_CHANGER = preload("uid://ijsge7t485at")
 
 const path := Globals.SAVED_CHAMPION_PATH
 
-@export var stats_point_champion1 = 6
-@export var stats_point_champion2 = 6
-@export var min_stat_point = 5
+var StatPoints = TeamComponent.new()
+
+var stats_point_champion1 = StatPoints
+var stats_point_champion2 = StatPoints
+var min_stat_point = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
