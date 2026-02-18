@@ -4,6 +4,8 @@ extends Node2D
 
 const PLAYER_PAPER = preload("uid://diuguoosinp8u")
 
+var exit_path = "res://Scenes/gameScene/start meny/StartScene.tscn"
+
 var current_lobby_id : int = 0
 var max_player_amount := 6
 
@@ -149,3 +151,29 @@ func check_command_line():
 func create_lobby():
 	print("Creating lobby...")
 	Steam.createLobby(Steam.LOBBY_TYPE_FRIENDS_ONLY, max_player_amount)
+
+func leave_lobby():
+	if current_lobby_id != 0:
+		Steam.leaveLobby(current_lobby_id)
+		current_lobby_id = 0
+
+func _rotate_button(button: TextureButton, angle: float) -> void:
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(button, "rotation", angle, 0.15)
+
+func _on_exit_btn_pressed() -> void:
+	leave_lobby()
+	get_tree().change_scene_to_file(exit_path)
+
+func _on_exit_btn_mouse_entered() -> void:
+	_rotate_button($Control/Background/TextureRect/Exit_btn, 0.1)
+
+
+func _on_exit_btn_mouse_exited() -> void:
+	_rotate_button($Control/Background/TextureRect/Exit_btn, 0.0)
+
+
+func _on_start_game_btn_pressed() -> void:
+	pass # Replace with function body.
