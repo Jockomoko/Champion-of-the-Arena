@@ -2,18 +2,18 @@ extends Node2D
 
 const STATS_COMPONENT  = preload("uid://cuxf7gcv3feum")
 const STATS_CHANGER = preload("uid://ijsge7t485at")
-@onready var champion_1Vbox: VBoxContainer = $Control/ColorRect/VBoxContainer/BodyContainer/Champion1_margincontainer/Champion1_stats
-@onready var champion_2Vbox: VBoxContainer = $Control/ColorRect/VBoxContainer/BodyContainer/Champion2_margincontainer2/Champion2_stats
-@onready var stat_point_champion_1_txt: AutoSizeLabel = $Control/ColorRect/VBoxContainer/HeaderContainer/Champion1_designe/VBoxContainer/stat_point_champion1_txt
-@onready var stat_point_champion_2_txt: AutoSizeLabel = $Control/ColorRect/VBoxContainer/HeaderContainer/Champion2_designe2/VBoxContainer2/stat_point_champion2_txt
+@onready var champion_1Vbox: VBoxContainer = $Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer/MarginContainer/Champion1_stats
+@onready var champion_2Vbox: VBoxContainer = $Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/MarginContainer/Champion2_stats
+@onready var stat_point_champion_1_txt: AutoSizeLabel = $Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/stat_point_champion1_txt
+@onready var stat_point_champion_2_txt: AutoSizeLabel = $Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/stat_point_champion2_txt
 
 
 const path := Globals.SAVED_CHAMPION_PATH
 
-var StatPoints = TeamComponent.new()
+var NewTeamComponent = TeamComponent.new()
 
-var stats_point_champion1 = StatPoints
-var stats_point_champion2 = StatPoints
+var stats_point_champion1 = NewTeamComponent.stats_points
+var stats_point_champion2 = NewTeamComponent.stats_points
 var min_stat_point = 5
 
 # Called when the node enters the scene tree for the first time.
@@ -75,6 +75,10 @@ func get_all_stats_from_VBoxContainer(vbox: VBoxContainer) -> Dictionary:
 
 
 func _on_save_btn_pressed() -> void:
+	
+	if stats_point_champion1 > 0 || stats_point_champion2 > 0 :
+		print("Must use all stat points")
+		return
 	
 	var updated_data : Dictionary = {
 		"champion1": get_all_stats_from_VBoxContainer(champion_1Vbox),

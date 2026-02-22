@@ -1,58 +1,62 @@
-[gd_scene load_steps=5 format=3 uid="uid://crcg1eq8x8rew"]
+[gd_scene format=3 uid="uid://crcg1eq8x8rew"]
 
-[ext_resource type="Texture2D" uid="uid://cianv52mpahjd" path="res://Sprite/city/Grass.PNG" id="1_5pcno"]
 [ext_resource type="Script" uid="uid://ckdmgvjk8ouyg" path="res://Scenes/gameScene/ChampionCreationScene/champion_creation_scene.gd" id="1_53xoa"]
+[ext_resource type="Texture2D" uid="uid://c56bg8uvrrhtn" path="res://Sprite/pl/Målarlager 1.PNG" id="2_bdbgo"]
 [ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="3_0b65l"]
+[ext_resource type="Texture2D" uid="uid://63uilqd8npdw" path="res://Sprite/pl/Målarlager 2.PNG" id="3_uk5nh"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="4_xtkc7"]
+[ext_resource type="Texture2D" uid="uid://dwpq3bo78nf71" path="res://Sprite/pl/Målarlager 3.PNG" id="5_mv2ae"]
 
-[node name="ChampionCreationScene" type="Node2D"]
+[node name="ChampionCreationScene" type="Node2D" unique_id=1310155521]
 script = ExtResource("1_53xoa")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=265785860]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1924.0
 offset_bottom = 1082.0
 
-[node name="Sprite2D" type="Sprite2D" parent="Control"]
-position = Vector2(896.00006, 633)
-scale = Vector2(1.2135359, 1.865684)
-texture = ExtResource("1_5pcno")
+[node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=1849626582]
+position = Vector2(795, 773)
+scale = Vector2(1.2135359, 1.0849328)
+texture = ExtResource("2_bdbgo")
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=855112702]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 1915.0
+offset_bottom = 1075.0
+
+[node name="BodyContainer" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=2077861065]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Champion1_margincontainer" type="MarginContainer" parent="Control/VBoxContainer/BodyContainer" unique_id=1877896499]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/BodyContainer/Champion1_margincontainer" unique_id=607707079]
+layout_mode = 2
+texture = ExtResource("3_uk5nh")
+expand_mode = 1
+
+[node name="stat_point_champion1_txt" type="Label" parent="Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect" unique_id=518875257]
+custom_minimum_size = Vector2(8, 8)
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.99600005
-anchor_bottom = 1.011
-offset_top = -2.0
-offset_right = 0.69592285
-offset_bottom = -1.9020996
-color = Color(0.4584458, 0.3562014, 9.62615e-08, 0.73333335)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect"]
-layout_mode = 0
-offset_top = 5.0
-offset_right = 1915.0
-offset_bottom = 1091.0
-
-[node name="HeaderContainer" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Champion1_designe" type="VBoxContainer" parent="Control/ColorRect/VBoxContainer/HeaderContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect/VBoxContainer/HeaderContainer/Champion1_designe"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="stat_point_champion1_txt" type="Label" parent="Control/ColorRect/VBoxContainer/HeaderContainer/Champion1_designe/VBoxContainer"]
-custom_minimum_size = Vector2(8, 8)
-layout_mode = 2
+anchor_left = 0.09
+anchor_top = 0.049
+anchor_right = 0.266
+anchor_bottom = 0.138
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 113
+theme_override_font_sizes/font_size = 51
 text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -63,35 +67,58 @@ script = ExtResource("4_xtkc7")
 max_font_size = 200
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="AutoSizeLabel2" type="Label" parent="Control/ColorRect/VBoxContainer/HeaderContainer/Champion1_designe/VBoxContainer"]
-custom_minimum_size = Vector2(8, 8)
+[node name="ChampionsContainer" type="VBoxContainer" parent="Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect" unique_id=1328851019]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.223
+anchor_top = 0.16
+anchor_right = 0.786
+anchor_bottom = 0.908
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer" unique_id=523848968]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 70
-text = "Champion1 points"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
-text_overrun_behavior = 3
-script = ExtResource("4_xtkc7")
-max_font_size = 70
-metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+texture = ExtResource("5_mv2ae")
 
-[node name="Champion2_designe2" type="VBoxContainer" parent="Control/ColorRect/VBoxContainer/HeaderContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer" unique_id=169157154]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
+
+[node name="Champion1_stats" type="VBoxContainer" parent="Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer/MarginContainer" unique_id=826379593]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Champion2_margincontainer2" type="MarginContainer" parent="Control/VBoxContainer/BodyContainer" unique_id=1195207244]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/ColorRect/VBoxContainer/HeaderContainer/Champion2_designe2"]
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/BodyContainer/Champion2_margincontainer2" unique_id=982171260]
 layout_mode = 2
-size_flags_vertical = 3
+texture = ExtResource("3_uk5nh")
+expand_mode = 1
 
-[node name="stat_point_champion2_txt" type="Label" parent="Control/ColorRect/VBoxContainer/HeaderContainer/Champion2_designe2/VBoxContainer2"]
+[node name="stat_point_champion2_txt" type="Label" parent="Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect" unique_id=128132048]
 custom_minimum_size = Vector2(8, 8)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.082
+anchor_top = 0.045
+anchor_right = 0.28
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 113
+theme_override_font_sizes/font_size = 59
 text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -102,68 +129,42 @@ script = ExtResource("4_xtkc7")
 max_font_size = 200
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="AutoSizeLabel2" type="Label" parent="Control/ColorRect/VBoxContainer/HeaderContainer/Champion2_designe2/VBoxContainer2"]
-custom_minimum_size = Vector2(8, 8)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 70
-text = "Champion2 points"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
-text_overrun_behavior = 3
-script = ExtResource("4_xtkc7")
-max_font_size = 70
-metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+[node name="ChampionsContainer" type="VBoxContainer" parent="Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect" unique_id=1953546515]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.209
+anchor_top = 0.195
+anchor_right = 0.786
+anchor_bottom = 0.92
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="BodyContainer" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer" unique_id=1152890005]
 layout_mode = 2
 size_flags_vertical = 3
+texture = ExtResource("5_mv2ae")
 
-[node name="Champion1_margincontainer" type="MarginContainer" parent="Control/ColorRect/VBoxContainer/BodyContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="Champion1_stats" type="VBoxContainer" parent="Control/ColorRect/VBoxContainer/BodyContainer/Champion1_margincontainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer" unique_id=2128437400]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
 
-[node name="Champion2_margincontainer2" type="MarginContainer" parent="Control/ColorRect/VBoxContainer/BodyContainer"]
+[node name="Champion2_stats" type="VBoxContainer" parent="Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/MarginContainer" unique_id=843467295]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/separation = 10
 
-[node name="Champion2_stats" type="VBoxContainer" parent="Control/ColorRect/VBoxContainer/BodyContainer/Champion2_margincontainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/ColorRect/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 100
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 100
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer/MarginContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=1056163932]
 layout_mode = 2
 
-[node name="Exit_btn" type="TextureButton" parent="Control/ColorRect/VBoxContainer/MarginContainer/HBoxContainer2"]
+[node name="Exit_btn" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer2" unique_id=284797347]
 custom_minimum_size = Vector2(500, 250)
 layout_mode = 2
 texture_normal = ExtResource("3_0b65l")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="AutoSizeLabel" type="Label" parent="Control/ColorRect/VBoxContainer/MarginContainer/HBoxContainer2/Exit_btn"]
+[node name="AutoSizeLabel" type="Label" parent="Control/VBoxContainer/HBoxContainer2/Exit_btn" unique_id=2126102514]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -182,7 +183,7 @@ min_font_size = 10
 max_font_size = 100
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/ColorRect/VBoxContainer/MarginContainer/HBoxContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer/HBoxContainer2" unique_id=476233784]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 20
@@ -190,7 +191,7 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Save_btn" type="TextureButton" parent="Control/ColorRect/VBoxContainer/MarginContainer/HBoxContainer2"]
+[node name="Save_btn" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer2" unique_id=1213728535]
 custom_minimum_size = Vector2(500, 250)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -199,7 +200,7 @@ texture_normal = ExtResource("3_0b65l")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="AutoSizeLabel" type="Label" parent="Control/ColorRect/VBoxContainer/MarginContainer/HBoxContainer2/Save_btn"]
+[node name="AutoSizeLabel" type="Label" parent="Control/VBoxContainer/HBoxContainer2/Save_btn" unique_id=2103530972]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -218,5 +219,5 @@ min_font_size = 10
 max_font_size = 100
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[connection signal="pressed" from="Control/ColorRect/VBoxContainer/MarginContainer/HBoxContainer2/Exit_btn" to="." method="_on_exit_btn_pressed"]
-[connection signal="pressed" from="Control/ColorRect/VBoxContainer/MarginContainer/HBoxContainer2/Save_btn" to="." method="_on_save_btn_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/Exit_btn" to="." method="_on_exit_btn_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/Save_btn" to="." method="_on_save_btn_pressed"]

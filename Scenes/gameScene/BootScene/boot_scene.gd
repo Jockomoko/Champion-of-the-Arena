@@ -8,11 +8,13 @@ const CHAMPION_CREATION_SCENE := "res://Scenes/gameScene/ChampionCreationScene/C
 func _ready():
 	if !FileAccess.file_exists(SAVE_PATH):
 		call_deferred("load_scene", CHAMPION_CREATION_SCENE)
+		return
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	
 	if not file:
 		call_deferred("load_scene", CHAMPION_CREATION_SCENE)
+		return
 	
 	var text := file.get_as_text()
 	file.close()
