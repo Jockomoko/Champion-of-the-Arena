@@ -1,12 +1,13 @@
 extends Node2D
 
+@onready var start_game_btn: TextureButton = $Control/Background/Start_Game_btn
 @onready var signe_container: GridContainer = $Control/Sign/GridContainer
 
 const PLAYER_PAPER = preload("uid://diuguoosinp8u")
 
 var exit_path = "res://Scenes/gameScene/start meny/StartScene.tscn"
+var start_path = "res://Scenes/gameScene/ArenaScene/Arena_Scene.tscn"
 
-var current_lobby_id : int = 0
 var max_player_amount := 6
 
 
@@ -28,10 +29,11 @@ func _ready() -> void:
 
 func _on_lobby_created(connect, lobby_id):
 	if connect == 1:
-		current_lobby_id = lobby_id
-
-		print("Lobby created:", lobby_id)
-
+		Globals.LOBBY_ID = lobby_id
+		
+		print("Lobby created: ", lobby_id)
+		print("Lobby owner: ", Steam.getLobbyOwner(lobby_id))
+	
 		# Optional but important
 		Steam.setLobbyData(lobby_id, "name", Globals.STEAM_NAME + "'s Lobby")
 		Steam.setLobbyJoinable(lobby_id, true)
@@ -41,18 +43,18 @@ func _on_lobby_created(connect, lobby_id):
 
 
 func _on_lobby_joined(lobby_id, permissions, locked, response):
-	current_lobby_id = lobby_id
+	Globals.LOBBY_ID = lobby_id
 	rebuild_player_papers()
 
 
 # Called when players join/leave
 func _on_lobby_chat_update(lobby_id, changed_id, making_change_id, chat_state):
-	if lobby_id == current_lobby_id:
+	if lobby_id == Globals.LOBBY_ID:
 		rebuild_player_papers()
 
 
 func _on_lobby_data_update(success, lobby_id, member_id):
-	if lobby_id == current_lobby_id:
+	if lobby_id == Globals.LOBBY_ID:
 		rebuild_player_papers()
 
 
@@ -73,16 +75,16 @@ func rebuild_player_papers():
 		for child in slot.get_children():
 			child.queue_free()
 	
-	if current_lobby_id == 0:
+	if Globals.LOBBY_ID == 0:
 		return
 
-	var member_count := Steam.getNumLobbyMembers(current_lobby_id)
+	var member_count := Steam.getNumLobbyMembers(Globals.LOBBY_ID)
 
 	for i in range(member_count):
 		if paper_slots[i] == null:
 			continue
 		
-		var steam_id = Steam.getLobbyMemberByIndex(current_lobby_id, i)
+		var steam_id = Steam.getLobbyMemberByIndex(Globals.LOBBY_ID, i)
 		var player_name = Steam.getFriendPersonaName(steam_id)
 
 		var avatar_id = Steam.getMediumFriendAvatar(steam_id)
@@ -153,9 +155,9 @@ func create_lobby():
 	Steam.createLobby(Steam.LOBBY_TYPE_FRIENDS_ONLY, max_player_amount)
 
 func leave_lobby():
-	if current_lobby_id != 0:
-		Steam.leaveLobby(current_lobby_id)
-		current_lobby_id = 0
+	if Globals.LOBBY_ID != 0:
+		Steam.leaveLobby(Globals.LOBBY_ID)
+		Globals.LOBBY_ID = 0
 
 func _rotate_button(button: TextureButton, angle: float) -> void:
 	var tween := create_tween()
@@ -170,10 +172,22 @@ func _on_exit_btn_pressed() -> void:
 func _on_exit_btn_mouse_entered() -> void:
 	_rotate_button($Control/Background/TextureRect/Exit_btn, 0.1)
 
-
 func _on_exit_btn_mouse_exited() -> void:
 	_rotate_button($Control/Background/TextureRect/Exit_btn, 0.0)
 
-
 func _on_start_game_btn_pressed() -> void:
-	pass # Replace with function body.
+	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID :
+		return
+	GameController.set_lobby(Globals.LOBBY_ID)
+
+
+func _on_start_game_btn_mouse_entered() -> void:
+	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID :
+		return
+	start_game_btn.show_behind_parent = false
+
+
+func _on_start_game_btn_mouse_exited() -> void:
+	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID :
+		return
+	start_game_btn.show_behind_parent = true

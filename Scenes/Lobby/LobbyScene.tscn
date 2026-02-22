@@ -41,12 +41,13 @@ texture = ExtResource("1_ysnny")
 stretch_mode = 2
 
 [node name="Start_Game_btn" type="TextureButton" parent="Control/Background"]
+show_behind_parent = true
 layout_mode = 0
 offset_left = 907.4329
 offset_top = 287.03268
 offset_right = 1673.75
 offset_bottom = 969.51624
-texture_hover = ExtResource("3_0c8wp")
+texture_normal = ExtResource("3_0c8wp")
 stretch_mode = 0
 
 [node name="TextureRect" type="TextureRect" parent="Control/Background"]
@@ -159,6 +160,8 @@ offset_top = -298.96933
 offset_right = -979.0906
 offset_bottom = 501.03067
 
+[connection signal="mouse_entered" from="Control/Background/Start_Game_btn" to="." method="_on_start_game_btn_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Background/Start_Game_btn" to="." method="_on_start_game_btn_mouse_exited"]
 [connection signal="pressed" from="Control/Background/Start_Game_btn" to="." method="_on_start_game_btn_pressed"]
 [connection signal="mouse_entered" from="Control/Background/TextureRect/Exit_btn" to="." method="_on_exit_btn_mouse_entered"]
 [connection signal="mouse_exited" from="Control/Background/TextureRect/Exit_btn" to="." method="_on_exit_btn_mouse_exited"]
