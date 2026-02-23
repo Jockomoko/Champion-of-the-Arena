@@ -2,12 +2,15 @@ extends Node2D
 @onready var smith_btn: TextureButton = $Smith
 @onready var church_btn: TextureButton = $Church
 @onready var arena_btn: TextureButton = $Arena
+@onready var timer_Bar: Control = $Timer
+
 var base_color = Color(1, 1, 1)
 var hover_color = Color(2.432, 2.432, 2.432, 1.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	timer_Bar.timer(GameController.city_wait_time)
+	GameController.countdown_updated.connect(_update_clock)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -15,7 +18,8 @@ func _process(delta: float) -> void:
 	pass
 
 
-
+func _update_clock(time_left:int):
+	timer_Bar.set_time_value(time_left)
 
 ######################
 # Mouse Hover buttons#

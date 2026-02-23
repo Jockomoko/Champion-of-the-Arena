@@ -2,10 +2,10 @@ extends Node2D
 
 const STATS_COMPONENT  = preload("uid://cuxf7gcv3feum")
 const STATS_CHANGER = preload("uid://ijsge7t485at")
-@onready var champion_1Vbox: VBoxContainer = $Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer/MarginContainer/Champion1_stats
-@onready var champion_2Vbox: VBoxContainer = $Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/MarginContainer/Champion2_stats
-@onready var stat_point_champion_1_txt: AutoSizeLabel = $Control/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/stat_point_champion1_txt
-@onready var stat_point_champion_2_txt: AutoSizeLabel = $Control/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/stat_point_champion2_txt
+@onready var champion_1Vbox: VBoxContainer = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer/MarginContainer/Champion1_stats
+@onready var champion_2Vbox: VBoxContainer = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/MarginContainer/Champion2_stats
+@onready var stat_point_champion_1_txt: AutoSizeLabel = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/stat_point_champion1_txt
+@onready var stat_point_champion_2_txt: AutoSizeLabel = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/stat_point_champion2_txt
 
 
 const path := Globals.SAVED_CHAMPION_PATH
@@ -85,7 +85,7 @@ func _on_save_btn_pressed() -> void:
 		"champion2": get_all_stats_from_VBoxContainer(champion_2Vbox)
 	}
 	
-	var file := FileAccess.open(path, FileAccess.WRITE)
+	var file := FileAccess.open(path, FileAccess.WRITE_READ)
 	
 	if file == null:
 		print("Failed to open save file")

@@ -9,8 +9,9 @@ const CITY_SCENE := "res://Scenes/gameScene/CityScene/CityScene.tscn"
 const ARENA_SCENE := "res://Scenes/gameScene/ArenaScene/Arena_Scene.tscn"
 
 # Round settings
-var city_wait_time := 60 # seconds in city before arena
+var city_wait_time := 10 # seconds in city before arena
 var current_lobby_id := Globals.LOBBY_ID
+var lobby_players := {}
 
 # Multiplayer state
 var is_host := false
@@ -85,29 +86,21 @@ func on_lobby_data_updated() -> void:
 # =========================
 # ARENA TRANSITION
 # =========================
+# Called from GameController or Lobby when the round starts
 func start_arena() -> void:
-	# Pick a random opponent from lobby
-	var member_count = Steam.getNumLobbyMembers(current_lobby_id)
-	var my_id = Steam.getSteamID()
-	var opponent_id = 0
-
-	# Select random player that isn’t self
-	var others := []
-	for i in range(member_count):
-		var steam_id = Steam.getLobbyMemberByIndex(current_lobby_id, i)
-		if steam_id != my_id:
-			others.append(steam_id)
-
-	if others.size() > 0:
-		opponent_id = others[randi() % others.size()]
-
-	# Update lobby so clients know arena started
+	# Host tells clients to load the arena
 	if is_host:
 		Steam.setLobbyData(current_lobby_id, "scene", "arena")
+	
+	_go_to_arena()
 
-	emit_signal("arena_started", opponent_id)
-	get_tree().change_scene_to_file(ARENA_SCENE)
 
-# Client joins arena if host already triggered
 func _go_to_arena():
 	get_tree().change_scene_to_file(ARENA_SCENE)
+	
+
+# RPC to register a player controller (called by clients)
+@rpc("authority")
+func register_player_controller(steam_id:int, playercontroller : PlayerController, player_name:String):
+	lobby_players[steam_id] = { "controller": playercontroller, "name": player_name}
+	print("Registered player:", player_name, "SteamID:", steam_id)

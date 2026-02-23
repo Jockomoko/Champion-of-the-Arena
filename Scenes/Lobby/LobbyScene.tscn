@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://de1r1njqponmy"]
+[gd_scene format=3 uid="uid://de1r1njqponmy"]
 
 [ext_resource type="Script" uid="uid://0pr0u8moajix" path="res://Scenes/Lobby/lobby_scene.gd" id="1_ayjqp"]
 [ext_resource type="Texture2D" uid="uid://35fyop5ogfcc" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 1.PNG" id="1_ysnny"]
@@ -8,10 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="5_csyuu"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="6_18gv8"]
 
-[node name="LobbyScene" type="Node2D"]
+[node name="LobbyScene" type="Node2D" unique_id=1733333752]
 script = ExtResource("1_ayjqp")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1662563473]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +25,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Background" type="TextureRect" parent="Control"]
+[node name="Background" type="TextureRect" parent="Control" unique_id=1836011508]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.73300004
@@ -40,7 +40,7 @@ scale = Vector2(2.7495146, 2.7209446)
 texture = ExtResource("1_ysnny")
 stretch_mode = 2
 
-[node name="Start_Game_btn" type="TextureButton" parent="Control/Background"]
+[node name="Start_Game_btn" type="TextureButton" parent="Control/Background" unique_id=1896990197]
 show_behind_parent = true
 layout_mode = 0
 offset_left = 907.4329
@@ -50,7 +50,7 @@ offset_bottom = 969.51624
 texture_normal = ExtResource("3_0c8wp")
 stretch_mode = 0
 
-[node name="TextureRect" type="TextureRect" parent="Control/Background"]
+[node name="TextureRect" type="TextureRect" parent="Control/Background" unique_id=513328777]
 layout_mode = 0
 offset_left = 1863.8347
 offset_top = 850.1663
@@ -60,7 +60,7 @@ rotation = 0.16037144
 texture = ExtResource("4_7t7gg")
 expand_mode = 1
 
-[node name="Exit_btn" type="TextureButton" parent="Control/Background/TextureRect"]
+[node name="Exit_btn" type="TextureButton" parent="Control/Background/TextureRect" unique_id=2065056611]
 layout_mode = 0
 offset_left = -41.499428
 offset_top = 34.16777
@@ -71,7 +71,7 @@ texture_normal = ExtResource("5_csyuu")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="AutoSizeLabel" type="Label" parent="Control/Background/TextureRect/Exit_btn"]
+[node name="AutoSizeLabel" type="Label" parent="Control/Background/TextureRect/Exit_btn" unique_id=944320126]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,7 +92,7 @@ text_overrun_behavior = 3
 script = ExtResource("6_18gv8")
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="Sign" type="TextureRect" parent="Control"]
+[node name="Sign" type="TextureRect" parent="Control" unique_id=111187299]
 layout_mode = 0
 offset_left = 126.0
 offset_top = 901.0
@@ -101,7 +101,7 @@ offset_bottom = 1651.0
 scale = Vector2(2.1623807, 2.1693425)
 texture = ExtResource("2_ayjqp")
 
-[node name="GridContainer" type="GridContainer" parent="Control/Sign"]
+[node name="GridContainer" type="GridContainer" parent="Control/Sign" unique_id=1753667006]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.181
@@ -117,42 +117,42 @@ theme_override_constants/h_separation = 1
 theme_override_constants/v_separation = 1
 columns = 3
 
-[node name="Player1" type="Control" parent="Control/Sign/GridContainer"]
+[node name="Player1" type="Control" parent="Control/Sign/GridContainer" unique_id=2021582178]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Player2" type="Control" parent="Control/Sign/GridContainer"]
+[node name="Player2" type="Control" parent="Control/Sign/GridContainer" unique_id=1234124350]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Player3" type="Control" parent="Control/Sign/GridContainer"]
+[node name="Player3" type="Control" parent="Control/Sign/GridContainer" unique_id=1987576481]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Player4" type="Control" parent="Control/Sign/GridContainer"]
+[node name="Player4" type="Control" parent="Control/Sign/GridContainer" unique_id=1083225184]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Player5" type="Control" parent="Control/Sign/GridContainer"]
+[node name="Player5" type="Control" parent="Control/Sign/GridContainer" unique_id=796378825]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Player6" type="Control" parent="Control/Sign/GridContainer"]
+[node name="Player6" type="Control" parent="Control/Sign/GridContainer" unique_id=819454654]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=9768002]
 position = Vector2(-44.999756, -34)
 scale = Vector2(2.1257982, 1.8648353)
 zoom = Vector2(0.385, 0.385)
 
-[node name="Control2" type="Control" parent="."]
+[node name="Control2" type="Control" parent="." unique_id=435211083]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -2179.0906

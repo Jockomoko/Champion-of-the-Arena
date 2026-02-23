@@ -7,7 +7,9 @@ const APP_ID: int = 480
 
 # Lobby
 var LOBBY_ID: int = 0
-var LOBBY_MEMBERS: Array = []
+
+var MY_PLAYERCONTROLLER : PlayerController
+
 var LOBBY_INVITE_ARG: bool = false
 
 #saved champions path

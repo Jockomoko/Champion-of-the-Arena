@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3cm1plumvu6e"]
+[gd_scene format=3 uid="uid://c3cm1plumvu6e"]
 
 [ext_resource type="Script" uid="uid://cfjjb5qo3tarc" path="res://Scenes/gameScene/CityScene/city_scene.gd" id="1_bsw3j"]
 [ext_resource type="Texture2D" uid="uid://1cb7y882j0gs" path="res://Sprite/city/sky.PNG" id="2_mro6r"]
@@ -7,26 +7,27 @@
 [ext_resource type="Texture2D" uid="uid://yxcbqvcgi0h6" path="res://Sprite/city/curch.PNG" id="5_xecl3"]
 [ext_resource type="Texture2D" uid="uid://dtvbu43e40nkq" path="res://Sprite/city/smith.PNG" id="6_36o41"]
 [ext_resource type="Texture2D" uid="uid://cmuusqmtsiic0" path="res://Sprite/city/arena.PNG" id="7_ow8e4"]
+[ext_resource type="PackedScene" uid="uid://b8nm6ef7nlesr" path="res://UserInterface/Clock/Timer.tscn" id="8_mro6r"]
 
-[node name="CityScene" type="Node2D"]
+[node name="CityScene" type="Node2D" unique_id=394205669]
 script = ExtResource("1_bsw3j")
 
-[node name="Sky" type="Sprite2D" parent="."]
+[node name="Sky" type="Sprite2D" parent="." unique_id=1159721]
 position = Vector2(-59, -209)
 scale = Vector2(0.62380946, 0.442446)
 texture = ExtResource("2_mro6r")
 
-[node name="Grass" type="Sprite2D" parent="."]
+[node name="Grass" type="Sprite2D" parent="." unique_id=1171426681]
 position = Vector2(-171, 329)
 scale = Vector2(1.1275698, 1.0685157)
 texture = ExtResource("3_bley2")
 
-[node name="Road" type="Sprite2D" parent="."]
+[node name="Road" type="Sprite2D" parent="." unique_id=1563378070]
 position = Vector2(-399.00003, 242.99998)
 scale = Vector2(1.1286156, 1.0238918)
 texture = ExtResource("4_uv2kv")
 
-[node name="Church" type="TextureButton" parent="."]
+[node name="Church" type="TextureButton" parent="." unique_id=1077837349]
 offset_left = -679.0
 offset_top = -499.0
 offset_right = -172.0
@@ -34,7 +35,7 @@ offset_bottom = 33.0
 texture_normal = ExtResource("5_xecl3")
 stretch_mode = 0
 
-[node name="Smith" type="TextureButton" parent="."]
+[node name="Smith" type="TextureButton" parent="." unique_id=1787779708]
 offset_left = -851.0
 offset_top = 63.0
 offset_right = -383.0
@@ -42,7 +43,7 @@ offset_bottom = 476.0
 texture_normal = ExtResource("6_36o41")
 stretch_mode = 0
 
-[node name="Arena" type="TextureButton" parent="."]
+[node name="Arena" type="TextureButton" parent="." unique_id=1336937700]
 offset_left = 211.0
 offset_top = -436.0
 offset_right = 1103.0
@@ -50,7 +51,16 @@ offset_bottom = 216.0
 texture_normal = ExtResource("7_ow8e4")
 stretch_mode = 0
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1007357427]
+
+[node name="Timer" parent="." unique_id=359163730 instance=ExtResource("8_mro6r")]
+anchors_preset = 9
+anchor_right = 0.0
+offset_left = 262.0
+offset_top = -519.0
+offset_right = 933.0
+offset_bottom = -444.0
+grow_horizontal = 1
 
 [connection signal="mouse_entered" from="Church" to="." method="_on_church_mouse_entered"]
 [connection signal="mouse_exited" from="Church" to="." method="_on_church_mouse_exited"]

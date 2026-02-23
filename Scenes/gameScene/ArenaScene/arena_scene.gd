@@ -4,13 +4,11 @@ extends Node2D
 const CHAMPION_SCENE = preload("uid://d2xtwn0w40ncd")
 
 @onready var multiplayer_spawner : MultiplayerSpawner = $MultiplayerSpawner
-
-@onready var player_spawns : Array = $SpawnPoints/PlayerSpawns.get_children()
-@onready var enemy_spawns  : Array = $SpawnPoints/EnemySpawns.get_children()
+@onready var player_spawns : Array = $MultiplayerSpawner/Spawn_points/Own_Spawn_points.get_children()
+@onready var enemy_spawns  : Array = $MultiplayerSpawner/Spawn_points/Enemy_Spawn_points.get_children()
 
 
 func _ready():
-
 	# Only host/server spawns players
 	if multiplayer.is_server():
 		start_arena()
@@ -19,45 +17,43 @@ func _ready():
 # =====================================================
 # START MATCH
 # =====================================================
-
 func start_arena():
+	var players := GameController.lobby_players.values()
 
-	# Example: get players from your GameController
-	var players : Array = GameController.players
-
-	# Safety check
 	if players.size() < 2:
-		print("Not enough players!")
+		push_error("Not enough players in lobby!")
 		return
 
-	# Pick two players randomly
+	# Shuffle to pick random players
 	players.shuffle()
 
-	var player_a = players[0]
-	var player_b = players[1]
+	var player_a = players[0]["controller"]
+	var player_b = players[1]["controller"]
 
-	spawn_match(player_a.peer_id, player_b.peer_id)
+	# Spawn each player's champions
+	spawn_team(player_a, player_spawns)
+	spawn_team(player_b, enemy_spawns)
 
 
 # =====================================================
-# SPAWNING
+# SPAWN PLAYER TEAM
 # =====================================================
+func spawn_team(controller: PlayerController, spawns: Array):
+	var team_size = controller.team.champions.size()
 
-func spawn_match(peer_a:int, peer_b:int):
+	if spawns.size() < team_size:
+		push_error("Not enough spawn points for player's team!")
+		return
 
-	var spawn_a : Marker2D = player_spawns.pick_random()
-	var spawn_b : Marker2D = enemy_spawns.pick_random()
+	for i in range(team_size):
+		var champ_data = controller.team.champions[i]
+		var champ_instance = CHAMPION_SCENE.instantiate()
 
-	# --- Player A ---
-	var champ_a = CHAMPION_SCENE.instantiate()
-	champ_a.global_position = spawn_a.global_position
-	champ_a.set_multiplayer_authority(peer_a)
+		# Position and multiplayer authority
+		champ_instance.global_position = spawns[i].global_position
+		champ_instance.set_multiplayer_authority(controller.player_id)
 
-	multiplayer_spawner.add_child(champ_a)
-
-	# --- Player B ---
-	var champ_b = CHAMPION_SCENE.instantiate()
-	champ_b.global_position = spawn_b.global_position
-	champ_b.set_multiplayer_authority(peer_b)
-
-	multiplayer_spawner.add_child(champ_b)
+		# Assign champion data (stats, abilities, etc.)
+		champ_instance.team = champ_data.duplicate()
+		
+		multiplayer_spawner.add_child(champ_instance)
