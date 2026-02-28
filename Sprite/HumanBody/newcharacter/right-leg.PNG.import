@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1m4sn4xb46y8"
-path="res://.godot/imported/body.PNG-eb0b777817869f6932f9d10c737645e9.ctex"
+uid="uid://c57y2hfbigbjy"
+path="res://.godot/imported/right-leg.PNG-97ff76bf459009b70a61210519ec02d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/HumanBody/body.PNG"
-dest_files=["res://.godot/imported/body.PNG-eb0b777817869f6932f9d10c737645e9.ctex"]
+source_file="res://Sprite/HumanBody/newcharacter/right-leg.PNG"
+dest_files=["res://.godot/imported/right-leg.PNG-97ff76bf459009b70a61210519ec02d7.ctex"]
 
 [params]
 

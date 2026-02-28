@@ -1,59 +1,60 @@
 extends Node2D
-
-# Champion scene
 const CHAMPION_SCENE = preload("uid://d2xtwn0w40ncd")
 
-@onready var multiplayer_spawner : MultiplayerSpawner = $MultiplayerSpawner
-@onready var player_spawns : Array = $MultiplayerSpawner/Spawn_points/Own_Spawn_points.get_children()
-@onready var enemy_spawns  : Array = $MultiplayerSpawner/Spawn_points/Enemy_Spawn_points.get_children()
+@onready var ability_sheet: Control = $Control/AbilitySheet
+@onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
+@onready var player_spawns: Array = $MultiplayerSpawner/Spawn_points/Own_Spawn_points.get_children()
+@onready var enemy_spawns: Array = $MultiplayerSpawner/Spawn_points/Enemy_Spawn_points.get_children()
 
+
+
+var collected_teams := {}
 
 func _ready():
-	# Only host/server spawns players
-	if multiplayer.is_server():
+	if Steam.getLobbyOwner(Globals.LOBBY_ID) == Globals.STEAM_ID:
+		request_team_data.rpc()
+
+@rpc("authority", "call_local", "reliable")
+func request_team_data() -> void:
+	var team_data = Globals.MY_PLAYERCONTROLLER.get_champions_team_data()
+	if Steam.getLobbyOwner(Globals.LOBBY_ID) == Globals.STEAM_ID:
+		submit_team_data(Globals.STEAM_ID, team_data)
+	else:
+		submit_team_data.rpc_id(1, Globals.STEAM_ID, team_data)
+
+@rpc("any_peer", "reliable")
+func submit_team_data(steam_id: int, team_data: Array) -> void:
+	print("submit_team_data received! steam_id: ", steam_id)
+	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID:
+		return
+	collected_teams[steam_id] = team_data
+	print("Got team from:", steam_id)
+	if collected_teams.size() == Globals.LOBBY_MEMBERS.size():
 		start_arena()
 
-
 # =====================================================
-# START MATCH
+# STEP 3 — Spawn when all data is collected
 # =====================================================
 func start_arena():
-	var players := GameController.lobby_players.values()
+	var steam_ids = collected_teams.keys()
+	steam_ids.shuffle()
+	spawn_team(collected_teams[steam_ids[0]], player_spawns, true)
+	#spawn_team(collected_teams[steam_ids[1]], enemy_spawns, false)
+	
 
-	if players.size() < 2:
-		push_error("Not enough players in lobby!")
+func spawn_team(team_data: Array, spawns: Array, own_champions: bool):
+	if spawns.size() < team_data.size():
+		push_error("Not enough spawn points!")
 		return
-
-	# Shuffle to pick random players
-	players.shuffle()
-
-	var player_a = players[0]["controller"]
-	var player_b = players[1]["controller"]
-
-	# Spawn each player's champions
-	spawn_team(player_a, player_spawns)
-	spawn_team(player_b, enemy_spawns)
-
-
-# =====================================================
-# SPAWN PLAYER TEAM
-# =====================================================
-func spawn_team(controller: PlayerController, spawns: Array):
-	var team_size = controller.team.champions.size()
-
-	if spawns.size() < team_size:
-		push_error("Not enough spawn points for player's team!")
-		return
-
-	for i in range(team_size):
-		var champ_data = controller.team.champions[i]
-		var champ_instance = CHAMPION_SCENE.instantiate()
-
-		# Position and multiplayer authority
-		champ_instance.global_position = spawns[i].global_position
-		champ_instance.set_multiplayer_authority(controller.player_id)
-
-		# Assign champion data (stats, abilities, etc.)
-		champ_instance.team = champ_data.duplicate()
+	for i in team_data.size():
+		var champion = CHAMPION_SCENE.instantiate()
 		
-		multiplayer_spawner.add_child(champ_instance)
+		# Match the keys from Champion.to_dict()
+		champion.name = team_data[i]["name"]
+		for stat_name in team_data[i]["stats"].keys():
+			champion.set_stat(stat_name, team_data[i]["stats"][stat_name])
+		add_child(champion)
+		champion.global_position = spawns[i].global_position
+		
+		if own_champions:
+			ability_sheet.add_player_bar(champion.get_max_health(), champion.get_max_mana())

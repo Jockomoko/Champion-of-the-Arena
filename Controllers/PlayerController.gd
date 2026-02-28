@@ -1,8 +1,8 @@
 extends Node
 class_name PlayerController
 
-var player_id := Globals.STEAM_ID
-var player_name := Globals.STEAM_NAME
+var player_id : int
+var player_name : String
 
 var glory := GloryComponent.new()
 var inventory := InventoryComponent.new()
@@ -13,7 +13,9 @@ signal player_lost
 
 
 func _ready():
-
+	
+	player_id = Globals.STEAM_ID
+	player_name = Globals.STEAM_NAME
 	team.TeamComponent()
 
 	# Register into Globals
@@ -28,7 +30,6 @@ func _ready():
 # GLOBAL REGISTRATION
 # =====================================
 func _register_controller():
-	
 	if Globals.LOBBY_MEMBERS.has(player_id):
 		Globals.LOBBY_MEMBERS[player_id]["controller"] = self
 
@@ -57,3 +58,6 @@ func lose_match():
 
 func win_match():
 	glory.add_glory(GameController.glory_gain)
+	
+func get_champions_team_data() -> Array:
+	return team.get_team_data()

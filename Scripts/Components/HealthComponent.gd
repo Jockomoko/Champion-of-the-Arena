@@ -7,13 +7,13 @@ signal died
 signal revived
 signal health_changed(current: float, max: float)
 
-@export var max_health: float = 100.0:
+var max_health: float = 100.0:
 	set(value):
 		max_health = max(value, 1.0)
 		current_health = clamp(current_health, 0.0, max_health)
 		emit_signal("health_changed", current_health, max_health)
 
-@export var current_health: float = 100.0:
+var current_health: float = 100.0:
 	set(value):
 		var was_dead := _is_dead
 		current_health = clamp(value, 0.0, max_health)

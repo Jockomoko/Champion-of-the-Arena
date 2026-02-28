@@ -1,18 +1,18 @@
 extends Node2D
 class_name Champion
 
-@export var champion_name: String = "Unnamed"
-@export var icon: Texture2D
+var champion_name: String = "Unnamed"
+var icon: Texture2D
 
 # Components
-@onready var stats: StatsComponent = $StatsComponent
-@onready var health: HealthComponent = $HealthComponent
-@onready var equipment: EquipmentComponent = $EquipmentComponent
+var stats := StatsComponent.new()
+var health:= HealthComponent.new()
+var equipment:= EquipmentComponent.new()
 
 func _ready():
 	# Set health based on effective stats
-	health.max_health = stats.get_health()
-	health.current_health = health.max_health
+	health.max_health = get_max_health()
+	health.current_health = get_max_health()
 
 	# Apply equipment bonuses
 	_apply_equipment_modifiers()
@@ -68,3 +68,22 @@ func _on_revived() -> void:
 
 func _on_health_changed(current: float, max: float) -> void:
 	print("%s HP: %f / %f" % [champion_name, current, max])
+	
+func get_max_health() -> int:
+	var stats_bonus = stats.get_health() * 10
+	return health.max_health + stats_bonus
+
+func get_max_mana() -> int:
+	return stats.get_mana() * 10
+
+func get_all_stats() -> Dictionary :
+	return stats.base_stats
+
+func set_stat(stat_name : String, stat_value : int) :
+	stats.base_stats[stat_name] = stat_value
+
+func get_dictionary() -> Dictionary:
+	return {
+		"name": name,
+		"stats": stats.base_stats.duplicate()
+	}

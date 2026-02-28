@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjmbocbss657y"
-path="res://.godot/imported/paint device.PNG-867892bb96d141355aa5dae30cbbd6e8.ctex"
+uid="uid://t7ghf5yabx6"
+path="res://.godot/imported/right-arm.PNG-545fb744666ba6f563f8acb42df52dc4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/HumanBody/Eyes/eyes/paint device.PNG"
-dest_files=["res://.godot/imported/paint device.PNG-867892bb96d141355aa5dae30cbbd6e8.ctex"]
+source_file="res://Sprite/HumanBody/newcharacter/right-arm.PNG"
+dest_files=["res://.godot/imported/right-arm.PNG-545fb744666ba6f563f8acb42df52dc4.ctex"]
 
 [params]
 

@@ -9,14 +9,14 @@ var hover_color = Color(2.432, 2.432, 2.432, 1.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	GameController._on_city_scene_loaded()
 	timer_Bar.timer(GameController.city_wait_time)
 	GameController.countdown_updated.connect(_update_clock)
+	Steam.lobby_data_update.connect(_on_lobby_data_update)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
+func _on_lobby_data_update(success, lobby_id, member_id):
+	if lobby_id == Globals.LOBBY_ID:
+		GameController.on_lobby_data_updated()
 
 func _update_clock(time_left:int):
 	timer_Bar.set_time_value(time_left)

@@ -2,16 +2,10 @@ extends Node
 class_name StatsComponent
 
 # ------------------------------
-# Identity
-# ------------------------------
-@export var hero_class: String = "Warrior"
-@export var level: int = 1
-
-# ------------------------------
 # Core stats stored as a dictionary
 # ------------------------------
 # Base stats
-@export var base_stats: Dictionary = {
+var base_stats: Dictionary = {
 	"attack": 5,
 	"defense": 5,
 	"health": 5,
@@ -56,7 +50,6 @@ func get_mana() -> int:
 # Level up increases base stats
 # ------------------------------
 func level_up():
-	level += 1
 	base_stats["attack"] += 2
 	base_stats["defense"] += 1
 	base_stats["health"] += 5

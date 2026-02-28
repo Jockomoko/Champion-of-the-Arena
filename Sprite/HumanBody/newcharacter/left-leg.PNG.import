@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyag21bpeli0n"
-path="res://.godot/imported/paint device.PNG-977b89eff0d20a137f401d1606899f05.ctex"
+uid="uid://be2fmh5e5wtbb"
+path="res://.godot/imported/left-leg.PNG-6c02d980f26d54e974f0317a60230e6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/HumanBody/Mouths/mouth/paint device.PNG"
-dest_files=["res://.godot/imported/paint device.PNG-977b89eff0d20a137f401d1606899f05.ctex"]
+source_file="res://Sprite/HumanBody/newcharacter/left-leg.PNG"
+dest_files=["res://.godot/imported/left-leg.PNG-6c02d980f26d54e974f0317a60230e6c.ctex"]
 
 [params]
 

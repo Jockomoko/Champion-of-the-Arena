@@ -22,14 +22,18 @@ func _ready():
 	
 	if data == null:
 		call_deferred("load_scene", CHAMPION_CREATION_SCENE)
+		return
 	
 	var ChampionsTeam := TeamComponent.new()
 	
+	ChampionsTeam.clear_champions_team()
 	for champion_name in data.keys() :
-		if  !ChampionsTeam.is_stats_valid_to_load(data[champion_name]) :
+		if  !ChampionsTeam.add_champion_to_team(data[champion_name]) :
 			call_deferred("load_scene", CHAMPION_CREATION_SCENE)
-		
+			return
 	Globals.MY_PLAYERCONTROLLER = PlayerController.new()
+	Globals.MY_PLAYERCONTROLLER.team = ChampionsTeam
+	Globals.add_child(Globals.MY_PLAYERCONTROLLER) 
 	call_deferred("load_scene", START_SCENE)
 
 func load_scene(path: String) -> void:

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5t3d1fa4twn7"
-path="res://.godot/imported/paint device.PNG-2d2101ca1551d4ae555b34fab5d836a8.ctex"
+uid="uid://d6sk6qkp5rjw"
+path="res://.godot/imported/body.PNG-cd8380fc5962ee257a219e7959882468.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/HumanBody/Hair/hair/paint device.PNG"
-dest_files=["res://.godot/imported/paint device.PNG-2d2101ca1551d4ae555b34fab5d836a8.ctex"]
+source_file="res://Sprite/HumanBody/newcharacter/body.PNG"
+dest_files=["res://.godot/imported/body.PNG-cd8380fc5962ee257a219e7959882468.ctex"]
 
 [params]
 

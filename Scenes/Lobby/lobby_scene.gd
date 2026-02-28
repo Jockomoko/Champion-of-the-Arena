@@ -18,9 +18,9 @@ func _ready() -> void:
 	# --- Steam signals ---
 	Steam.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_joined.connect(_on_lobby_joined)
-	Steam.lobby_data_update.connect(_on_lobby_data_update)
+	Steam.lobby_chat_update.connect(_on_lobby_Chat_update)
 	Steam.join_requested.connect(_on_lobby_join_requested)
-
+	
 	check_command_line()
 	create_lobby()
 
@@ -32,23 +32,25 @@ func _ready() -> void:
 func _on_lobby_created(connect, lobby_id):
 	if connect != 1:
 		return
-	
 	Globals.LOBBY_ID = lobby_id
-	print("Lobby created: ", lobby_id)
-	print("Lobby owner: ", Steam.getLobbyOwner(lobby_id))
-
+	var peer = SteamMultiplayerPeer.new()
+	peer.connect_to_lobby(lobby_id)  # 👈 handles host setup automatically
+	multiplayer.multiplayer_peer = peer
 	Steam.setLobbyData(lobby_id, "name", Globals.STEAM_NAME + "'s Lobby")
 	Steam.setLobbyJoinable(lobby_id, true)
-
 	rebuild_player_papers()
-
 
 func _on_lobby_joined(lobby_id, permissions, locked, response):
 	Globals.LOBBY_ID = lobby_id
+	var peer = SteamMultiplayerPeer.new()
+	peer.connect_to_lobby(lobby_id)  # 👈 handles client setup automatically
+	multiplayer.multiplayer_peer = peer
+	if Steam.getSteamID() != Steam.getLobbyOwner(lobby_id):
+		get_tree().change_scene_to_file("res://Scenes/Lobby/LobbyScene.tscn")
 	rebuild_player_papers()
 
 
-func _on_lobby_data_update(success, lobby_id, member_id):
+func _on_lobby_Chat_update(success, lobby_id, member_id):
 	if lobby_id != Globals.LOBBY_ID:
 		return
 
@@ -73,9 +75,8 @@ func _on_lobby_data_update(success, lobby_id, member_id):
 					1,
 					"player_joined",
 					steam_id,
-					null,
 					Steam.getFriendPersonaName(steam_id)
-				)
+					)
 
 	# Detect leaves
 	for steam_id in current_lobby_members:
@@ -173,9 +174,11 @@ func check_command_line():
 func create_lobby():
 	print("Creating lobby...")
 	Steam.createLobby(Steam.LOBBY_TYPE_FRIENDS_ONLY, max_player_amount)
+	
 
 
 func leave_lobby():
+	rebuild_player_papers()
 	if Globals.LOBBY_ID != 0:
 		Steam.leaveLobby(Globals.LOBBY_ID)
 		Globals.LOBBY_ID = 0
@@ -207,28 +210,8 @@ func _on_exit_btn_mouse_exited() -> void:
 
 func _on_start_game_btn_pressed() -> void:
 	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID:
-		return  # only host can start
-
-	GameController.lobby_players.clear()
-
-	var member_count = Steam.getNumLobbyMembers(Globals.LOBBY_ID)
-
-	for i in range(member_count):
-		var steam_id = Steam.getLobbyMemberByIndex(Globals.LOBBY_ID, i)
-		var player_name = Steam.getFriendPersonaName(steam_id)
-		var controller: PlayerController = null
-
-		if steam_id == Globals.STEAM_ID:
-			# Host registers its own controller locally
-			controller = Globals.MY_PLAYERCONTROLLER
-
-		# Register placeholder for others; clients will send their controllers via RPC
-		GameController.lobby_players[steam_id] = { "controller": controller, "name": player_name }
-
-	# Start arena (host can check controllers are ready)
-	GameController.start_arena()
-
-
+		return
+	GameController.set_lobby()
 
 func _on_start_game_btn_mouse_entered() -> void:
 	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID:
@@ -248,9 +231,8 @@ func _on_start_game_btn_mouse_exited() -> void:
 
 func notify_host_controller_ready():
 	GameController.rpc_id(
-		1,  # host
-		"player_joined",
-		Globals.STEAM_ID,
-		Globals.MY_PLAYERCONTROLLER,
-		Globals.STEAM_NAME
+	1,
+	"player_joined",
+	Globals.STEAM_ID,
+	Steam.getFriendPersonaName(Globals.STEAM_ID)
 	)
