@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://cetybdc0e465a"]
+
+[ext_resource type="Script" uid="uid://1earqwnlamir" path="res://Scripts/Resourcse/Abilities/Ability.gd" id="1_l20e4"]
+
+[resource]
+script = ExtResource("1_l20e4")
+id = "fireball"
+ability_name = "Fireball"
+type = 1
+mana_cost = 20
+base_damage = 15.0
+stat_scaling = {
+"attack": 0.0,
+"defense": 0.0,
+"mana": 0.05,
+"speed": 0.0
+}
+metadata/_custom_type_script = "uid://1earqwnlamir"

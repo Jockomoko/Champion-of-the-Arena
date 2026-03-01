@@ -23,7 +23,13 @@ config/icon="res://icon.svg"
 
 Globals="*res://Scripts/Globals/Globals.gd"
 ItemDataBase="*res://Scripts/Singeltons/ItemDataBase.gd"
+AbilitiesDataBase="*uid://cnxbnrnr2qi54"
 GameController="*res://Controllers/GameController.gd"
+CombatController="*uid://iissfupecuny"
+RoundController="*uid://3cbtois8t8nv"
+HairDataBase="*uid://ckjn4ijkhym85"
+EyeDataBase="*uid://p0rc71xcn7w3"
+MouthDataBase="*uid://ptrfyg2rdfv7"
 
 [display]
 

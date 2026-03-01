@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://cp6poqiucfsri"]
+
+[ext_resource type="Script" uid="uid://cykafxt7myxcx" path="res://Scenes/gameScene/ArenaScene/arena_scene.gd" id="1_eslee"]
+[ext_resource type="Texture2D" uid="uid://bb0xhff8xq3ip" path="res://Sprite/Arena/Målarlager 1.PNG" id="1_iqyo5"]
+[ext_resource type="Texture2D" uid="uid://c4vrwggwdprm5" path="res://Sprite/Arena/Målarlager 2.PNG" id="2_wvlsf"]
+[ext_resource type="Texture2D" uid="uid://br81ln2bd538x" path="res://Sprite/Arena/Målarlager 3.PNG" id="3_eslee"]
+[ext_resource type="PackedScene" uid="uid://bn8dkf4ds57b7" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/ChampionSheet.tscn" id="4_wvlsf"]
+
+[node name="ArenaScene" type="Node2D" unique_id=619070431]
+script = ExtResource("1_eslee")
+
+[node name="Control" type="Control" parent="." unique_id=1839083381]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="Control" unique_id=423186656]
+position = Vector2(960, 542)
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=36835704]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -244.0
+offset_top = -79.0
+offset_right = 223.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_iqyo5")
+
+[node name="Fensce" type="TextureRect" parent="Control" unique_id=1460073368]
+layout_mode = 0
+offset_left = -52.0
+offset_top = 328.0
+offset_right = 274.0
+offset_bottom = 634.0
+texture = ExtResource("2_wvlsf")
+
+[node name="TextureRect3" type="TextureRect" parent="Control" unique_id=675189471]
+layout_mode = 0
+offset_left = 1699.0
+offset_top = 362.0
+offset_right = 1968.0
+offset_bottom = 680.0
+texture = ExtResource("3_eslee")
+
+[node name="AbilitySheet" parent="Control" unique_id=343724048 instance=ExtResource("4_wvlsf")]
+layout_mode = 1
+offset_left = 462.0
+offset_top = 712.0
+offset_right = -610.0
+offset_bottom = 47.0
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=788940716]
+spawn_path = NodePath("Spawn_points")
+
+[node name="Spawn_points" type="Node2D" parent="MultiplayerSpawner" unique_id=1245961779]
+
+[node name="Own_Spawn_points" type="Node2D" parent="MultiplayerSpawner/Spawn_points" unique_id=975205740]
+
+[node name="Own_spawn_point1" type="Marker2D" parent="MultiplayerSpawner/Spawn_points/Own_Spawn_points" unique_id=689369320]
+position = Vector2(543, 463)
+
+[node name="Own_spawn_point2" type="Marker2D" parent="MultiplayerSpawner/Spawn_points/Own_Spawn_points" unique_id=524843630]
+position = Vector2(550, 615)
+
+[node name="Enemy_Spawn_points" type="Node2D" parent="MultiplayerSpawner/Spawn_points" unique_id=2112955524]
+
+[node name="Enemy_spawn_point1" type="Marker2D" parent="MultiplayerSpawner/Spawn_points/Enemy_Spawn_points" unique_id=541304084]
+position = Vector2(1253, 454)
+
+[node name="Enemy_spawn_point2" type="Marker2D" parent="MultiplayerSpawner/Spawn_points/Enemy_Spawn_points" unique_id=1722945599]
+position = Vector2(1264, 613)

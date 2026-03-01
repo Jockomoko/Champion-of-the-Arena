@@ -3,11 +3,21 @@ class_name Champion
 
 var champion_name: String = "Unnamed"
 var icon: Texture2D
+@onready var hair: Sprite2D = $body/Head/Hair
+@onready var head_sprite: Sprite2D = $body/Head
+@onready var left_arm: Sprite2D = $body/LeftArm
+@onready var body_sprite: Sprite2D = $body/Body_sprite
+@onready var right_arm: Sprite2D = $body/RightArm
+@onready var left_leg: Sprite2D = $body/LeftLeg
+@onready var right_leg: Sprite2D = $body/RightLeg
+
 
 # Components
 var stats := StatsComponent.new()
 var health:= HealthComponent.new()
 var equipment:= EquipmentComponent.new()
+var abilities := AbilityComponent.new()
+var appearance:= AppearanceComponent.new()
 
 func _ready():
 	# Set health based on effective stats
@@ -52,6 +62,13 @@ func _on_equipment_changed(slot_name: String, item) -> void:
 	}
 	health.current_health = stats.get_health()
 	_apply_equipment_modifiers()
+	_sync_abilities()
+
+func _sync_abilities() -> void:
+	abilities.equipped_ability_ids.clear()
+	for slot_item in equipment.get_all_items():
+		if slot_item and slot_item.get("ability_name", "") != "":
+			abilities.equip_ability(slot_item.ability_name)
 
 # Health signal handlers
 func _on_damaged(amount: float) -> void:
@@ -85,5 +102,20 @@ func set_stat(stat_name : String, stat_value : int) :
 func get_dictionary() -> Dictionary:
 	return {
 		"name": name,
-		"stats": stats.base_stats.duplicate()
+		"stats": stats.base_stats.duplicate(),
+		"appearance": appearance.to_dict(),
+		"abilities": abilities.get_available_abilities()
 	}
+
+func apply_appearance(new_appearance: AppearanceComponent) -> void:
+	if not is_node_ready():
+		await ready
+	hair.modulate = new_appearance.hair_color
+	head_sprite.modulate = new_appearance.body_color
+	right_leg.modulate = new_appearance.body_color
+	left_leg.modulate = new_appearance.body_color
+	right_arm.modulate = new_appearance.body_color
+	body_sprite.modulate = new_appearance.body_color
+	left_arm.modulate = new_appearance.body_color
+	var new_hair = HairDataBase.get_hair(new_appearance.hair_id)
+	hair.texture = new_hair.icon

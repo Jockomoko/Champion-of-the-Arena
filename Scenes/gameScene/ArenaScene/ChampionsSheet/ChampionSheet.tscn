@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://xeah8q68h5lw" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/champion_sheet.gd" id="1_afqq2"]
 [ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="1_jngoq"]
+[ext_resource type="PackedScene" uid="uid://b33lk3svy5ljd" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/Champions_ActionList/Action_Container.tscn" id="3_afqq2"]
 
 [node name="AbilitySheet" type="Control" unique_id=334912242]
 layout_mode = 3
@@ -47,7 +48,5 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VScrollBar" type="VScrollBar" parent="TextureRect/Control/HBoxContainer/VBoxContainer2" unique_id=258731038]
+[node name="ActionContainer" parent="TextureRect/Control/HBoxContainer/VBoxContainer2" unique_id=196306182 instance=ExtResource("3_afqq2")]
 layout_mode = 2
-size_flags_horizontal = 1
-size_flags_vertical = 3

@@ -6,18 +6,45 @@ const STATS_CHANGER = preload("uid://ijsge7t485at")
 @onready var champion_2Vbox: VBoxContainer = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/MarginContainer/Champion2_stats
 @onready var stat_point_champion_1_txt: AutoSizeLabel = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/stat_point_champion1_txt
 @onready var stat_point_champion_2_txt: AutoSizeLabel = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/stat_point_champion2_txt
-
+@onready var character_1_view: Control = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer/character1_view
+@onready var character_2_view: Control = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/character2_view
+var color_picker: ColorPicker
 
 const path := Globals.SAVED_CHAMPION_PATH
 
 var NewTeamComponent = TeamComponent.new()
+var appearance_1 := AppearanceComponent.new()
+var appearance_2 := AppearanceComponent.new()
 
 var stats_point_champion1 = NewTeamComponent.stats_points
 var stats_point_champion2 = NewTeamComponent.stats_points
 var min_stat_point = 5
 
+var hair_index_1 := 0
+var eye_index_1 := 0
+var mouth_index_1 := 0
+
+var hair_index_2 := 0
+var eye_index_2 := 0
+var mouth_index_2 := 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	character_1_view.go_left_hair_index.connect(func(): _change_index("hair", -1, 1))
+	character_1_view.go_Right_hair_index.connect(func(): _change_index("hair", 1, 1))
+	character_1_view.go_left_eye_index.connect(func(): _change_index("eye", -1, 1))
+	character_1_view.go_Right_eye_index.connect(func(): _change_index("eye", 1, 1))
+	character_1_view.go_left_mouth_index.connect(func(): _change_index("mouth", -1, 1))
+	character_1_view.go_Right_mouth_index.connect(func(): _change_index("mouth", 1, 1))
+	character_1_view.set_color_skin.connect(func(): _change_color(1))
+	# Champion 2 signals
+	character_2_view.go_left_hair_index.connect(func(): _change_index("hair", -1, 2))
+	character_2_view.go_Right_hair_index.connect(func(): _change_index("hair", 1, 2))
+	character_2_view.go_left_eye_index.connect(func(): _change_index("eye", -1, 2))
+	character_2_view.go_Right_eye_index.connect(func(): _change_index("eye", 1, 2))
+	character_2_view.go_left_mouth_index.connect(func(): _change_index("mouth", -1, 2))
+	character_2_view.go_Right_mouth_index.connect(func(): _change_index("mouth", 1, 2))
+	character_2_view.set_color_skin.connect(func(): _change_color(2))
 	
 	stat_point_champion_1_txt.text = str(stats_point_champion1)
 	stat_point_champion_2_txt.text = str(stats_point_champion2)
@@ -130,3 +157,55 @@ func _on_stat_removed_champion2(stat_changer_class : Stat_Changer):
 	stat_changer_class.amount -= 1
 	stat_changer_class._apply()
 	stat_point_champion_2_txt.text = str(stats_point_champion2)
+
+func _change_index(feature: String, direction: int, champion: int) -> void:
+	if champion == 1:
+		match feature:
+			"hair": 
+				hair_index_1 = wrapi(hair_index_1 + direction, 0, HairDataBase.hairs.size())
+				appearance_1.hair_id = hair_index_1
+			"eye": 
+				eye_index_1 = wrapi(eye_index_1 + direction, 0, EyeDataBase.eyes.size())
+				appearance_1.eye_id = eye_index_1
+			"mouth": 
+				mouth_index_1 = wrapi(mouth_index_1 + direction, 0, MouthDataBase.mouths.size())
+				appearance_1.mouth_id = mouth_index_1
+			
+	else:
+		match feature:
+			"hair": 
+				hair_index_2 = wrapi(hair_index_2 + direction, 0, HairDataBase.hairs.size())
+				appearance_2.hair_id = hair_index_2
+			"eye": 
+				eye_index_2 = wrapi(eye_index_2 + direction, 0, EyeDataBase.eyes.size())
+				appearance_2.eye_id = eye_index_2
+			"mouth": 
+				mouth_index_2 = wrapi(mouth_index_2 + direction, 0, MouthDataBase.mouths.size())
+				appearance_2.mouth_id = mouth_index_2
+	
+	character_1_view.set_apperance(appearance_1)
+	character_2_view.set_apperance(appearance_2)
+
+func _change_color(champion: int) -> void:
+	if color_picker != null:
+		color_picker.queue_free()
+		color_picker = null
+		return
+	
+	var initial_color := appearance_1.body_color if champion == 1 else appearance_2.body_color
+	
+	color_picker = ColorPicker.new()
+	color_picker.color = initial_color
+	color_picker.edit_alpha = false
+	color_picker.edit_intensity = false
+
+	color_picker.color_changed.connect(func(c: Color):
+		if champion == 1:
+			appearance_1.body_color = c
+			character_1_view.set_apperance(appearance_1)
+		else:
+			appearance_2.body_color = c
+			character_2_view.set_apperance(appearance_2)
+	)
+
+	add_child(color_picker)
