@@ -4,8 +4,20 @@ extends Node2D
 @onready var quit_btn: TextureButton = $Buttons/Quit_btn
 
 func _ready() -> void:
-	pass
+	Steam.join_requested.connect(_on_lobby_join_requested)
+	Steam.lobby_joined.connect(_on_lobby_joined)
 
+func _on_lobby_join_requested(lobby_id: int, steam_id: int) -> void:
+	Steam.joinLobby(lobby_id)
+
+func _on_lobby_joined(lobby_id, permissions, locked, response) -> void:
+	if response != 1:
+		return
+	Globals.LOBBY_ID = lobby_id
+	var peer = SteamMultiplayerPeer.new()
+	peer.connect_to_lobby(lobby_id)
+	multiplayer.multiplayer_peer = peer
+	get_tree().change_scene_to_file("res://Scenes/Lobby/LobbyScene.tscn")
 
 func _on_quit_btn_pressed() -> void:
 	get_tree().quit()

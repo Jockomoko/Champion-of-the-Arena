@@ -15,10 +15,9 @@ var LOBBY_MEMBERS: Dictionary = {}
 const SAVED_CHAMPION_PATH = "user://champion_stats.json"
 
 func _ready():
-	var INIT = Steam.steamInit(APP_ID)
-	print("Initialise Steam: ", INIT)
-	if INIT == false:
-		print("Failed to initialise Steam, shutting down...")
+	var INIT = Steam.steamInitEx(APP_ID, false)
+	if INIT["status"] != Steam.STEAM_API_INIT_RESULT_OK:
+		print("Failed: ", INIT["verbal"])
 		get_tree().quit()
 		return
 		

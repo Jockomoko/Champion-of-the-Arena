@@ -12,17 +12,23 @@ var max_player_amount := 6
 
 # Add this for tracking lobby members
 var current_lobby_members := []
-
+var controller_registered := false
 
 func _ready() -> void:
 	# --- Steam signals ---
-	Steam.lobby_created.connect(_on_lobby_created)
-	Steam.lobby_joined.connect(_on_lobby_joined)
-	Steam.lobby_chat_update.connect(_on_lobby_Chat_update)
-	Steam.join_requested.connect(_on_lobby_join_requested)
+	if not Steam.lobby_joined.is_connected(_on_lobby_joined):
+		Steam.lobby_joined.connect(_on_lobby_joined)
+	if not Steam.lobby_created.is_connected(_on_lobby_created):
+		Steam.lobby_created.connect(_on_lobby_created)
+	if not Steam.lobby_chat_update.is_connected(_on_lobby_Chat_update):
+		Steam.lobby_chat_update.connect(_on_lobby_Chat_update)
+	if not Steam.join_requested.is_connected(_on_lobby_join_requested):
+		Steam.join_requested.connect(_on_lobby_join_requested)
 	
-	check_command_line()
-	create_lobby()
+	if Globals.LOBBY_ID == 0:
+		create_lobby()
+	else:
+		rebuild_player_papers()
 
 
 # =====================================================
@@ -33,64 +39,99 @@ func _on_lobby_created(connect, lobby_id):
 	if connect != 1:
 		return
 	Globals.LOBBY_ID = lobby_id
+	if multiplayer.multiplayer_peer != null:
+		rebuild_player_papers()
+		return
 	var peer = SteamMultiplayerPeer.new()
-	peer.connect_to_lobby(lobby_id)  # 👈 handles host setup automatically
+	var err = peer.create_host(0)
+	if err != OK:
+		print("Host failed:", err)
+		return
 	multiplayer.multiplayer_peer = peer
 	Steam.setLobbyData(lobby_id, "name", Globals.STEAM_NAME + "'s Lobby")
 	Steam.setLobbyJoinable(lobby_id, true)
 	rebuild_player_papers()
 
 func _on_lobby_joined(lobby_id, permissions, locked, response):
-	Globals.LOBBY_ID = lobby_id
-	var peer = SteamMultiplayerPeer.new()
-	peer.connect_to_lobby(lobby_id)  # 👈 handles client setup automatically
-	multiplayer.multiplayer_peer = peer
-	if Steam.getSteamID() != Steam.getLobbyOwner(lobby_id):
-		get_tree().change_scene_to_file("res://Scenes/Lobby/LobbyScene.tscn")
-	rebuild_player_papers()
-
-
-func _on_lobby_Chat_update(success, lobby_id, member_id):
-	if lobby_id != Globals.LOBBY_ID:
+	if response != 1:
+		print("Failed to join lobby: ", response)
 		return
 
+	Globals.LOBBY_ID = lobby_id
+
+	# Prevent duplicate peer creation
+	if multiplayer.multiplayer_peer != null:
+		rebuild_player_papers()
+		return
+
+	var owner_id = Steam.getLobbyOwner(lobby_id)
+	var my_id = Steam.getSteamID()
+
+	# Host already created peer in _on_lobby_created
+	if my_id == owner_id:
+		rebuild_player_papers()
+		return
+
+	var peer = SteamMultiplayerPeer.new()
+
+	var err = peer.create_client(owner_id, 0)
+
+	if err != OK:
+		print("Client creation failed:", err)
+		return
+
+	multiplayer.multiplayer_peer = peer
+
+	var current_scene = get_tree().current_scene.scene_file_path
+	if current_scene != "res://Scenes/Lobby/LobbyScene.tscn":
+		get_tree().change_scene_to_file("res://Scenes/Lobby/LobbyScene.tscn")
+	else:
+		rebuild_player_papers()
+
+
+func _on_lobby_Chat_update(lobby_id, change_id, making_change_id, chat_state):
+	if lobby_id != Globals.LOBBY_ID:
+		return
+	
 	rebuild_player_papers()
 
-	# Detect joins/leaves by comparing current members with cached list
+	# Get current lobby members
 	var new_members := []
 	var member_count = Steam.getNumLobbyMembers(Globals.LOBBY_ID)
 	for i in range(member_count):
 		new_members.append(Steam.getLobbyMemberByIndex(Globals.LOBBY_ID, i))
 
+	var is_host := multiplayer.is_server()
+
+	# -------------------------
 	# Detect joins
+	# -------------------------
 	for steam_id in new_members:
 		if not current_lobby_members.has(steam_id):
-			# New player joined
-			if Steam.getSteamID() != Steam.getLobbyOwner(Globals.LOBBY_ID):
-				# Client tells host about their controller
-				notify_host_controller_ready()
+			if is_host:
+				# Host handles join directly
+				GameController.player_joined(steam_id, Steam.getFriendPersonaName(steam_id))
 			else:
-				# Host placeholder registration
-				GameController.rpc_id(
-					1,
-					"player_joined",
-					steam_id,
-					Steam.getFriendPersonaName(steam_id)
-					)
+				# Client notifies host ONLY ONCE
+				if not controller_registered:
+					controller_registered = true
+					notify_host_controller_ready()
 
+	# -------------------------
 	# Detect leaves
+	# -------------------------
 	for steam_id in current_lobby_members:
 		if not new_members.has(steam_id):
-			# Player left
-			if Steam.getSteamID() == Steam.getLobbyOwner(Globals.LOBBY_ID):
-				GameController.rpc_id(1, "player_left", steam_id)
+			if is_host:
+				# Host handles leave directly
+				GameController.player_left(steam_id)
 
+	# Update cached list
 	current_lobby_members = new_members
 
 
 func _on_lobby_join_requested(lobby_id, steam_id):
 	Steam.joinLobby(lobby_id)
-
 
 # =====================================================
 # PLAYER UI
@@ -179,9 +220,17 @@ func create_lobby():
 
 func leave_lobby():
 	rebuild_player_papers()
+
 	if Globals.LOBBY_ID != 0:
 		Steam.leaveLobby(Globals.LOBBY_ID)
 		Globals.LOBBY_ID = 0
+
+	if multiplayer.multiplayer_peer != null:
+		multiplayer.multiplayer_peer.close()
+		multiplayer.multiplayer_peer = null
+
+	current_lobby_members.clear()
+	controller_registered = false
 
 
 # =====================================================
@@ -230,9 +279,12 @@ func _on_start_game_btn_mouse_exited() -> void:
 # =====================================================
 
 func notify_host_controller_ready():
+	if multiplayer.is_server():
+		return
+	
 	GameController.rpc_id(
-	1,
-	"player_joined",
-	Globals.STEAM_ID,
-	Steam.getFriendPersonaName(Globals.STEAM_ID)
+		multiplayer.get_server_id(),
+		"player_joined",
+		Globals.STEAM_ID,
+		Steam.getFriendPersonaName(Globals.STEAM_ID)
 	)

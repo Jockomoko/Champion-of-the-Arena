@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://blhsmi7s1n30t"]
+[gd_scene format=3 uid="uid://blhsmi7s1n30t"]
 
 [ext_resource type="Texture2D" uid="uid://blp76x4sv5c2c" path="res://Sprite/Målarlager 1.PNG" id="1_gsxt3"]
 [ext_resource type="Script" uid="uid://cwq4iefn0mard" path="res://Scenes/gameScene/start meny/start_scene.gd" id="1_nqs3o"]
@@ -6,27 +6,27 @@
 [ext_resource type="Texture2D" uid="uid://bxd63ltm85121" path="res://Sprite/Målarlager 2.PNG" id="3_nqs3o"]
 [ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="5_1laog"]
 
-[node name="StartScene" type="Node2D"]
+[node name="StartScene" type="Node2D" unique_id=87433845]
 script = ExtResource("1_nqs3o")
 
-[node name="Målarlager1" type="Sprite2D" parent="."]
+[node name="Målarlager1" type="Sprite2D" parent="." unique_id=1478554055]
 position = Vector2(150, 57)
 texture = ExtResource("1_gsxt3")
 
-[node name="Arena" type="Sprite2D" parent="."]
+[node name="Arena" type="Sprite2D" parent="." unique_id=1321852373]
 position = Vector2(340, -771)
 texture = ExtResource("2_ewwas")
 
-[node name="Målarlager2" type="Sprite2D" parent="."]
+[node name="Målarlager2" type="Sprite2D" parent="." unique_id=565028455]
 position = Vector2(-1441, 22)
 texture = ExtResource("3_nqs3o")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1728512085]
 zoom = Vector2(0.36, 0.36)
 
-[node name="Buttons" type="Node2D" parent="."]
+[node name="Buttons" type="Node2D" parent="." unique_id=103436510]
 
-[node name="Start_btn" type="TextureButton" parent="Buttons"]
+[node name="Start_btn" type="TextureButton" parent="Buttons" unique_id=1514257697]
 offset_left = -2040.0
 offset_top = -760.0
 offset_right = -982.0
@@ -37,7 +37,7 @@ texture_normal = ExtResource("5_1laog")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="Buttons/Start_btn"]
+[node name="Label" type="Label" parent="Buttons/Start_btn" unique_id=1504297397]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -57,7 +57,7 @@ text = "Start"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Quit_btn" type="TextureButton" parent="Buttons"]
+[node name="Quit_btn" type="TextureButton" parent="Buttons" unique_id=965043941]
 offset_left = -2031.0001
 offset_top = -251.99997
 offset_right = -973.0001
@@ -71,7 +71,7 @@ ignore_texture_size = true
 stretch_mode = 0
 flip_h = true
 
-[node name="Label" type="Label" parent="Buttons/Quit_btn"]
+[node name="Label" type="Label" parent="Buttons/Quit_btn" unique_id=238439906]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
