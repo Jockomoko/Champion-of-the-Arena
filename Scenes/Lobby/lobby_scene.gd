@@ -5,247 +5,118 @@ extends Node2D
 
 const PLAYER_PAPER = preload("uid://diuguoosinp8u")
 
-var exit_path = "res://Scenes/gameScene/start meny/StartScene.tscn"
-var start_path = "res://Scenes/gameScene/ArenaScene/Arena_Scene.tscn"
+var exit_path  = "res://Scenes/gameScene/start meny/StartScene.tscn"
 
 var max_player_amount := 6
 
-# Add this for tracking lobby members
-var current_lobby_members := []
-var controller_registered := false
+# =====================================================
+# READY
+# =====================================================
 
 func _ready() -> void:
-	# --- Steam signals ---
-	if not Steam.lobby_joined.is_connected(_on_lobby_joined):
-		Steam.lobby_joined.connect(_on_lobby_joined)
-	if not Steam.lobby_created.is_connected(_on_lobby_created):
-		Steam.lobby_created.connect(_on_lobby_created)
-	if not Steam.lobby_chat_update.is_connected(_on_lobby_Chat_update):
-		Steam.lobby_chat_update.connect(_on_lobby_Chat_update)
-	if not Steam.join_requested.is_connected(_on_lobby_join_requested):
-		Steam.join_requested.connect(_on_lobby_join_requested)
-	
+	# DO NOT connect them here. Just listen to Globals' own signals.
+	Globals.member_updated.connect(_on_member_updated)
+
+	# Multiplayer events
+	multiplayer.peer_connected.connect(_on_peer_connected)
+
+	# If we're not in a lobby yet, create one.
+	# Globals handles lobby_created / lobby_joined signals and sets LOBBY_ID.
 	if Globals.LOBBY_ID == 0:
-		create_lobby()
+		Globals.create_lobby(max_player_amount)
 	else:
 		rebuild_player_papers()
 
 
+
 # =====================================================
-# LOBBY EVENTS
+# LOBBY EVENTS  (forwarded from Globals)
 # =====================================================
 
-func _on_lobby_created(connect, lobby_id):
-	if connect != 1:
-		return
-	Globals.LOBBY_ID = lobby_id
-	if multiplayer.multiplayer_peer != null:
-		rebuild_player_papers()
-		return
-	var peer = SteamMultiplayerPeer.new()
-	var err = peer.create_host(0)
-	if err != OK:
-		print("Host failed:", err)
-		return
-	multiplayer.multiplayer_peer = peer
-	Steam.setLobbyData(lobby_id, "name", Globals.STEAM_NAME + "'s Lobby")
-	Steam.setLobbyJoinable(lobby_id, true)
+func _on_member_updated(_steam_id: int, _chat_state: int) -> void:
 	rebuild_player_papers()
 
-func _on_lobby_joined(lobby_id, permissions, locked, response):
-	if response != 1:
-		print("Failed to join lobby: ", response)
-		return
 
-	Globals.LOBBY_ID = lobby_id
+func _on_peer_connected(peer_id: int) -> void:
+	print("LobbyScene: peer connected — ", peer_id)
+	print("LobbyScene: all peers — ", multiplayer.get_peers())
 
-	# Prevent duplicate peer creation
-	if multiplayer.multiplayer_peer != null:
-		rebuild_player_papers()
-		return
-
-	var owner_id = Steam.getLobbyOwner(lobby_id)
-	var my_id = Steam.getSteamID()
-
-	# Host already created peer in _on_lobby_created
-	if my_id == owner_id:
-		rebuild_player_papers()
-		return
-
-	var peer = SteamMultiplayerPeer.new()
-
-	var err = peer.create_client(owner_id, 0)
-
-	if err != OK:
-		print("Client creation failed:", err)
-		return
-
-	multiplayer.multiplayer_peer = peer
-
-	var current_scene = get_tree().current_scene.scene_file_path
-	if current_scene != "res://Scenes/Lobby/LobbyScene.tscn":
-		get_tree().change_scene_to_file("res://Scenes/Lobby/LobbyScene.tscn")
-	else:
-		rebuild_player_papers()
-
-
-func _on_lobby_Chat_update(lobby_id, change_id, making_change_id, chat_state):
-	if lobby_id != Globals.LOBBY_ID:
-		return
-	
-	rebuild_player_papers()
-
-	# Get current lobby members
-	var new_members := []
-	var member_count = Steam.getNumLobbyMembers(Globals.LOBBY_ID)
-	for i in range(member_count):
-		new_members.append(Steam.getLobbyMemberByIndex(Globals.LOBBY_ID, i))
-
-	var is_host := multiplayer.is_server()
-
-	# -------------------------
-	# Detect joins
-	# -------------------------
-	for steam_id in new_members:
-		if not current_lobby_members.has(steam_id):
-			if is_host:
-				# Host handles join directly
-				GameController.player_joined(steam_id, Steam.getFriendPersonaName(steam_id))
-			else:
-				# Client notifies host ONLY ONCE
-				if not controller_registered:
-					controller_registered = true
-					notify_host_controller_ready()
-
-	# -------------------------
-	# Detect leaves
-	# -------------------------
-	for steam_id in current_lobby_members:
-		if not new_members.has(steam_id):
-			if is_host:
-				# Host handles leave directly
-				GameController.player_left(steam_id)
-
-	# Update cached list
-	current_lobby_members = new_members
-
-
-func _on_lobby_join_requested(lobby_id, steam_id):
-	Steam.joinLobby(lobby_id)
 
 # =====================================================
 # PLAYER UI
 # =====================================================
 
-func rebuild_player_papers():
+func rebuild_player_papers() -> void:
 	var paper_slots := signe_container.get_children()
-	
-	# Reset paper slots
+
 	for slot in paper_slots:
 		for child in slot.get_children():
 			child.queue_free()
-	
+
 	if Globals.LOBBY_ID == 0:
 		return
 
 	var member_count := Steam.getNumLobbyMembers(Globals.LOBBY_ID)
-
 	for i in range(member_count):
-		if paper_slots[i] == null:
-			continue
-		
-		var steam_id = Steam.getLobbyMemberByIndex(Globals.LOBBY_ID, i)
+		if i >= paper_slots.size():
+			break
+		var steam_id    = Steam.getLobbyMemberByIndex(Globals.LOBBY_ID, i)
 		var player_name = Steam.getFriendPersonaName(steam_id)
-		var avatar_id = Steam.getMediumFriendAvatar(steam_id)
-		var avatar_texture = get_avatar_texture(avatar_id)
-		
-		add_player_paper_to_sign(avatar_texture, player_name, paper_slots[i])
+		var avatar_id   = Steam.getMediumFriendAvatar(steam_id)
+		var avatar_tex  = _get_avatar_texture(avatar_id)
+		_add_player_paper(avatar_tex, player_name, paper_slots[i])
 
 
-func add_player_paper_to_sign(player_picture: Texture2D, player_name: String, paper_slot : Control):
-	var new_player_paper = PLAYER_PAPER.instantiate()
-	new_player_paper.size_flags_horizontal = Control.SIZE_FILL | Control.SIZE_EXPAND
-	new_player_paper.size_flags_vertical   = Control.SIZE_FILL | Control.SIZE_EXPAND
-	new_player_paper.Player_Paper(player_picture, player_name)
-	paper_slot.add_child(new_player_paper)
+func _add_player_paper(picture: Texture2D, player_name: String, slot: Control) -> void:
+	var paper = PLAYER_PAPER.instantiate()
+	paper.size_flags_horizontal = Control.SIZE_FILL | Control.SIZE_EXPAND
+	paper.size_flags_vertical   = Control.SIZE_FILL | Control.SIZE_EXPAND
+	paper.Player_Paper(picture, player_name)
+	slot.add_child(paper)
 
 
 # =====================================================
 # STEAM AVATAR → TEXTURE
 # =====================================================
 
-func get_avatar_texture(avatar_id: int) -> Texture2D:
+func _get_avatar_texture(avatar_id: int) -> Texture2D:
 	if avatar_id <= 0:
 		return null
-
 	var size = Steam.getImageSize(avatar_id)
 	if not size.has("width") or not size.has("height"):
 		return null
-
-	var width = size["width"]
-	var height = size["height"]
-
-	if width <= 0 or height <= 0:
+	var w = size["width"]
+	var h = size["height"]
+	if w <= 0 or h <= 0:
 		return null
-
 	var result = Steam.getImageRGBA(avatar_id)
 	if not result.has("buffer"):
 		return null
-
 	var data: PackedByteArray = result["buffer"]
 	if data.size() == 0:
 		return null
-
-	var image : Image = Image.create_from_data(width, height, false, Image.FORMAT_RGBA8, data)
+	var image := Image.create_from_data(w, h, false, Image.FORMAT_RGBA8, data)
 	return ImageTexture.create_from_image(image)
 
 
-# =====================================================
-# COMMAND LINE JOIN (Steam Invite)
-# =====================================================
-
-func check_command_line():
-	var args = OS.get_cmdline_args()
-	for arg in args:
-		if arg.begins_with("+connect_lobby"):
-			var lobby_id = int(arg.split(" ")[1])
-			Steam.joinLobby(lobby_id)
+func _on_start_game_btn_mouse_entered() -> void:
+	if not Globals.is_host:
+		return
+	start_game_btn.show_behind_parent = false
 
 
-func create_lobby():
-	print("Creating lobby...")
-	Steam.createLobby(Steam.LOBBY_TYPE_FRIENDS_ONLY, max_player_amount)
-	
-
-
-func leave_lobby():
-	rebuild_player_papers()
-
-	if Globals.LOBBY_ID != 0:
-		Steam.leaveLobby(Globals.LOBBY_ID)
-		Globals.LOBBY_ID = 0
-
-	if multiplayer.multiplayer_peer != null:
-		multiplayer.multiplayer_peer.close()
-		multiplayer.multiplayer_peer = null
-
-	current_lobby_members.clear()
-	controller_registered = false
+func _on_start_game_btn_mouse_exited() -> void:
+	if not Globals.is_host:
+		return
+	start_game_btn.show_behind_parent = true
 
 
 # =====================================================
-# BUTTONS / UI
+# EXIT
 # =====================================================
-
-func _rotate_button(button: TextureButton, angle: float) -> void:
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(button, "rotation", angle, 0.15)
-
 
 func _on_exit_btn_pressed() -> void:
-	leave_lobby()
+	Globals.leave_lobby()
 	get_tree().change_scene_to_file(exit_path)
 
 
@@ -257,34 +128,25 @@ func _on_exit_btn_mouse_exited() -> void:
 	_rotate_button($Control/Background/TextureRect/Exit_btn, 0.0)
 
 
+func _rotate_button(button: TextureButton, angle: float) -> void:
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(button, "rotation", angle, 0.15)
+
+
+# =====================================================
+# CLEANUP
+# =====================================================
+
+func _exit_tree() -> void:
+	if Globals.member_updated.is_connected(_on_member_updated):
+		Globals.member_updated.disconnect(_on_member_updated)
+	if multiplayer.peer_connected.is_connected(_on_peer_connected):
+		multiplayer.peer_connected.disconnect(_on_peer_connected)
+
+
 func _on_start_game_btn_pressed() -> void:
-	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID:
+	if not Globals.is_host:
 		return
-	GameController.set_lobby()
-
-func _on_start_game_btn_mouse_entered() -> void:
-	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID:
-		return
-	start_game_btn.show_behind_parent = false
-
-
-func _on_start_game_btn_mouse_exited() -> void:
-	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID:
-		return
-	start_game_btn.show_behind_parent = true
-
-
-# =====================================================
-# CLIENT → HOST CONTROLLER NOTIFICATION
-# =====================================================
-
-func notify_host_controller_ready():
-	if multiplayer.is_server():
-		return
-	
-	GameController.rpc_id(
-		multiplayer.get_server_id(),
-		"player_joined",
-		Globals.STEAM_ID,
-		Steam.getFriendPersonaName(Globals.STEAM_ID)
-	)
+	GameController.start_game()

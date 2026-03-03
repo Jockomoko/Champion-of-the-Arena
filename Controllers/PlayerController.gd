@@ -13,6 +13,7 @@ signal player_lost
 
 
 func _ready():
+	RoundController.solo_detected.connect(_on_solo_detected)
 	
 	player_id = Globals.STEAM_ID
 	player_name = Globals.STEAM_NAME
@@ -24,7 +25,6 @@ func _ready():
 	# React to glory changes
 	glory.arena_won.connect(_on_arena_won)
 	glory.arena_lost.connect(_on_arena_lost)
-
 
 # =====================================
 # GLOBAL REGISTRATION
@@ -61,3 +61,22 @@ func win_match():
 	
 func get_champions_team_data() -> Array:
 	return team.get_team_data()
+
+func _on_solo_detected() -> void:
+	print("Waiting 5 seconds to check if still alone...")
+	await get_tree().create_timer(5.0).timeout
+	
+	# Check if still alone after 5 seconds
+	var member_count = Steam.getNumLobbyMembers(Globals.LOBBY_ID)
+	if member_count > 1:
+		# Someone joined, continue normally
+		print("Player joined, continuing...")
+		return
+	
+	
+	Steam.leaveLobby(Globals.LOBBY_ID)
+	Globals.LOBBY_ID = 0
+	multiplayer.multiplayer_peer.close()
+	multiplayer.multiplayer_peer = null
+	
+	get_tree().change_scene_to_file("res://Scenes/gameScene/start meny/StartScene.tscn")

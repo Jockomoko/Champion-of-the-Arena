@@ -4,14 +4,19 @@ extends Node
 signal round_started(matches: Array)
 signal player_waiting(steam_id: int)
 signal all_matches_done
+signal solo_detected
 
-var active_players: Array[int] = []
+var active_players: Array = []
 var current_matches: Dictionary = {}
 var finished_matches: Array = []
 var waiting_player: int = -1
 
 func start_round(steam_ids: Array) -> void:
 	active_players = steam_ids.duplicate()
+	
+	if active_players.size() == 1:
+		_broadcast_solo_check.rpc()
+		return
 	active_players.shuffle()
 	finished_matches.clear()
 	current_matches.clear()
@@ -33,6 +38,10 @@ func start_round(steam_ids: Array) -> void:
 		player_waiting.emit(waiting_player)
 	
 	_broadcast_round_started.rpc(matches, current_matches, waiting_player)
+
+@rpc("authority", "call_local", "reliable")
+func _broadcast_solo_check() -> void:
+	solo_detected.emit()
 
 @rpc("authority", "call_local", "reliable")
 func _broadcast_round_started(matches: Array, matches_dict: Dictionary, bye_player: int) -> void:

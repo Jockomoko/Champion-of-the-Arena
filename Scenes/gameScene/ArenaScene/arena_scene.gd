@@ -26,10 +26,12 @@ func _ready():
 @rpc("authority", "call_local", "reliable")
 func request_team_data() -> void:
 	var team_data = Globals.MY_PLAYERCONTROLLER.get_champions_team_data()
-	if Steam.getLobbyOwner(Globals.LOBBY_ID) == Globals.STEAM_ID:
+
+	if Globals.STEAM_ID == Steam.getLobbyOwner(Globals.LOBBY_ID):
 		submit_team_data(Globals.STEAM_ID, team_data)
 	else:
-		submit_team_data.rpc_id(1, Globals.STEAM_ID, team_data)
+		# Use get_server_id() not Steam ID, because create_client maps host as peer 1
+		submit_team_data.rpc_id(multiplayer.get_server_id(), Globals.STEAM_ID, team_data)
 
 @rpc("any_peer", "reliable")
 func submit_team_data(steam_id: int, team_data: Array) -> void:
@@ -131,5 +133,5 @@ func _on_player_waiting(steam_id: int) -> void:
 		_show_waiting_screen()
 
 func _show_waiting_screen() -> void:
-	ability_sheet.visible = false
+	ability_sheet.hide()
 	print("Waiting for other players to finish their match...")

@@ -37,6 +37,7 @@ offset_bottom = -1829.038
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2.7495146, 2.7209446)
+mouse_filter = 2
 texture = ExtResource("1_ysnny")
 stretch_mode = 2
 

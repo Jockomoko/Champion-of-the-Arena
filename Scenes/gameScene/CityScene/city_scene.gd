@@ -9,7 +9,7 @@ var hover_color = Color(2.432, 2.432, 2.432, 1.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	GameController._on_city_scene_loaded()
+	GameController.on_city_scene_ready()
 	timer_Bar.timer(GameController.city_wait_time)
 	GameController.countdown_updated.connect(_update_clock)
 	Steam.lobby_data_update.connect(_on_lobby_data_update)
