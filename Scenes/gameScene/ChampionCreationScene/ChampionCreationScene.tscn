@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="3_0b65l"]
 [ext_resource type="Texture2D" uid="uid://63uilqd8npdw" path="res://Sprite/pl/Målarlager 2.PNG" id="3_uk5nh"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="4_xtkc7"]
-[ext_resource type="PackedScene" uid="uid://cde8bhw4fqnqs" path="res://Scenes/gameScene/ChampionCreationScene/CharcaterDesigne/ChampionDesigne.tscn" id="5_bdbgo"]
 
 [node name="ChampionCreationScene" type="Node2D" unique_id=1310155521]
 script = ExtResource("1_53xoa")
@@ -85,9 +84,6 @@ anchor_bottom = 0.932
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="character1_view" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer" unique_id=46503785 instance=ExtResource("5_bdbgo")]
-layout_mode = 2
-
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer" unique_id=169157154]
 layout_mode = 2
 size_flags_vertical = 3
@@ -144,9 +140,6 @@ anchor_right = 0.786
 anchor_bottom = 0.932
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="character2_view" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer" unique_id=1040462017 instance=ExtResource("5_bdbgo")]
-layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer" unique_id=2128437400]
 layout_mode = 2
