@@ -14,18 +14,15 @@ var max_player_amount := 6
 # =====================================================
 
 func _ready() -> void:
-	# DO NOT connect them here. Just listen to Globals' own signals.
 	Globals.member_updated.connect(_on_member_updated)
-
-	# Multiplayer events
 	multiplayer.peer_connected.connect(_on_peer_connected)
 
-	# If we're not in a lobby yet, create one.
-	# Globals handles lobby_created / lobby_joined signals and sets LOBBY_ID.
 	if Globals.LOBBY_ID == 0:
 		Globals.create_lobby(max_player_amount)
 	else:
 		rebuild_player_papers()
+	
+	_update_start_button()
 
 
 
@@ -35,12 +32,24 @@ func _ready() -> void:
 
 func _on_member_updated(_steam_id: int, _chat_state: int) -> void:
 	rebuild_player_papers()
-
+	_update_start_button()
 
 func _on_peer_connected(peer_id: int) -> void:
 	print("LobbyScene: peer connected — ", peer_id)
-	print("LobbyScene: all peers — ", multiplayer.get_peers())
+	_update_start_button()
 
+func _update_start_button() -> void:
+	if not Globals.is_host:
+		start_game_btn.hide()
+		return
+	start_game_btn.show() 
+	
+	var lobby_count = Steam.getNumLobbyMembers(Globals.LOBBY_ID)
+	var peer_count  = multiplayer.get_peers().size()  # doesn't count host itself
+	var all_connected = lobby_count >= 2 and peer_count >= (lobby_count - 1)
+	
+	start_game_btn.disabled = not all_connected
+	print("Peers connected: %d / %d needed" % [peer_count, lobby_count - 1])
 
 # =====================================================
 # PLAYER UI

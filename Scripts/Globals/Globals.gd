@@ -99,9 +99,11 @@ func _on_lobby_created(connect: int, lobby_id: int) -> void:
 		return
 
 	multiplayer.multiplayer_peer = peer
-	multiplayer.peer_connected.connect(func(id):
-		print("Globals: peer connected — ", id)
+
+	multiplayer.peer_connected.connect(func(id: int):
+		print("Globals: peer fully connected — ", id)
 		print("Globals: all peers — ", multiplayer.get_peers())
+		member_updated.emit(id, 1)
 	)
 
 	populate_lobby_members()
@@ -130,10 +132,9 @@ func _on_lobby_joined(lobby_id: int, _permissions: int, _locked: bool, response:
 	var peer = SteamMultiplayerPeer.new()
 	var err  = peer.create_client(Steam.getLobbyOwner(LOBBY_ID), 0)
 	if err != OK:
-		print("Client peer creation failed: ", err)
 		return
-
 	multiplayer.multiplayer_peer = peer
+	
 	print("Globals: client peer set — host Steam ID: ", Steam.getLobbyOwner(LOBBY_ID))
 	print("Globals: my peer ID: ", multiplayer.get_unique_id())
 
