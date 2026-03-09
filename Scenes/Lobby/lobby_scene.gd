@@ -45,7 +45,7 @@ func _update_start_button() -> void:
 	start_game_btn.show() 
 	
 	var lobby_count = Steam.getNumLobbyMembers(Globals.LOBBY_ID)
-	var peer_count  = multiplayer.get_peers().size()  # doesn't count host itself
+	var peer_count  = multiplayer.get_peers().size()
 	var all_connected = lobby_count >= 2 and peer_count >= (lobby_count - 1)
 	
 	start_game_btn.disabled = not all_connected

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="3_0b65l"]
 [ext_resource type="Texture2D" uid="uid://63uilqd8npdw" path="res://Sprite/pl/Målarlager 2.PNG" id="3_uk5nh"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="4_xtkc7"]
+[ext_resource type="Script" uid="uid://cs3okxqop883t" path="res://addons/AutoSizeText/ui/AutoSizeLineEdit.gd" id="5_bdbgo"]
 
 [node name="ChampionCreationScene" type="Node2D" unique_id=1310155521]
 script = ExtResource("1_53xoa")
@@ -95,6 +96,23 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
+[node name="Champion1_name" type="LineEdit" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect" unique_id=1367702659]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.358
+anchor_top = 0.06
+anchor_right = 0.78
+anchor_bottom = 0.128
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Champion Name"
+alignment = 1
+max_length = 10
+script = ExtResource("5_bdbgo")
+min_size = 10
+max_size = 400
+metadata/_custom_type_script = "uid://cs3okxqop883t"
+
 [node name="Champion2_margincontainer2" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer" unique_id=1195207244]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -150,6 +168,24 @@ theme_override_constants/margin_right = 120
 [node name="Champion2_stats" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/MarginContainer" unique_id=843467295]
 layout_mode = 2
 theme_override_constants/separation = 10
+
+[node name="Champion2_name" type="LineEdit" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect" unique_id=2064655640]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.358
+anchor_top = 0.078
+anchor_right = 0.78
+anchor_bottom = 0.128
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 39
+placeholder_text = "Champion Name"
+alignment = 1
+max_length = 10
+script = ExtResource("5_bdbgo")
+min_size = 10
+max_size = 400
+metadata/_custom_type_script = "uid://cs3okxqop883t"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=1056163932]
 layout_mode = 2

@@ -8,6 +8,8 @@ const STATS_CHANGER    = preload("uid://ijsge7t485at")
 @onready var champion_2Vbox: VBoxContainer = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/MarginContainer/Champion2_stats
 @onready var stat_point_champion_1_txt: AutoSizeLabel = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/stat_point_champion1_txt
 @onready var stat_point_champion_2_txt: AutoSizeLabel = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/stat_point_champion2_txt
+@onready var champion_1_name: AutoSizeLineEdit = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/Champion1_name
+@onready var champion_2_name: AutoSizeLineEdit = $Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/Champion2_name
 
 var champion_1_design: Control
 var champion_2_design: Control
@@ -23,12 +25,12 @@ var stats_point_champion1 = NewTeamComponent.stats_points
 var stats_point_champion2 = NewTeamComponent.stats_points
 var min_stat_point = 5
 
-var hair_index_1 := 0
-var eye_index_1 := 0
-var mouth_index_1 := 0
-var hair_index_2 := 0
-var eye_index_2 := 0
-var mouth_index_2 := 0
+var hair_index_1 : int = 0
+var eye_index_1 : int = 0
+var mouth_index_1 : int = 0
+var hair_index_2 : int = 0
+var eye_index_2 : int = 0
+var mouth_index_2 : int = 0
 
 func _ready() -> void:
 	# Spawn champion designs dynamically
@@ -172,10 +174,22 @@ func _on_save_btn_pressed() -> void:
 	if stats_point_champion1 > 0 or stats_point_champion2 > 0:
 		print("Must use all stat points")
 		return
-	
+	if champion_1_name.text == "" or champion_2_name.text == "":
+		print("you champions dont have any names")
+		return
 	var updated_data := {
-		"champion1": get_all_stats_from_VBoxContainer(champion_1Vbox),
-		"champion2": get_all_stats_from_VBoxContainer(champion_2Vbox)
+		"champion1": 
+			{
+				"name" : champion_1_name.text,
+				"stats" : get_all_stats_from_VBoxContainer(champion_1Vbox),
+				"appearance" : appearance_1.to_dict()
+			},
+		"champion2": 
+			{
+				"name" : champion_2_name.text,
+				"stats" : get_all_stats_from_VBoxContainer(champion_2Vbox),
+				"appearance" : appearance_2.to_dict()
+			}
 	}
 	var file := FileAccess.open(path, FileAccess.WRITE_READ)
 	if file == null:

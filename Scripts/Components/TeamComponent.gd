@@ -65,14 +65,22 @@ func is_stats_valid_to_load(loaded_stats: Dictionary) -> bool:
 				return false
 	return true
 
-func add_champion_to_team(loaded_stats: Dictionary) -> bool:
-	if !is_stats_valid_to_load(loaded_stats) :
+func add_champion_to_team(loaded_data: Dictionary) -> bool:
+	if not loaded_data.has("name") || loaded_data["name"] == null || loaded_data["name"] == "":
+		return false
+	
+	if not loaded_data.has("stats") || !is_stats_valid_to_load(loaded_data["stats"]) :
+		return false
+	
+	if not loaded_data.has("appearance") || !is_appearance_valid_to_load(loaded_data["appearance"]):
 		return false
 	
 	var champion := CHAMPIONS.instantiate()
+	champion.champion_name = loaded_data["name"]
+	champion.appearance.load_apperance(loaded_data["appearance"])
 	
-	for stat_name in loaded_stats.keys():
-		champion.set_stat(stat_name, loaded_stats[stat_name])
+	for stat_name in loaded_data["stats"].keys():
+		champion.set_stat(stat_name, loaded_data["stats"][stat_name])
 	
 	champions.append(champion)
 	return true
@@ -85,3 +93,28 @@ func get_team_data() -> Array:
 	for champion in champions:
 		data.append(champion.get_dictionary())
 	return data
+
+func is_appearance_valid_to_load(appearance_data: Dictionary) -> bool:
+	var required_keys = AppearanceComponent.new().to_dict().keys()
+	
+	for key in required_keys:
+		# Check key exists
+		if not appearance_data.has(key):
+			return false
+		
+		# Check color strings are not transparent
+		if key in ["body_color", "hair_color"]:
+			if not appearance_data[key] is String:
+				return false
+			var color = Color(appearance_data[key])
+			if color.a == 0:
+				return false
+		
+		# Check IDs are valid integers
+		if key in ["hair_style", "eye_id", "mouth_id"]:
+			if not (appearance_data[key] is int or appearance_data[key] is float):
+				return false
+			if appearance_data[key] < 0:
+				return false
+	
+	return true

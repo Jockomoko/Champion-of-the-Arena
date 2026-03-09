@@ -13,23 +13,28 @@ var countdown_running := false
 signal countdown_updated(time_left: int)
 signal arena_started(opponent_id: int)
 
-
-# =========================
-# PLAYER JOIN / LEFT  (RPCs)
-# =========================
-
-@rpc("any_peer", "reliable", "call_local")
-func player_joined(steam_id: int, player_name: String) -> void:
-	print("Player joined: ", player_name, " | ", steam_id)
-	Globals.LOBBY_MEMBERS[steam_id] = { "name": player_name }
-
+func _ready() -> void:
+	RoundController.all_matches_done.connect(_on_all_matches_done)
+	Globals.player_disconnected.connect(_on_player_disconnected)
 
 @rpc("any_peer", "reliable", "call_local")
 func player_left(steam_id: int) -> void:
 	Globals.LOBBY_MEMBERS.erase(steam_id)
 	print("Player left, SteamID: ", steam_id)
 
-
+func _on_player_disconnected(steam_id: int) -> void:
+	if not Globals.is_host:
+		return
+	print("Player disconnected: ", steam_id)
+	
+	# If they were in an active match, auto-report them as loser
+	if RoundController.current_matches.has(steam_id):
+		var opponent_id = RoundController.current_matches[steam_id]
+		RoundController.report_match_result(opponent_id, steam_id)
+	
+	# Remove from future rounds
+	RoundController.active_players.erase(steam_id)
+	Globals.LOBBY_MEMBERS.erase(steam_id)
 # =========================
 # LOBBY → GAME START
 # =========================
@@ -38,7 +43,7 @@ func player_left(steam_id: int) -> void:
 func start_game() -> void:
 	if not Globals.is_host:
 		return
-
+	Steam.setLobbyJoinable(Globals.LOBBY_ID, false)
 	Globals.populate_lobby_members()
 
 	var player_ids = Globals.LOBBY_MEMBERS.keys()
@@ -64,6 +69,7 @@ func load_city_scene() -> void:
 func on_city_scene_ready() -> void:
 	if not Globals.is_host:
 		return
+	countdown_running = false  # reset before starting new countdown
 	var end_time := int(Time.get_unix_time_from_system()) + city_wait_time
 	Steam.setLobbyData(Globals.LOBBY_ID, "city_end_time", str(end_time))
 	countdown_running = true
@@ -109,7 +115,6 @@ func start_arena() -> void:
 func _go_to_arena() -> void:
 	get_tree().change_scene_to_file(ARENA_SCENE)
 
-
 # =========================
 # RETURN TO LOBBY
 # =========================
@@ -119,9 +124,17 @@ func return_to_lobby() -> void:
 		return
 	_load_lobby.rpc()
 
-
 @rpc("authority", "call_local", "reliable")
 func _load_lobby() -> void:
+	if Globals.is_host:
+		Steam.setLobbyJoinable(Globals.LOBBY_ID, true)
 	get_tree().change_scene_to_file(
 		"res://Scenes/Lobby/LobbyScene.tscn"
 	)
+
+func _on_all_matches_done() -> void:
+	if not Globals.is_host:
+		return
+	# Small delay so players can see the result before transitioning
+	await get_tree().create_timer(2.0).timeout
+	load_city_scene.rpc()

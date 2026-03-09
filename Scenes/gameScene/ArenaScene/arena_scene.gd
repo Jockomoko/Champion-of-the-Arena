@@ -6,32 +6,35 @@ const CHAMPION_SCENE = preload("uid://d2xtwn0w40ncd")
 @onready var player_spawns: Array = $MultiplayerSpawner/Spawn_points/Own_Spawn_points.get_children()
 @onready var enemy_spawns: Array = $MultiplayerSpawner/Spawn_points/Enemy_Spawn_points.get_children()
 
+var pending_ability: String = ""
 var collected_teams := {}
 var all_champions: Array[Champion] = []
 var player_champions: Array[Champion] = []
+var ready_players := 0
 
 func _ready():
+	collected_teams.clear()
+	all_champions.clear()
+	player_champions.clear()
+	ready_players = 0
+	
 	RoundController.player_waiting.connect(_on_player_waiting)
 	CombatController.turn_started.connect(_on_turn_started)
 	CombatController.turn_ended.connect(_on_turn_ended)
 	CombatController.combat_ended.connect(_on_combat_ended)
-
+	
+	ability_sheet.ability_selected.connect(_on_ability_selected)
+	
 	if RoundController.is_waiting_this_round():
 		_show_waiting_screen()
 		return
-
-	if Steam.getLobbyOwner(Globals.LOBBY_ID) == Globals.STEAM_ID:
-		request_team_data.rpc()
-
-@rpc("authority", "call_local", "reliable")
-func request_team_data() -> void:
+	
 	var team_data = Globals.MY_PLAYERCONTROLLER.get_champions_team_data()
-
-	if Globals.STEAM_ID == Steam.getLobbyOwner(Globals.LOBBY_ID):
+	print("Submitting my team: ", Globals.STEAM_ID)
+	if Globals.is_host:
 		submit_team_data(Globals.STEAM_ID, team_data)
 	else:
-		# Use get_server_id() not Steam ID, because create_client maps host as peer 1
-		submit_team_data.rpc_id(multiplayer.get_server_id(), Globals.STEAM_ID, team_data)
+		submit_team_data.rpc_id(1, Globals.STEAM_ID, team_data)
 
 @rpc("any_peer", "reliable")
 func submit_team_data(steam_id: int, team_data: Array) -> void:
@@ -45,7 +48,7 @@ func submit_team_data(steam_id: int, team_data: Array) -> void:
 	
 	var expected = RoundController.current_matches.size()
 	if collected_teams.size() == expected:
-		_send_match_to_pairs()  # ← replaced _broadcast_spawn.rpc(collected_teams)
+		_send_match_to_pairs()
 
 func _send_match_to_pairs() -> void:
 	var sent_pairs = []
@@ -57,24 +60,39 @@ func _send_match_to_pairs() -> void:
 		match_teams[steam_id] = collected_teams[steam_id]
 		match_teams[opponent_id] = collected_teams[opponent_id]
 		
-		# Send only to the two players in this match
-		_broadcast_spawn.rpc_id(steam_id, match_teams)
-		_broadcast_spawn.rpc_id(opponent_id, match_teams)
+		var peer_1 = Globals.steam_to_peer.get(steam_id, -1)
+		var peer_2 = Globals.steam_to_peer.get(opponent_id, -1)
+		
+		if peer_1 != -1:
+			_broadcast_spawn.rpc_id(peer_1, match_teams)
+		if peer_2 != -1:
+			_broadcast_spawn.rpc_id(peer_2, match_teams)
 		
 		sent_pairs.append(steam_id)
 		sent_pairs.append(opponent_id)
 
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func _broadcast_spawn(teams: Dictionary) -> void:
 	var my_opponent = RoundController.get_my_opponent()
 	
 	if teams.has(Globals.STEAM_ID):
 		spawn_team(teams[Globals.STEAM_ID], player_spawns, true, Globals.STEAM_ID)
-	
 	if my_opponent != -1 and teams.has(my_opponent):
 		spawn_team(teams[my_opponent], enemy_spawns, false, my_opponent)
+
+	# Tell host we finished spawning
+	if Globals.is_host:
+		_confirm_ready()
+	else:
+		_confirm_ready.rpc_id(1)
 	
-	if Steam.getLobbyOwner(Globals.LOBBY_ID) == Globals.STEAM_ID:
+@rpc("any_peer", "reliable")
+func _confirm_ready() -> void:
+	if not Globals.is_host:
+		return
+	ready_players += 1
+	print("Ready: %d / 2" % ready_players)
+	if ready_players >= 2:
 		CombatController.start_combat(all_champions)
 
 func spawn_team(team_data: Array, spawns: Array, own_champions: bool, owner_steam_id: int) -> void:
@@ -83,6 +101,7 @@ func spawn_team(team_data: Array, spawns: Array, own_champions: bool, owner_stea
 		return
 	for i in team_data.size():
 		var champion = CHAMPION_SCENE.instantiate()
+		champion.champion_name = team_data[i]["name"]
 		champion.name = team_data[i]["name"]
 		for stat_name in team_data[i]["stats"].keys():
 			champion.set_stat(stat_name, team_data[i]["stats"][stat_name])
@@ -90,6 +109,9 @@ func spawn_team(team_data: Array, spawns: Array, own_champions: bool, owner_stea
 		champion.global_position = spawns[i].global_position
 		all_champions.append(champion)
 		CombatController.register_owner(champion, owner_steam_id)
+		if not own_champions:
+			champion.champion_clicked.connect(on_champion_clicked)
+		
 		if own_champions:
 			player_champions.append(champion)
 			ability_sheet.add_player_bar(champion.get_max_health(), champion.get_max_mana())
@@ -98,7 +120,7 @@ func _on_turn_started(champion: Champion) -> void:
 	print("It's %s's turn!" % champion.champion_name)
 	champion.modulate = Color.YELLOW
 	if CombatController.is_my_turn():
-		var abilities = champion.ability_component.get_available_abilities()
+		var abilities = champion.abilities.get_available_abilities()
 		ability_sheet.show_ability_menu(abilities)
 	else:
 		ability_sheet.show_waiting(champion.champion_name)
@@ -118,15 +140,25 @@ func _on_combat_ended(winner: Champion) -> void:
 	else:
 		winner_id = RoundController.get_my_opponent()
 		loser_id = Globals.STEAM_ID
-	
+
 	if winner_id == Globals.STEAM_ID:
 		Globals.MY_PLAYERCONTROLLER.win_match()
 	else:
 		Globals.MY_PLAYERCONTROLLER.lose_match()
-	
-	# Only host reports to RoundController
-	if Steam.getLobbyOwner(Globals.LOBBY_ID) == Globals.STEAM_ID:
+
+	# Report once, host only
+	if Globals.is_host:
 		RoundController.report_match_result(winner_id, loser_id)
+
+	# Show result once
+	_show_result_screen(winner_id == Globals.STEAM_ID)
+
+func _show_result_screen(did_win: bool) -> void:
+	ability_sheet.hide()
+	var label = Label.new()
+	label.text = "You won! Waiting for other matches..." if did_win else "You lost! Waiting for other matches..."
+	label.set_anchors_preset(Control.PRESET_CENTER)
+	$Control.add_child(label)
 
 func _on_player_waiting(steam_id: int) -> void:
 	if steam_id == Globals.STEAM_ID:
@@ -135,3 +167,24 @@ func _on_player_waiting(steam_id: int) -> void:
 func _show_waiting_screen() -> void:
 	ability_sheet.hide()
 	print("Waiting for other players to finish their match...")
+
+func _on_ability_selected(ability_name: String) -> void:
+	# Player switched ability — update pending and re-highlight targets
+	pending_ability = ability_name
+	for champion in all_champions:
+		if not player_champions.has(champion):
+			champion.set_clickable(true)
+
+func on_champion_clicked(champion: Champion) -> void:
+	if pending_ability == "":
+		return
+	if player_champions.has(champion):
+		return
+
+	# Clear everything and fire
+	for c in all_champions:
+		c.set_clickable(false)
+
+	CombatController.request_use_ability(pending_ability, champion.champion_name)
+	pending_ability = ""
+	ability_sheet.hide_ability_menu()

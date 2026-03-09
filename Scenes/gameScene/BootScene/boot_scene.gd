@@ -28,7 +28,7 @@ func _ready():
 	
 	ChampionsTeam.clear_champions_team()
 	for champion_name in data.keys() :
-		if  !ChampionsTeam.add_champion_to_team(data[champion_name]) :
+		if !ChampionsTeam.add_champion_to_team(data[champion_name]) :
 			call_deferred("load_scene", CHAMPION_CREATION_SCENE)
 			return
 	Globals.MY_PLAYERCONTROLLER = PlayerController.new()

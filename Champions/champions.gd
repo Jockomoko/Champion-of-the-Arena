@@ -10,8 +10,10 @@ var icon: Texture2D
 @onready var right_arm: Sprite2D = $body/RightArm
 @onready var left_leg: Sprite2D = $body/LeftLeg
 @onready var right_leg: Sprite2D = $body/RightLeg
+@onready var area: Area2D = $Area2D
 
-
+signal champion_clicked(champion: Champion)
+var is_clickable: bool = false
 # Components
 var stats := StatsComponent.new()
 var health:= HealthComponent.new()
@@ -33,7 +35,9 @@ func _ready():
 	health.died.connect(_on_died)
 	health.revived.connect(_on_revived)
 	health.health_changed.connect(_on_health_changed)
-
+	
+	area.input_event.connect(_on_area_input)
+	
 	# React to equipment changes
 	equipment.equipment_changed.connect(_on_equipment_changed)
 
@@ -101,7 +105,7 @@ func set_stat(stat_name : String, stat_value : int) :
 
 func get_dictionary() -> Dictionary:
 	return {
-		"name": name,
+		"name": champion_name,
 		"stats": stats.base_stats.duplicate(),
 		"appearance": appearance.to_dict(),
 		"abilities": abilities.get_available_abilities()
@@ -119,3 +123,11 @@ func apply_appearance(new_appearance: AppearanceComponent) -> void:
 	left_arm.modulate = new_appearance.body_color
 	var new_hair = HairDataBase.get_hair(new_appearance.hair_id)
 	hair.texture = new_hair.icon
+
+func set_clickable(value: bool) -> void:
+	is_clickable = value
+	modulate = Color.RED if value else Color.WHITE
+
+func _on_area_input(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and is_clickable:
+		champion_clicked.emit(self)
