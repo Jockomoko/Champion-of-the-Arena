@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="Ability" format=3 uid="uid://cdkos2re1q36o"]
 
 [ext_resource type="Script" uid="uid://1earqwnlamir" path="res://Scripts/Resourcse/Abilities/Ability.gd" id="1_hi7tq"]
+[ext_resource type="Texture2D" uid="uid://dfu43kjmmua2x" path="res://Sprite/Ability/ability_Melee/Målarlager 1.PNG" id="1_umjdj"]
 
 [resource]
 script = ExtResource("1_hi7tq")
+icon = ExtResource("1_umjdj")
 id = "Rest"
 ability_name = "Rest"
 type = 2

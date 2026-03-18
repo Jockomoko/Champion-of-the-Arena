@@ -9,16 +9,14 @@ var current_turn_index: int = 0
 var champion_owners: Dictionary = {}
 
 func start_combat(champions: Array[Champion]) -> void:
-	champion_owners.clear()  # FIX 1: clear stale owner data from previous rounds
 	turn_order = champions
-	_sort_by_speed()
+	sort_by_speed()
 	current_turn_index = 0
-	_broadcast_turn.rpc(0)
 
 func register_owner(champion: Champion, steam_id: int) -> void:
 	champion_owners[champion.champion_name] = steam_id  # FIX 3: use champion_name not node name
 
-func _sort_by_speed() -> void:
+func sort_by_speed() -> void:
 	turn_order.sort_custom(func(a, b):
 		return a.stats.base_stats["speed"] > b.stats.base_stats["speed"]
 	)
@@ -124,3 +122,6 @@ func _find_champion_by_name(champion_name: String) -> Champion:
 		if champion.champion_name == champion_name:
 			return champion
 	return null
+
+func broadcast_turn(turn_index: int) -> void:
+	_broadcast_turn.rpc(turn_index)   # sends to all clients

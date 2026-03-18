@@ -136,17 +136,17 @@ func _on_stat_removed_champion2(stat_changer_class: Stat_Changer) -> void:
 func _change_index(feature: String, direction: int, champion: int) -> void:
 	if champion == 1:
 		match feature:
-			"hair": hair_index_1 = wrapi(hair_index_1 + direction, 0, HairDataBase.hairs.size()); appearance_1.hair_id = hair_index_1
-			"eye":  eye_index_1 = wrapi(eye_index_1 + direction, 0, EyeDataBase.eyes.size()); appearance_1.eye_id = eye_index_1
-			"mouth": mouth_index_1 = wrapi(mouth_index_1 + direction, 0, MouthDataBase.mouths.size()); appearance_1.mouth_id = mouth_index_1
+			"hair": hair_index_1 = wrapi(hair_index_1 + direction, 0, HairDataBase.hairs.size()); appearance_1.style["hair_id"] = hair_index_1
+			"eye":  eye_index_1 = wrapi(eye_index_1 + direction, 0, EyeDataBase.eyes.size()); appearance_1.style["eye_id"] = eye_index_1
+			"mouth": mouth_index_1 = wrapi(mouth_index_1 + direction, 0, MouthDataBase.mouths.size()); appearance_1.style["mouth_id"] = mouth_index_1
 	else:
 		match feature:
-			"hair": hair_index_2 = wrapi(hair_index_2 + direction, 0, HairDataBase.hairs.size()); appearance_2.hair_id = hair_index_2
-			"eye":  eye_index_2 = wrapi(eye_index_2 + direction, 0, EyeDataBase.eyes.size()); appearance_2.eye_id = eye_index_2
-			"mouth": mouth_index_2 = wrapi(mouth_index_2 + direction, 0, MouthDataBase.mouths.size()); appearance_2.mouth_id = mouth_index_2
+			"hair": hair_index_2 = wrapi(hair_index_2 + direction, 0, HairDataBase.hairs.size()); appearance_2.style["hair_id"] = hair_index_2
+			"eye":  eye_index_2 = wrapi(eye_index_2 + direction, 0, EyeDataBase.eyes.size()); appearance_2.style["eye_id"] = eye_index_2
+			"mouth": mouth_index_2 = wrapi(mouth_index_2 + direction, 0, MouthDataBase.mouths.size()); appearance_2.style["mouth_id"] = mouth_index_2
 	
-	champion_1_design.set_apperance(appearance_1)
-	champion_2_design.set_apperance(appearance_2)
+	champion_1_design.set_apperance(appearance_1.style)
+	champion_2_design.set_apperance(appearance_2.style)
 
 func _change_color(champion: int) -> void:
 	if color_picker != null:
@@ -154,18 +154,18 @@ func _change_color(champion: int) -> void:
 		color_picker = null
 		return
 	
-	var initial_color := appearance_1.body_color if champion == 1 else appearance_2.body_color
+	var initial_color: Color = appearance_1.style["body_color"] if champion == 1 else appearance_2.style["body_color"]
 	color_picker = ColorPicker.new()
 	color_picker.color = initial_color
 	color_picker.edit_alpha = false
 	color_picker.edit_intensity = false
 	color_picker.color_changed.connect(func(c: Color):
 		if champion == 1:
-			appearance_1.body_color = c
-			champion_1_design.set_apperance(appearance_1)
+			appearance_1.style["body_color"] = c
+			champion_1_design.set_apperance(appearance_1.style)
 		else:
-			appearance_2.body_color = c
-			champion_2_design.set_apperance(appearance_2)
+			appearance_2.style["body_color"] = c
+			champion_2_design.set_apperance(appearance_2.style)
 	)
 	add_child(color_picker)
 

@@ -111,17 +111,24 @@ func get_dictionary() -> Dictionary:
 		"abilities": abilities.get_available_abilities()
 	}
 
-func apply_appearance(new_appearance: AppearanceComponent) -> void:
-	if not is_node_ready():
-		await ready
-	hair.modulate = new_appearance.hair_color
-	head_sprite.modulate = new_appearance.body_color
-	right_leg.modulate = new_appearance.body_color
-	left_leg.modulate = new_appearance.body_color
-	right_arm.modulate = new_appearance.body_color
-	body_sprite.modulate = new_appearance.body_color
-	left_arm.modulate = new_appearance.body_color
-	var new_hair = HairDataBase.get_hair(new_appearance.hair_id)
+func apply_appearance(new_appearance: Dictionary) -> void:
+	if not is_inside_tree():
+		await tree_entered
+	
+	print("appearance keys: ", new_appearance.keys())
+	
+	var body_color := Color(new_appearance["body_color"])
+	var hair_color := Color(new_appearance["hair_color"])
+	
+	hair.modulate = hair_color
+	head_sprite.modulate = body_color
+	right_leg.modulate = body_color
+	left_leg.modulate = body_color
+	right_arm.modulate = body_color
+	body_sprite.modulate = body_color
+	left_arm.modulate = body_color
+	
+	var new_hair = HairDataBase.get_hair(new_appearance["hair_id"])
 	hair.texture = new_hair.icon
 
 func set_clickable(value: bool) -> void:

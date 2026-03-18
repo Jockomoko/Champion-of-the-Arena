@@ -17,6 +17,7 @@ func _ready():
 	all_champions.clear()
 	player_champions.clear()
 	ready_players = 0
+	CombatController.champion_owners.clear()
 	
 	RoundController.player_waiting.connect(_on_player_waiting)
 	CombatController.turn_started.connect(_on_turn_started)
@@ -63,15 +64,22 @@ func _send_match_to_pairs() -> void:
 		var peer_1 = Globals.steam_to_peer.get(steam_id, -1)
 		var peer_2 = Globals.steam_to_peer.get(opponent_id, -1)
 		
-		if peer_1 != -1:
+		# Send to remote peers only via rpc_id
+		# Host calls _broadcast_spawn directly to avoid double-firing call_local
+		if peer_1 == 1:  # this is the host
+			_broadcast_spawn(match_teams)
+		elif peer_1 != -1:
 			_broadcast_spawn.rpc_id(peer_1, match_teams)
-		if peer_2 != -1:
+			
+		if peer_2 == 1:  # this is the host
+			_broadcast_spawn(match_teams)
+		elif peer_2 != -1:
 			_broadcast_spawn.rpc_id(peer_2, match_teams)
 		
 		sent_pairs.append(steam_id)
 		sent_pairs.append(opponent_id)
 
-@rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "reliable")
 func _broadcast_spawn(teams: Dictionary) -> void:
 	var my_opponent = RoundController.get_my_opponent()
 	
@@ -79,7 +87,9 @@ func _broadcast_spawn(teams: Dictionary) -> void:
 		spawn_team(teams[Globals.STEAM_ID], player_spawns, true, Globals.STEAM_ID)
 	if my_opponent != -1 and teams.has(my_opponent):
 		spawn_team(teams[my_opponent], enemy_spawns, false, my_opponent)
-
+	
+	CombatController.turn_order = all_champions.duplicate()
+	CombatController.sort_by_speed()
 	# Tell host we finished spawning
 	if Globals.is_host:
 		_confirm_ready()
@@ -93,7 +103,7 @@ func _confirm_ready() -> void:
 	ready_players += 1
 	print("Ready: %d / 2" % ready_players)
 	if ready_players >= 2:
-		CombatController.start_combat(all_champions)
+		CombatController.broadcast_turn(0)
 
 func spawn_team(team_data: Array, spawns: Array, own_champions: bool, owner_steam_id: int) -> void:
 	if spawns.size() < team_data.size():
@@ -105,10 +115,14 @@ func spawn_team(team_data: Array, spawns: Array, own_champions: bool, owner_stea
 		champion.name = team_data[i]["name"]
 		for stat_name in team_data[i]["stats"].keys():
 			champion.set_stat(stat_name, team_data[i]["stats"][stat_name])
+			
+		CombatController.register_owner(champion, owner_steam_id)
 		add_child(champion)
 		champion.global_position = spawns[i].global_position
+		champion.apply_appearance(team_data[i]["appearance"])
+		
 		all_champions.append(champion)
-		CombatController.register_owner(champion, owner_steam_id)
+	
 		if not own_champions:
 			champion.champion_clicked.connect(on_champion_clicked)
 		
@@ -169,7 +183,6 @@ func _show_waiting_screen() -> void:
 	print("Waiting for other players to finish their match...")
 
 func _on_ability_selected(ability_name: String) -> void:
-	# Player switched ability — update pending and re-highlight targets
 	pending_ability = ability_name
 	for champion in all_champions:
 		if not player_champions.has(champion):

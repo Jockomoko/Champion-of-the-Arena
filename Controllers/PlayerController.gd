@@ -17,11 +17,11 @@ func _ready():
 	
 	player_id = Globals.STEAM_ID
 	player_name = Globals.STEAM_NAME
-	team.TeamComponent()
-
-	# Register into Globals
+	
+	if not team.is_inside_tree():
+		add_child(team)
+	
 	_register_controller()
-
 	# React to glory changes
 	glory.arena_won.connect(_on_arena_won)
 	glory.arena_lost.connect(_on_arena_lost)

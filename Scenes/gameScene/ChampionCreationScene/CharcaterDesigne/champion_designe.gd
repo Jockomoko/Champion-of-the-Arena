@@ -12,7 +12,7 @@ signal go_left_mouth_index()
 signal go_Right_mouth_index()
 signal set_color_skin()
 
-func set_apperance(apperance : AppearanceComponent):
+func set_apperance(apperance : Dictionary):
 	champion.apply_appearance(apperance)
 
 

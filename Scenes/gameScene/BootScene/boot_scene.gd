@@ -32,8 +32,9 @@ func _ready():
 			call_deferred("load_scene", CHAMPION_CREATION_SCENE)
 			return
 	Globals.MY_PLAYERCONTROLLER = PlayerController.new()
+	ChampionsTeam.skip_load = true 
 	Globals.MY_PLAYERCONTROLLER.team = ChampionsTeam
-	Globals.add_child(Globals.MY_PLAYERCONTROLLER) 
+	Globals.add_child(Globals.MY_PLAYERCONTROLLER)
 	call_deferred("load_scene", START_SCENE)
 
 func load_scene(path: String) -> void:
