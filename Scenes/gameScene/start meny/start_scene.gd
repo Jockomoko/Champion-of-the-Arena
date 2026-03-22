@@ -43,3 +43,7 @@ func _on_start_btn_mouse_exited():
 
 func _on_start_btn_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Lobby/LobbyScene.tscn")
+
+
+func _on_team_btn_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/gameScene/ChampionCreationScene/ChampionCreationScene.tscn")

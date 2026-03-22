@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://lg5l2od61pcj" path="res://Champions/champions.gd" id="1_7qa8m"]
 [ext_resource type="Texture2D" uid="uid://be2fmh5e5wtbb" path="res://Sprite/HumanBody/newcharacter/left-leg.PNG" id="5_aroo1"]
+[ext_resource type="Texture2D" uid="uid://6pd04qqg6wkw" path="res://Sprite/HumanBody/head/Head1.PNG" id="5_ynyc7"]
 [ext_resource type="Texture2D" uid="uid://t7ghf5yabx6" path="res://Sprite/HumanBody/newcharacter/right-arm.PNG" id="6_6wd55"]
 [ext_resource type="Texture2D" uid="uid://d6sk6qkp5rjw" path="res://Sprite/HumanBody/newcharacter/body.PNG" id="7_8qeas"]
-[ext_resource type="Texture2D" uid="uid://bk12du37pvcx6" path="res://Sprite/HumanBody/newcharacter/head.PNG" id="8_x4n2h"]
 [ext_resource type="Texture2D" uid="uid://ccwhru2wolnov" path="res://Sprite/HumanBody/newcharacter/left-arm.PNG" id="9_tm0v7"]
 
 [sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_es7mb"]
@@ -342,55 +342,56 @@ script = ExtResource("1_7qa8m")
 
 [node name="RightLeg" type="Sprite2D" parent="body" unique_id=863479160]
 position = Vector2(20.000006, 15)
-rotation = 0.05229599
-scale = Vector2(0.9998228, 0.9998228)
+rotation = -0.06461513
+scale = Vector2(0.99982786, 0.99982786)
 texture = ExtResource("5_aroo1")
 offset = Vector2(8.6048355, 28.49784)
 
 [node name="LeftLeg" type="Sprite2D" parent="body" unique_id=1467493872]
 position = Vector2(-35.999973, 14.000004)
-rotation = -0.06395748
-scale = Vector2(0.99982876, 0.99982876)
+rotation = 0.03112133
+scale = Vector2(0.99982774, 0.99982774)
 texture = ExtResource("5_aroo1")
 offset = Vector2(8.6048355, 28.49784)
 
 [node name="RightArm" type="Sprite2D" parent="body" unique_id=1300419314]
-position = Vector2(52.289845, -50.78583)
-rotation = 1.2312533
-scale = Vector2(0.9984125, 1.0009385)
-skew = -0.018310428
+position = Vector2(51.99991, -51.99996)
+rotation = 1.2279867
+scale = Vector2(0.99832785, 1.0010192)
+skew = -0.019480348
 texture = ExtResource("6_6wd55")
 offset = Vector2(37.661297, -0.6491394)
 
 [node name="Body_sprite" type="Sprite2D" parent="body" unique_id=242050331]
-position = Vector2(-1.2159967, -38.654606)
-rotation = 0.008848602
-scale = Vector2(0.9998288, 0.9998288)
+position = Vector2(-1.2159966, -38.654606)
+rotation = -0.0139040435
+scale = Vector2(0.99982697, 0.99982697)
 texture = ExtResource("7_8qeas")
 
 [node name="Head" type="Sprite2D" parent="body" unique_id=528702490]
-position = Vector2(-0.76518774, -105.39116)
-rotation = -0.09285174
-scale = Vector2(0.99965787, 0.99965787)
-texture = ExtResource("8_x4n2h")
+position = Vector2(-7.9999886, -135.99983)
+rotation = -0.04377335
+scale = Vector2(0.999825, 0.999825)
+texture = ExtResource("5_ynyc7")
 offset = Vector2(4.927746, -67.31796)
 
 [node name="Eyes" type="Sprite2D" parent="body/Head" unique_id=364875008]
-position = Vector2(16.087568, -73.21222)
+position = Vector2(0.9154179, -66.006195)
+offset = Vector2(1.9045248, -1.1312866)
 
 [node name="Mouth" type="Sprite2D" parent="body/Head" unique_id=1037922127]
-position = Vector2(13.322312, -15.120068)
+position = Vector2(4.022644, -51.778797)
 
 [node name="Hair" type="Sprite2D" parent="body/Head" unique_id=8671298]
-position = Vector2(17.049746, -168.99677)
+position = Vector2(-0.9544296, -68.12902)
 
 [node name="Hat" type="Sprite2D" parent="body/Head" unique_id=1878420408]
 position = Vector2(18.8293, -165.5507)
 
 [node name="LeftArm" type="Sprite2D" parent="body" unique_id=1068308394]
-position = Vector2(-50.61527, -56.12839)
-rotation = -1.1765265
-scale = Vector2(0.9996951, 0.9996951)
+position = Vector2(-50.999935, -54.99997)
+rotation = -1.8392676
+scale = Vector2(0.99969095, 0.99969095)
 texture = ExtResource("9_tm0v7")
 offset = Vector2(-35.72386, -0.42620087)
 
@@ -403,7 +404,7 @@ modification_stack = SubResource("SkeletonModificationStack2D_es7mb")
 
 [node name="B_hip" type="Bone2D" parent="body/Bones/Skeleton2D" unique_id=724113486]
 position = Vector2(0.04511805, -7.9998727)
-rotation = -0.0068990625
+rotation = -0.0068990584
 rest = Transform2D(0.9999762, -0.00689902, 0.007450944, 1.0799747, 30, -333)
 auto_calculate_length_and_angle = false
 length = 107.449265
@@ -412,7 +413,7 @@ bone_angle = -88.40007
 [node name="B_body" type="Bone2D" parent="body/Bones/Skeleton2D/B_hip" unique_id=766885468]
 position = Vector2(-1.0321541, -14.668701)
 rotation = -0.0013651997
-scale = Vector2(0.99982876, 0.99982876)
+scale = Vector2(0.999827, 0.999827)
 rest = Transform2D(0.99999905, -0.0013651992, 0.0013651992, 0.99999905, -1.0321541, -14.668701)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -422,20 +423,19 @@ bone_angle = 0.0
 visible = false
 position = Vector2(-5.430827, -97.44699)
 rotation = -0.02986928
-scale = Vector2(0.999829, 0.999829)
+scale = Vector2(0.999998, 0.999998)
 rest = Transform2D(0.9995539, -0.029864833, 0.029864833, 0.9995539, 5.2202654, -528.68463)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
 [node name="HeadSkin" type="RemoteTransform2D" parent="body/Bones/Skeleton2D/B_hip/B_body/B_head" unique_id=670680226]
-position = Vector2(2.1475239, 31.081514)
 remote_path = NodePath("../../../../../../Head")
 
 [node name="B_armL" type="Bone2D" parent="body/Bones/Skeleton2D/B_hip/B_body" unique_id=440572851]
 position = Vector2(-49.56044, -17.03891)
 rotation = -1.2167977
-scale = Vector2(0.9998663, 0.9998663)
+scale = Vector2(0.9998639, 0.9998639)
 rest = Transform2D(0.34665126, -0.93799406, 0.9379941, 0.34665114, -177.19357, -345.78723)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -448,8 +448,8 @@ remote_path = NodePath("../../../../../../LeftArm")
 [node name="B_armR" type="Bone2D" parent="body/Bones/Skeleton2D/B_hip/B_body" unique_id=1980355702]
 position = Vector2(53.40555, -12.606354)
 rotation = 1.3105407
-scale = Vector2(0.9998475, 0.99984753)
-skew = -0.018483877
+scale = Vector2(0.99984545, 0.99984944)
+skew = -0.01966548
 rest = Transform2D(0.2573276, 0.96632415, -0.96632415, 0.2573276, 346.52554, -332.1762)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -465,7 +465,7 @@ remote_path = NodePath("../../../../../Body_sprite")
 [node name="B_legL" type="Bone2D" parent="body/Bones/Skeleton2D/B_hip" unique_id=520349446]
 position = Vector2(-36.47361, 37.54563)
 rotation = 0.04366017
-scale = Vector2(0.9998288, 0.9998288)
+scale = Vector2(0.99982774, 0.99982774)
 rest = Transform2D(0.99904704, 0.043646287, -0.043646287, 0.99904704, -149.99031, -21.928154)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -477,7 +477,7 @@ remote_path = NodePath("../../../../../LeftLeg")
 [node name="B_legR" type="Bone2D" parent="body/Bones/Skeleton2D/B_hip" unique_id=449567218]
 position = Vector2(19.50943, 39.247704)
 rotation = -0.05207629
-scale = Vector2(0.9998228, 0.9998228)
+scale = Vector2(0.99982786, 0.99982786)
 rest = Transform2D(0.99864435, -0.052052785, 0.052052785, 0.99864435, 166.8693, 1.9490786)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -491,6 +491,7 @@ remote_path = NodePath("../../../../../RightLeg")
 libraries/ = SubResource("AnimationLibrary_1kufq")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1793745700]
+active = false
 tree_root = SubResource("AnimationNodeStateMachine_aroo1")
 anim_player = NodePath("../AnimationPlayer")
 

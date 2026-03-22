@@ -3,7 +3,6 @@ class_name Champion
 
 var champion_name: String = "Unnamed"
 var icon: Texture2D
-@onready var hair: Sprite2D = $body/Head/Hair
 @onready var head_sprite: Sprite2D = $body/Head
 @onready var left_arm: Sprite2D = $body/LeftArm
 @onready var body_sprite: Sprite2D = $body/Body_sprite
@@ -11,6 +10,10 @@ var icon: Texture2D
 @onready var left_leg: Sprite2D = $body/LeftLeg
 @onready var right_leg: Sprite2D = $body/RightLeg
 @onready var area: Area2D = $Area2D
+
+@onready var hair: Sprite2D = $body/Head/Hair
+@onready var mouth: Sprite2D = $body/Head/Mouth
+@onready var eyes: Sprite2D = $body/Head/Eyes
 
 signal champion_clicked(champion: Champion)
 var is_clickable: bool = false
@@ -120,16 +123,20 @@ func apply_appearance(new_appearance: Dictionary) -> void:
 	var body_color := Color(new_appearance["body_color"])
 	var hair_color := Color(new_appearance["hair_color"])
 	
-	hair.modulate = hair_color
-	head_sprite.modulate = body_color
-	right_leg.modulate = body_color
-	left_leg.modulate = body_color
-	right_arm.modulate = body_color
-	body_sprite.modulate = body_color
-	left_arm.modulate = body_color
+	hair.self_modulate = hair_color
+	head_sprite.self_modulate = body_color
+	right_leg.self_modulate = body_color
+	left_leg.self_modulate = body_color
+	right_arm.self_modulate = body_color
+	body_sprite.self_modulate = body_color
+	left_arm.self_modulate = body_color
 	
 	var new_hair = HairDataBase.get_hair(new_appearance["hair_id"])
+	var new_eye = EyeDataBase.get_eye(new_appearance["eye_id"])
+	var new_mouth = MouthDataBase.get_mouth(new_appearance["mouth_id"])
 	hair.texture = new_hair.icon
+	eyes.texture = new_eye.icon
+	mouth.texture = new_mouth.icon
 
 func set_clickable(value: bool) -> void:
 	is_clickable = value

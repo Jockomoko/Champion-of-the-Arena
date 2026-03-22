@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5t3d1fa4twn7"
-path="res://.godot/imported/paint device.PNG-8301db17a12f9fe9a1c8b71cd8940af1.ctex"
+uid="uid://vtid3kloqpt8"
+path="res://.godot/imported/slimmouth.PNG-7f291023808684a77098366eb0eb4d15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/HumanBody/Hair/paint device.PNG"
-dest_files=["res://.godot/imported/paint device.PNG-8301db17a12f9fe9a1c8b71cd8940af1.ctex"]
+source_file="res://Sprite/HumanBody/Mouths/slimmouth.PNG"
+dest_files=["res://.godot/imported/slimmouth.PNG-7f291023808684a77098366eb0eb4d15.ctex"]
 
 [params]
 

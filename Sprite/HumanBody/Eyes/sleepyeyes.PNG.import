@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjmbocbss657y"
-path="res://.godot/imported/paint device.PNG-db374fe934936869493d845a100d8b0b.ctex"
+uid="uid://dmmqyqvdirtpt"
+path="res://.godot/imported/sleepyeyes.PNG-3e96f2244791d91cfbef6af8c42cfadf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/HumanBody/Eyes/paint device.PNG"
-dest_files=["res://.godot/imported/paint device.PNG-db374fe934936869493d845a100d8b0b.ctex"]
+source_file="res://Sprite/HumanBody/Eyes/sleepyeyes.PNG"
+dest_files=["res://.godot/imported/sleepyeyes.PNG-3e96f2244791d91cfbef6af8c42cfadf.ctex"]
 
 [params]
 
