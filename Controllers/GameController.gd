@@ -67,9 +67,9 @@ func load_city_scene() -> void:
 # Call this from CityScene._ready() so the countdown starts
 # after the scene is fully loaded on the host.
 func on_city_scene_ready() -> void:
+	countdown_running = false  # reset before starting new countdown
 	if not Globals.is_host:
 		return
-	countdown_running = false  # reset before starting new countdown
 	var end_time := int(Time.get_unix_time_from_system()) + city_wait_time
 	Steam.setLobbyData(Globals.LOBBY_ID, "city_end_time", str(end_time))
 	countdown_running = true
@@ -80,27 +80,19 @@ func _host_city_countdown(end_time: int) -> void:
 	while countdown_running:
 		var now       := Time.get_unix_time_from_system()
 		var time_left := int(max(end_time - now, 0))
-		countdown_updated.emit(time_left)
+		_sync_countdown.rpc(time_left)
 		if time_left <= 0:
 			countdown_running = false
 			start_arena()
 			return
 		await get_tree().create_timer(1.0).timeout
 
-
-# Clients call this when they receive a lobby_data_update for "city_end_time".
-func on_lobby_data_updated() -> void:
-	if Globals.LOBBY_ID == 0:
-		return
-	var end_time_str := Steam.getLobbyData(Globals.LOBBY_ID, "city_end_time")
-	if end_time_str == "":
-		return
-	var end_time  := int(end_time_str)
-	var now       := Time.get_unix_time_from_system()
-	var time_left := int(max(end_time - now, 0))
+@rpc("authority", "call_local", "reliable")
+func _sync_countdown(time_left: int) -> void:
 	countdown_updated.emit(time_left)
-	if time_left <= 0:
-		_go_to_arena.rpc()
+
+func on_lobby_data_updated() -> void:
+	pass
 
 
 # =========================

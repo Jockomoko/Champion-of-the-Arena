@@ -5,15 +5,11 @@ class_name AbilityComponent
 var equipped_ability_ids: Array[String] = []
 
 func get_available_abilities() -> Array[Ability]:
-	# Always available
-	var available: Array[Ability] = [
-		AbilitiesDataBase.get_ability("Melee Attack"),
-		AbilitiesDataBase.get_ability("Rest")
-	]
-	# From equipment
-	for ability_name in equipped_ability_ids:
-		var ability = AbilitiesDataBase.get_ability(ability_name)
-		available.append(ability)
+	var available: Array[Ability] = []
+	for id in ["melee_attack", "rest"] + equipped_ability_ids:
+		var ability = AbilitiesDataBase.get_ability(id)
+		if ability:
+			available.append(ability)
 	return available
 
 func equip_ability(ability_name: String) -> void:

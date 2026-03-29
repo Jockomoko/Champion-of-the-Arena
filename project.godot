@@ -43,6 +43,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray()
 
+[physics]
+
+common/physics_object_picking=true
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

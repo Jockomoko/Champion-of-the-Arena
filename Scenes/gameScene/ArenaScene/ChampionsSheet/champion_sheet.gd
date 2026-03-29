@@ -1,6 +1,7 @@
 extends Control
 
 const CHAMPION_STATS_CONTAINER = preload("uid://rk3vhw2cs1xl")
+const defualt_image = preload("uid://dfu43kjmmua2x")
 
 @onready var champions_bar: VBoxContainer = $TextureRect/Control/HBoxContainer/Champions_Bar
 @onready var action_container: Control = $TextureRect/Control/HBoxContainer/VBoxContainer2/ActionContainer
@@ -21,12 +22,17 @@ func add_player_bar(max_health: int, max_mana: int) -> void:
 	container.init(max_health, max_mana)
 
 func show_ability_menu(abilities: Array[Ability]) -> void:
+	if abilities.is_empty():
+		push_warning("champion_sheet: no abilities to show")
+		return
 	waiting_label.hide()
 	action_container.show()
 	action_container.clear_abilities()
 	for ability in abilities:
-		action_container.add_ability(ability.icon, ability.ability_name, ability.mana_cost)
-	# Connect ability selection from container
+		if ability == null:
+			push_warning("champion_sheet: skipping null ability in list")
+			continue
+		action_container.add_ability(ability.icon if ability.icon else defualt_image, ability.ability_name, ability.mana_cost)
 	if not action_container.ability_selected.is_connected(_on_ability_selected):
 		action_container.ability_selected.connect(_on_ability_selected)
 

@@ -3,7 +3,7 @@ extends Control
 signal ability_pressed(ability_name: String)
 
 @onready var ability_icon: TextureRect = $TextureButton/HBoxContainer/Ability_icon
-@onready var cost: AutoSizeLabel = $TextureButton/HBoxContainer/MarginContainer/HBoxContainer/Mana_cost
+@onready var cost: AutoSizeLabel = $TextureButton/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Mana_cost
 @onready var nameLabel: AutoSizeLabel = $TextureButton/HBoxContainer/MarginContainer/VBoxContainer/Name
 @onready var texture_button: TextureButton = $TextureButton
 

@@ -370,8 +370,8 @@ texture = ExtResource("7_8qeas")
 
 [node name="Head" type="Sprite2D" parent="body" unique_id=528702490]
 position = Vector2(-7.9999886, -135.99983)
-rotation = -0.04377335
-scale = Vector2(0.999825, 0.999825)
+rotation = -0.04377334
+scale = Vector2(0.99982464, 0.99982464)
 texture = ExtResource("5_ynyc7")
 offset = Vector2(4.927746, -67.31796)
 
@@ -404,7 +404,7 @@ modification_stack = SubResource("SkeletonModificationStack2D_es7mb")
 
 [node name="B_hip" type="Bone2D" parent="body/Bones/Skeleton2D" unique_id=724113486]
 position = Vector2(0.04511805, -7.9998727)
-rotation = -0.0068990584
+rotation = -0.006899058
 rest = Transform2D(0.9999762, -0.00689902, 0.007450944, 1.0799747, 30, -333)
 auto_calculate_length_and_angle = false
 length = 107.449265
@@ -423,7 +423,7 @@ bone_angle = 0.0
 visible = false
 position = Vector2(-5.430827, -97.44699)
 rotation = -0.02986928
-scale = Vector2(0.999998, 0.999998)
+scale = Vector2(0.9999976, 0.9999976)
 rest = Transform2D(0.9995539, -0.029864833, 0.029864833, 0.9995539, 5.2202654, -528.68463)
 auto_calculate_length_and_angle = false
 length = 16.0

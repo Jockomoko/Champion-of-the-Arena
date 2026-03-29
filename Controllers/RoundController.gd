@@ -1,6 +1,4 @@
 extends Node
-# Add as Autoload: RoundManager
-
 signal round_started(matches: Array)
 signal player_waiting(steam_id: int)
 signal all_matches_done

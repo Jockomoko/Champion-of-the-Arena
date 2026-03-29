@@ -46,9 +46,8 @@ func submit_team_data(steam_id: int, team_data: Array) -> void:
 	
 	collected_teams[steam_id] = team_data
 	print("Got team from:", steam_id)
-	
-	var expected = RoundController.current_matches.size()
-	if collected_teams.size() == expected:
+
+	if collected_teams.size() == RoundController.current_matches.size():
 		_send_match_to_pairs()
 
 func _send_match_to_pairs() -> void:
@@ -132,7 +131,7 @@ func spawn_team(team_data: Array, spawns: Array, own_champions: bool, owner_stea
 
 func _on_turn_started(champion: Champion) -> void:
 	print("It's %s's turn!" % champion.champion_name)
-	champion.modulate = Color.YELLOW
+	champion.start_turn()
 	if CombatController.is_my_turn():
 		var abilities = champion.abilities.get_available_abilities()
 		ability_sheet.show_ability_menu(abilities)
@@ -140,7 +139,7 @@ func _on_turn_started(champion: Champion) -> void:
 		ability_sheet.show_waiting(champion.champion_name)
 
 func _on_turn_ended(champion: Champion) -> void:
-	champion.modulate = Color.WHITE
+	champion.end_turn()
 	ability_sheet.hide_ability_menu()
 
 func _on_combat_ended(winner: Champion) -> void:

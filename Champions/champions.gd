@@ -140,8 +140,14 @@ func apply_appearance(new_appearance: Dictionary) -> void:
 
 func set_clickable(value: bool) -> void:
 	is_clickable = value
-	modulate = Color.RED if value else Color.WHITE
+	modulate = Color(1.0, 0.55, 0.55, 1.0) if value else Color.WHITE
 
 func _on_area_input(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and is_clickable:
 		champion_clicked.emit(self)
+
+func start_turn():
+	modulate = Color(1.0, 0.891, 0.0, 1.0)
+
+func end_turn():
+	modulate = Color(1.0, 1.0, 1.0, 1.0)

@@ -2,8 +2,9 @@ extends Resource
 class_name Ability
 
 enum Type { MELEE, SPELL, REST }
+const default_Icon = preload("uid://dfu43kjmmua2x")
 
-@export var icon : Texture2D
+@export var icon : Texture2D = default_Icon
 @export var id: String = ""
 @export var ability_name: String = "Unnamed Ability"
 @export var description: String = ""

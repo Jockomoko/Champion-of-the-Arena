@@ -10,9 +10,9 @@ var selected_button = null
 
 func add_ability(icon: Texture2D, ability_name: String, mana_cost: int) -> void:
 	var action = ACTION_BUTTON.instantiate()
+	v_box_container.add_child(action)
 	action.set_button(icon, ability_name, mana_cost)
 	action.ability_pressed.connect(_on_ability_pressed)
-	v_box_container.add_child(action)
 
 func _on_ability_pressed(ability_name: String) -> void:
 	# Deselect previous button

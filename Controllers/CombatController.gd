@@ -18,7 +18,9 @@ func register_owner(champion: Champion, steam_id: int) -> void:
 
 func sort_by_speed() -> void:
 	turn_order.sort_custom(func(a, b):
-		return a.stats.base_stats["speed"] > b.stats.base_stats["speed"]
+		if a.stats.base_stats["speed"] != b.stats.base_stats["speed"]:
+			return a.stats.base_stats["speed"] > b.stats.base_stats["speed"]
+		return a.champion_name < b.champion_name
 	)
 
 func _start_turn() -> void:
@@ -85,11 +87,14 @@ func _apply_ability_result(attacker_name: String, target_name: String, damage: f
 		_next_turn()
 
 func _next_turn() -> void:
-	# FIX 2: filter all dead champions out first, then advance index
-	turn_order = turn_order.filter(func(c): return c.health.is_alive())
+	var new_turn_order : Array[Champion]
+	
+	for champion in turn_order :
+		if champion.health.is_alive() :
+			new_turn_order.append(champion)
 	if _check_combat_end():
 		return
-	current_turn_index = (current_turn_index + 1) % turn_order.size()
+	current_turn_index = (current_turn_index + 1) % new_turn_order.size()
 	_broadcast_turn.rpc(current_turn_index)
 
 @rpc("authority", "call_local", "reliable")
