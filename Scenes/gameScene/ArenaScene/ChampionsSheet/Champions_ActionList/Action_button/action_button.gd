@@ -22,4 +22,4 @@ func _on_pressed() -> void:
 
 # Called by ActionContainer to highlight/unhighlight
 func set_selected(value: bool) -> void:
-	texture_button.modulate = Color.YELLOW if value else Color.WHITE
+	texture_button.modulate = Color(0.6, 0.6, 0.6) if value else Color.WHITE

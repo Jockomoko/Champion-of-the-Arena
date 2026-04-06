@@ -4,10 +4,10 @@ extends Node
 # GAME CONTROLLER FOR MULTIPLAYER
 # =====================================
 
-const CITY_SCENE  := "res://Scenes/gameScene/CityScene/CityScene.tscn"
+const CITY_SCENE := "res://Scenes/gameScene/CityScene/CityScene.tscn"
 const ARENA_SCENE := "res://Scenes/gameScene/ArenaScene/Arena_Scene.tscn"
 
-var city_wait_time    := 10
+var city_wait_time := 10
 var countdown_running := false
 
 signal countdown_updated(time_left: int)

@@ -62,3 +62,6 @@ func revive(health_amount: float = -1.0) -> void:
 
 func is_dead() -> bool:
 	return _is_dead
+
+func is_alive() -> bool:
+	return not _is_dead

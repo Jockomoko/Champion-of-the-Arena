@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://xeah8q68h5lw" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/champion_sheet.gd" id="1_afqq2"]
 [ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="1_jngoq"]
 [ext_resource type="PackedScene" uid="uid://b33lk3svy5ljd" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/Champions_ActionList/Action_Container.tscn" id="3_afqq2"]
-[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="4_w70i1"]
 
 [node name="AbilitySheet" type="Control" unique_id=334912242]
 layout_mode = 3
@@ -51,20 +50,3 @@ size_flags_horizontal = 3
 
 [node name="ActionContainer" parent="TextureRect/Control/HBoxContainer/VBoxContainer2" unique_id=196306182 instance=ExtResource("3_afqq2")]
 layout_mode = 2
-
-[node name="waiting_lable" type="Label" parent="TextureRect/Control/HBoxContainer/VBoxContainer2/ActionContainer" unique_id=1843700570]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "Waiting...."
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
-text_overrun_behavior = 3
-script = ExtResource("4_w70i1")
-metadata/_custom_type_script = "uid://d11kfgsd6jgt"

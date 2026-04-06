@@ -5,7 +5,6 @@
 
 [resource]
 script = ExtResource("1_t5v6f")
-icon = ExtResource("1_8wqrq")
 id = "melee_attack"
 ability_name = "Melee"
 base_damage = 10.0

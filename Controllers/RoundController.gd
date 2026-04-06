@@ -76,7 +76,8 @@ func _on_all_matches_done() -> void:
 		# Tournament over
 		_broadcast_tournament_end.rpc(next_players[0])
 	else:
-		# More rounds to play
+		# Set up next round matches before telling everyone to transition
+		start_round(next_players)
 		_broadcast_all_matches_done.rpc()
 
 @rpc("authority", "call_local", "reliable")

@@ -5,7 +5,6 @@
 
 [resource]
 script = ExtResource("1_hi7tq")
-icon = ExtResource("1_umjdj")
 id = "Rest"
 ability_name = "Rest"
 type = 2

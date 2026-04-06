@@ -27,13 +27,14 @@ expand_mode = 1
 [node name="ScrollContainer" type="ScrollContainer" parent="TextureRect" unique_id=1001854678]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.156
-anchor_top = 0.175
-anchor_right = 0.874
+anchor_left = 0.249
+anchor_top = 0.153
+anchor_right = 0.802
 anchor_bottom = 0.861
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/ScrollContainer" unique_id=1867378819]
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/ScrollContainer" unique_id=1736677090]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3

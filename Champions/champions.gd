@@ -16,7 +16,17 @@ var icon: Texture2D
 @onready var eyes: Sprite2D = $body/Head/Eyes
 
 signal champion_clicked(champion: Champion)
+signal champion_hovered(champion: Champion)
+signal champion_unhovered(champion: Champion)
+signal health_changed(current: float, max_val: float)
+signal mana_changed(current: int, max_val: int)
 var is_clickable: bool = false
+var _is_hovered: bool = false
+
+var current_mana: int = 0:
+	set(value):
+		current_mana = clampi(value, 0, get_max_mana())
+		mana_changed.emit(current_mana, get_max_mana())
 # Components
 var stats := StatsComponent.new()
 var health:= HealthComponent.new()
@@ -25,9 +35,10 @@ var abilities := AbilityComponent.new()
 var appearance:= AppearanceComponent.new()
 
 func _ready():
-	# Set health based on effective stats
-	health.max_health = get_max_health()
-	health.current_health = get_max_health()
+	# Set health and mana based on effective stats
+	health.max_health = stats.get_health() * 10
+	health.current_health = health.max_health
+	current_mana = get_max_mana()
 
 	# Apply equipment bonuses
 	_apply_equipment_modifiers()
@@ -39,7 +50,7 @@ func _ready():
 	health.revived.connect(_on_revived)
 	health.health_changed.connect(_on_health_changed)
 	
-	area.input_event.connect(_on_area_input)
+	# input_event on Area2D can be blocked by Control nodes; use _input + physics query instead
 	
 	# React to equipment changes
 	equipment.equipment_changed.connect(_on_equipment_changed)
@@ -92,10 +103,10 @@ func _on_revived() -> void:
 
 func _on_health_changed(current: float, max: float) -> void:
 	print("%s HP: %f / %f" % [champion_name, current, max])
+	health_changed.emit(current, max)
 	
 func get_max_health() -> int:
-	var stats_bonus = stats.get_health() * 10
-	return health.max_health + stats_bonus
+	return int(health.max_health)
 
 func get_max_mana() -> int:
 	return stats.get_mana() * 10
@@ -142,9 +153,44 @@ func set_clickable(value: bool) -> void:
 	is_clickable = value
 	modulate = Color(1.0, 0.55, 0.55, 1.0) if value else Color.WHITE
 
-func _on_area_input(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and is_clickable:
-		champion_clicked.emit(self)
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		_check_hover()
+		return
+	if not is_clickable:
+		return
+	if not (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed):
+		return
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsPointQueryParameters2D.new()
+	query.position = get_global_mouse_position()
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	var results = space_state.intersect_point(query)
+	for result in results:
+		if result["collider"] == area:
+			get_viewport().set_input_as_handled()
+			champion_clicked.emit(self)
+			return
+
+func _check_hover() -> void:
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsPointQueryParameters2D.new()
+	query.position = get_global_mouse_position()
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	var results = space_state.intersect_point(query)
+	var mouse_over := false
+	for result in results:
+		if result["collider"] == area:
+			mouse_over = true
+			break
+	if mouse_over and not _is_hovered:
+		_is_hovered = true
+		champion_hovered.emit(self)
+	elif not mouse_over and _is_hovered:
+		_is_hovered = false
+		champion_unhovered.emit(self)
 
 func start_turn():
 	modulate = Color(1.0, 0.891, 0.0, 1.0)
