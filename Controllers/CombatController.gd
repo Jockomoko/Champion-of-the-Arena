@@ -89,7 +89,6 @@ func _next_turn() -> void:
 
 @rpc("authority", "call_local", "reliable")
 func _broadcast_turn(turn_index: int) -> void:
-	turn_order = _get_alive_champions()
 	current_turn_index = turn_index
 	_start_turn()
 
