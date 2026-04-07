@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://b33lk3svy5ljd"]
+
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="1_3bi8d"]
+[ext_resource type="Script" uid="uid://ctj2wo78weyq6" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/Champions_ActionList/action_container.gd" id="1_aqldg"]
+
+[node name="ActionContainer" type="Control" unique_id=196306182]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_aqldg")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1881212854]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3bi8d")
+expand_mode = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect" unique_id=1001854678]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.249
+anchor_top = 0.153
+anchor_right = 0.802
+anchor_bottom = 0.861
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/ScrollContainer" unique_id=1736677090]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

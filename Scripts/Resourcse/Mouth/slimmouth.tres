@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Mouth" format=3 uid="uid://b721kn7hpdelo"]
+
+[ext_resource type="Texture2D" uid="uid://vtid3kloqpt8" path="res://Sprite/HumanBody/Mouths/slimmouth.PNG" id="1_h6i8p"]
+[ext_resource type="Script" uid="uid://c0ny3maadipav" path="res://Scripts/Resourcse/Mouth/mouth.gd" id="1_kh776"]
+
+[resource]
+script = ExtResource("1_kh776")
+name = "slimmouth"
+icon = ExtResource("1_h6i8p")
+metadata/_custom_type_script = "uid://c0ny3maadipav"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Hair" format=3 uid="uid://cd87ggcs4f70l"]
+
+[ext_resource type="Script" uid="uid://d4k6u5hs8e5xk" path="res://Scripts/Resourcse/Hair/hair.gd" id="1_42yrw"]
+[ext_resource type="Texture2D" uid="uid://nlmjr1xfqb8n" path="res://Sprite/HumanBody/Hair/electrichead.PNG" id="1_bm6ia"]
+
+[resource]
+script = ExtResource("1_42yrw")
+name = "electriheair"
+icon = ExtResource("1_bm6ia")
+metadata/_custom_type_script = "uid://d4k6u5hs8e5xk"

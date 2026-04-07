@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bn8dkf4ds57b7"]
+
+[ext_resource type="Script" uid="uid://xeah8q68h5lw" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/champion_sheet.gd" id="1_afqq2"]
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="1_jngoq"]
+[ext_resource type="PackedScene" uid="uid://b33lk3svy5ljd" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/Champions_ActionList/Action_Container.tscn" id="3_afqq2"]
+
+[node name="AbilitySheet" type="Control" unique_id=334912242]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_afqq2")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1643359370]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_jngoq")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="TextureRect" unique_id=448157980]
+layout_mode = 1
+anchor_left = 0.099
+anchor_top = 0.161
+anchor_right = 0.919
+anchor_bottom = 0.832
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/Control" unique_id=1019943530]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Champions_Bar" type="VBoxContainer" parent="TextureRect/Control/HBoxContainer" unique_id=2085573120]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TextureRect/Control/HBoxContainer" unique_id=2127720711]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActionContainer" parent="TextureRect/Control/HBoxContainer/VBoxContainer2" unique_id=196306182 instance=ExtResource("3_afqq2")]
+layout_mode = 2

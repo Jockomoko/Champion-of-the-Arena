@@ -1,0 +1,169 @@
+[gd_scene format=3 uid="uid://de1r1njqponmy"]
+
+[ext_resource type="Script" uid="uid://0pr0u8moajix" path="res://Scenes/Lobby/lobby_scene.gd" id="1_ayjqp"]
+[ext_resource type="Texture2D" uid="uid://35fyop5ogfcc" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 1.PNG" id="1_ysnny"]
+[ext_resource type="Texture2D" uid="uid://dkrm3mv746gfe" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 3.PNG" id="2_ayjqp"]
+[ext_resource type="Texture2D" uid="uid://den504khfhrn7" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 5.PNG" id="3_0c8wp"]
+[ext_resource type="Texture2D" uid="uid://bxd63ltm85121" path="res://Sprite/Målarlager 2.PNG" id="4_7t7gg"]
+[ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="5_csyuu"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="6_18gv8"]
+
+[node name="LobbyScene" type="Node2D" unique_id=1733333752]
+script = ExtResource("1_ayjqp")
+
+[node name="Control" type="Control" parent="." unique_id=1662563473]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2581.0
+offset_top = -1462.0
+offset_right = 4317.0
+offset_bottom = 2444.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Background" type="TextureRect" parent="Control" unique_id=1836011508]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.73300004
+anchor_bottom = 0.72300005
+offset_left = -959.0
+offset_top = -321.0
+offset_right = -3497.2344
+offset_bottom = -1829.038
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.7495146, 2.7209446)
+mouse_filter = 2
+texture = ExtResource("1_ysnny")
+stretch_mode = 2
+
+[node name="Start_Game_btn" type="TextureButton" parent="Control/Background" unique_id=1896990197]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 907.4329
+offset_top = 287.03268
+offset_right = 1673.75
+offset_bottom = 969.51624
+texture_normal = ExtResource("3_0c8wp")
+stretch_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="Control/Background" unique_id=513328777]
+layout_mode = 0
+offset_left = 1863.8347
+offset_top = 850.1663
+offset_right = 1937.0525
+offset_bottom = 1057.2687
+rotation = 0.16037144
+texture = ExtResource("4_7t7gg")
+expand_mode = 1
+
+[node name="Exit_btn" type="TextureButton" parent="Control/Background/TextureRect" unique_id=2065056611]
+layout_mode = 0
+offset_left = -41.499428
+offset_top = 34.16777
+offset_right = 102.83755
+offset_bottom = 82.19047
+pivot_offset = Vector2(64.38623, 0.8374176)
+texture_normal = ExtResource("5_csyuu")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AutoSizeLabel" type="Label" parent="Control/Background/TextureRect/Exit_btn" unique_id=944320126]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.736483
+offset_top = 3.2494373
+offset_right = -22.506561
+offset_bottom = -7.193817
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 27
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("6_18gv8")
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Sign" type="TextureRect" parent="Control" unique_id=111187299]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 901.0
+offset_right = 917.0
+offset_bottom = 1651.0
+scale = Vector2(2.1623807, 2.1693425)
+texture = ExtResource("2_ayjqp")
+
+[node name="GridContainer" type="GridContainer" parent="Control/Sign" unique_id=1753667006]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.181
+anchor_top = 0.076
+anchor_right = 0.659
+anchor_bottom = 0.475
+offset_left = -1.5258789e-05
+offset_right = 155.00098
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 3
+
+[node name="Player1" type="Control" parent="Control/Sign/GridContainer" unique_id=2021582178]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player2" type="Control" parent="Control/Sign/GridContainer" unique_id=1234124350]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player3" type="Control" parent="Control/Sign/GridContainer" unique_id=1987576481]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player4" type="Control" parent="Control/Sign/GridContainer" unique_id=1083225184]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player5" type="Control" parent="Control/Sign/GridContainer" unique_id=796378825]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player6" type="Control" parent="Control/Sign/GridContainer" unique_id=819454654]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=9768002]
+position = Vector2(-44.999756, -34)
+scale = Vector2(2.1257982, 1.8648353)
+zoom = Vector2(0.385, 0.385)
+
+[node name="Control2" type="Control" parent="." unique_id=435211083]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -2179.0906
+offset_top = -298.96933
+offset_right = -979.0906
+offset_bottom = 501.03067
+
+[connection signal="mouse_entered" from="Control/Background/Start_Game_btn" to="." method="_on_start_game_btn_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Background/Start_Game_btn" to="." method="_on_start_game_btn_mouse_exited"]
+[connection signal="pressed" from="Control/Background/Start_Game_btn" to="." method="_on_start_game_btn_pressed"]
+[connection signal="mouse_entered" from="Control/Background/TextureRect/Exit_btn" to="." method="_on_exit_btn_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Background/TextureRect/Exit_btn" to="." method="_on_exit_btn_mouse_exited"]
+[connection signal="pressed" from="Control/Background/TextureRect/Exit_btn" to="." method="_on_exit_btn_pressed"]

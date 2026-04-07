@@ -1,0 +1,138 @@
+[gd_scene format=3 uid="uid://ijsge7t485at"]
+
+[ext_resource type="Script" uid="uid://ddjwn7v0jh2gs" path="res://Scenes/gameScene/ChampionCreationScene/StatsMeny/stats_changer.gd" id="1_p5lxi"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_6v7rw"]
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="2_dm5ip"]
+[ext_resource type="Texture2D" uid="uid://b2yregdob5wt7" path="res://Sprite/pl/Målarlager 4.PNG" id="3_uo62j"]
+
+[node name="StatsChanger" type="Control" unique_id=34320255]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = -34.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_p5lxi")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1268861327]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dm5ip")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect" unique_id=1568937159]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.059
+anchor_top = 0.071
+anchor_right = 0.953
+anchor_bottom = 0.894
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Stat_Name_txt" type="Label" parent="TextureRect/VBoxContainer" unique_id=219818700]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 317
+text = "StatsName"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_6v7rw")
+min_font_size = 11
+max_font_size = 512
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/VBoxContainer" unique_id=1072079401]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="add_btn" type="TextureButton" parent="TextureRect/VBoxContainer/HBoxContainer" unique_id=1040336167]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("3_uo62j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AutoSizeLabel" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/add_btn" unique_id=324596779]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.118
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 330
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_6v7rw")
+min_font_size = 11
+max_font_size = 512
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Stat_amout_txt" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer" unique_id=821557978]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 330
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 1
+script = ExtResource("2_6v7rw")
+min_font_size = 11
+max_font_size = 512
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="minus_btn" type="TextureButton" parent="TextureRect/VBoxContainer/HBoxContainer" unique_id=1716690412]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("3_uo62j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_h = true
+
+[node name="AutoSizeLabel" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/minus_btn" unique_id=1890726389]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.035
+anchor_right = 0.753
+anchor_bottom = 0.976
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 322
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_6v7rw")
+min_font_size = 11
+max_font_size = 512
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[connection signal="pressed" from="TextureRect/VBoxContainer/HBoxContainer/add_btn" to="." method="_on_add_btn_pressed"]
+[connection signal="pressed" from="TextureRect/VBoxContainer/HBoxContainer/minus_btn" to="." method="_on_minus_btn_pressed"]

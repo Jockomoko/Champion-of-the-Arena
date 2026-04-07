@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://d1uj7p2n8ud08"]
+
+[ext_resource type="Script" uid="uid://bach10wr6iqub" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/Champions_ActionList/Action_button/action_button.gd" id="1_v84jk"]
+[ext_resource type="Texture2D" uid="uid://dwpq3bo78nf71" path="res://Sprite/pl/Målarlager 3.PNG" id="1_x8pj5"]
+[ext_resource type="Texture2D" uid="uid://dfu43kjmmua2x" path="res://Sprite/Ability/ability_Melee/Målarlager 1.PNG" id="2_v84jk"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_xm5pu"]
+
+[node name="ActionButton" type="Control" unique_id=1013254406]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_v84jk")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=1230463205]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_x8pj5")
+stretch_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureButton" unique_id=1162305098]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.102
+anchor_top = 0.13
+anchor_right = 0.892
+anchor_bottom = 0.873
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Ability_icon" type="TextureRect" parent="TextureButton/HBoxContainer" unique_id=377380808]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_v84jk")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureButton/HBoxContainer" unique_id=274824067]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureButton/HBoxContainer/MarginContainer" unique_id=34694082]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="TextureButton/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1160278260]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 100
+text = "Ability"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_xm5pu")
+max_font_size = 100
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureButton/HBoxContainer/MarginContainer/VBoxContainer" unique_id=767149013]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AutoSizeLabel" type="Label" parent="TextureButton/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=808220522]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 100
+text = "Cost: "
+horizontal_alignment = 2
+autowrap_mode = 3
+text_overrun_behavior = 3
+script = ExtResource("2_xm5pu")
+max_font_size = 100
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Mana_cost" type="Label" parent="TextureButton/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1706971957]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 100
+text = "10"
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_xm5pu")
+max_font_size = 100
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"

@@ -1,0 +1,105 @@
+[gd_scene load_steps=7 format=3 uid="uid://diuguoosinp8u"]
+
+[ext_resource type="Script" uid="uid://56crv8igwd1f" path="res://Scenes/Lobby/AssetInterface/player_paper.gd" id="1_lvxr4"]
+[ext_resource type="Texture2D" uid="uid://bsh5gh1l4pgl8" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 4.PNG" id="1_n5pxo"]
+[ext_resource type="Texture2D" uid="uid://dsh22u2contej" path="res://Sprite/LobbyMeny/LobbyMeny/Kopia av Målarlager 4.PNG" id="3_7boi1"]
+[ext_resource type="Texture2D" uid="uid://hukchg1ey28l" path="res://icon.svg" id="3_lvxr4"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="4_a5nd1"]
+[ext_resource type="SystemFont" uid="uid://ddxgfq8huo6yb" path="res://Scenes/Lobby/AssetInterface/PlayerPaper.tres" id="5_7boi1"]
+
+[node name="PlayerPaper" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_lvxr4")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player_Profile" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.095
+anchor_top = 0.075
+anchor_right = 0.98
+anchor_bottom = 1.01
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.017658234
+texture = ExtResource("1_n5pxo")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="Player_Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Player_Profile" type="TextureRect" parent="Player_Profile/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.045
+anchor_top = 0.01
+anchor_right = 1.125
+anchor_bottom = 1.0
+offset_left = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.007694661
+scale = Vector2(0.833931, 0.48768604)
+texture = ExtResource("3_lvxr4")
+expand_mode = 1
+
+[node name="Player_Profile2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_7boi1")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="Player_Profile2"]
+layout_mode = 1
+anchor_left = 0.099
+anchor_top = 0.609
+anchor_right = 0.913
+anchor_bottom = 0.894
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.024506478
+
+[node name="player_name" type="Label" parent="Player_Profile2/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_7boi1")
+theme_override_font_sizes/font_size = 15
+text = "Player_name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("4_a5nd1")
+max_font_size = 15
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"

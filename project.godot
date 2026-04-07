@@ -8,12 +8,44 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Champion of the arena"
-run/main_scene="uid://bnql251dsvtbd"
-config/features=PackedStringArray("4.5", "Mobile")
-config/icon="res://icon.svg"
+run/main_scene="uid://bc60jvwfj41cy"
+config/features=PackedStringArray("4.6", "Mobile")
+config/icon="uid://xv2tmy1kmt21"
+
+[autoload]
+
+Globals="*res://Scripts/Globals/Globals.gd"
+ItemDataBase="*res://Scripts/Singeltons/ItemDataBase.gd"
+AbilitiesDataBase="*uid://cnxbnrnr2qi54"
+GameController="*res://Controllers/GameController.gd"
+CombatController="*uid://iissfupecuny"
+RoundController="*uid://3cbtois8t8nv"
+HairDataBase="*uid://ckjn4ijkhym85"
+EyeDataBase="*uid://p0rc71xcn7w3"
+MouthDataBase="*uid://ptrfyg2rdfv7"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+window/size/resizable=false
+window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray()
+
+[physics]
+
+common/physics_object_picking=true
 
 [rendering]
 
@@ -23,6 +55,6 @@ renderer/rendering_method.mobile="gl_compatibility"
 [steam]
 
 initialization/app_id=0
-initialization/initialize_on_startup=false
 initialization/embed_callbacks=false
 multiplayer_peer/max_channels=4
+initialization/initialize_on_startup=false

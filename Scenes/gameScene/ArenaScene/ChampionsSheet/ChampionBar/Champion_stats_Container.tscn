@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://rk3vhw2cs1xl"]
+
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="1_3ghpm"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="1_bpd7b"]
+[ext_resource type="Script" uid="uid://t23bdrsb1imv" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/ChampionBar/champion_stats_container.gd" id="1_wm8rb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ghpm"]
+bg_color = Color(0.5921569, 0, 0, 0.23529412)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wm8rb"]
+bg_color = Color(0.5924477, 8.904189e-07, 3.85046e-07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tqbot"]
+bg_color = Color(0, 0.2509804, 0.5529412, 0.23529412)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6sem8"]
+bg_color = Color(8.1822276e-07, 0.25070325, 0.5516604, 1)
+
+[node name="ChampionStatsContainer" type="Control" unique_id=1427845860]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wm8rb")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=222649430]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3ghpm")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect" unique_id=867971267]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.136
+anchor_top = 0.221
+anchor_right = 0.87
+anchor_bottom = 0.745
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=134500223]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Health_txt" type="Label" parent="TextureRect/VBoxContainer/HealthContainer" unique_id=1372555807]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 38
+text = "Health"
+vertical_alignment = 2
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("1_bpd7b")
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Health_Bar" type="ProgressBar" parent="TextureRect/VBoxContainer/HealthContainer" unique_id=798067389]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_3ghpm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wm8rb")
+value = 76.12
+show_percentage = false
+
+[node name="ManaContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=172756908]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Mana_txt" type="Label" parent="TextureRect/VBoxContainer/ManaContainer" unique_id=179971891]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 38
+text = "Mana"
+vertical_alignment = 2
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("1_bpd7b")
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Mana_bar" type="ProgressBar" parent="TextureRect/VBoxContainer/ManaContainer" unique_id=1925387004]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_tqbot")
+theme_override_styles/fill = SubResource("StyleBoxFlat_6sem8")
+value = 82.17
+show_percentage = false

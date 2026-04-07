@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://blhsmi7s1n30t"]
+
+[ext_resource type="Texture2D" uid="uid://blp76x4sv5c2c" path="res://Sprite/Målarlager 1.PNG" id="1_gsxt3"]
+[ext_resource type="Script" uid="uid://cwq4iefn0mard" path="res://Scenes/gameScene/start meny/start_scene.gd" id="1_nqs3o"]
+[ext_resource type="Texture2D" uid="uid://2i1d7bxrd5sr" path="res://Sprite/Arena.PNG" id="2_ewwas"]
+[ext_resource type="Texture2D" uid="uid://bxd63ltm85121" path="res://Sprite/Målarlager 2.PNG" id="3_nqs3o"]
+[ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="5_1laog"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="6_1laog"]
+
+[node name="StartScene" type="Node2D" unique_id=87433845]
+script = ExtResource("1_nqs3o")
+
+[node name="Målarlager1" type="Sprite2D" parent="." unique_id=1478554055]
+position = Vector2(150, 57)
+texture = ExtResource("1_gsxt3")
+
+[node name="Arena" type="Sprite2D" parent="." unique_id=1321852373]
+position = Vector2(340, -771)
+texture = ExtResource("2_ewwas")
+
+[node name="Målarlager2" type="Sprite2D" parent="." unique_id=565028455]
+position = Vector2(-1441, 22)
+texture = ExtResource("3_nqs3o")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1728512085]
+zoom = Vector2(0.36, 0.36)
+
+[node name="Buttons" type="Node2D" parent="." unique_id=103436510]
+
+[node name="Start_btn" type="TextureButton" parent="Buttons" unique_id=1514257697]
+offset_left = -2040.0
+offset_top = -760.0
+offset_right = -982.0
+offset_bottom = -360.0
+pivot_offset = Vector2(500, 192)
+action_mode = 0
+texture_normal = ExtResource("5_1laog")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AutoSizeLabel" type="Label" parent="Buttons/Start_btn" unique_id=463257353]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.128
+anchor_top = 0.083
+anchor_right = 0.798
+anchor_bottom = 0.807
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 212
+text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+script = ExtResource("6_1laog")
+max_font_size = 400
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Quit_btn" type="TextureButton" parent="Buttons" unique_id=965043941]
+offset_left = -2030.9999
+offset_top = 11.000061
+offset_right = -972.9999
+offset_bottom = 411.00006
+rotation = -0.093157806
+scale = Vector2(0.8814292, 0.45272836)
+pivot_offset = Vector2(498.11377, 181.07898)
+action_mode = 0
+texture_normal = ExtResource("5_1laog")
+ignore_texture_size = true
+stretch_mode = 0
+flip_h = true
+
+[node name="AutoSizeLabel" type="Label" parent="Buttons/Quit_btn" unique_id=2110919976]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.183
+anchor_top = 0.055
+anchor_right = 0.865
+anchor_bottom = 0.908
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 250
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("6_1laog")
+max_font_size = 400
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="team_btn" type="TextureButton" parent="Buttons/Quit_btn" unique_id=441589466]
+layout_mode = 0
+offset_left = 34.252174
+offset_top = -793.07
+offset_right = 1095.8572
+offset_bottom = -293.07
+rotation = 0.23306727
+pivot_offset = Vector2(498.11377, 181.07898)
+action_mode = 0
+texture_normal = ExtResource("5_1laog")
+ignore_texture_size = true
+stretch_mode = 0
+flip_h = true
+
+[node name="AutoSizeLabel" type="Label" parent="Buttons/Quit_btn/team_btn" unique_id=481777116]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.183
+anchor_top = 0.055
+anchor_right = 0.865
+anchor_bottom = 0.908
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 155
+text = "Edit
+ team"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("6_1laog")
+max_font_size = 400
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[connection signal="mouse_entered" from="Buttons/Start_btn" to="." method="_on_start_btn_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/Start_btn" to="." method="_on_start_btn_mouse_exited"]
+[connection signal="pressed" from="Buttons/Start_btn" to="." method="_on_start_btn_pressed"]
+[connection signal="mouse_entered" from="Buttons/Quit_btn" to="." method="_on_quit_btn_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/Quit_btn" to="." method="_on_quit_btn_mouse_exited"]
+[connection signal="pressed" from="Buttons/Quit_btn" to="." method="_on_quit_btn_pressed"]
+[connection signal="pressed" from="Buttons/Quit_btn/team_btn" to="." method="_on_team_btn_pressed"]

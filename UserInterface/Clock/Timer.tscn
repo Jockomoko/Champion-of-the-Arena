@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b8nm6ef7nlesr"]
+
+[ext_resource type="Script" uid="uid://i23upab4wwn2" path="res://UserInterface/Clock/timer.gd" id="1_aab53"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x8k8i"]
+bg_color = Color(0.45205832, 0.3272587, 0.21105132, 1)
+
+[node name="Timer" type="Control" unique_id=359163730]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aab53")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1525395863]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 4.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/fill = SubResource("StyleBoxFlat_x8k8i")
+value = 28.32

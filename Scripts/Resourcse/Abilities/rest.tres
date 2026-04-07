@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://cdkos2re1q36o"]
+
+[ext_resource type="Script" uid="uid://1earqwnlamir" path="res://Scripts/Resourcse/Abilities/Ability.gd" id="1_hi7tq"]
+[ext_resource type="Texture2D" uid="uid://dfu43kjmmua2x" path="res://Sprite/Ability/ability_Melee/Målarlager 1.PNG" id="1_umjdj"]
+
+[resource]
+script = ExtResource("1_hi7tq")
+id = "Rest"
+ability_name = "Rest"
+type = 2
+mana_restore = 10
+stat_scaling = {
+"attack": 0.0,
+"defense": 0.0,
+"mana": 0.1,
+"speed": 0.0
+}
+metadata/_custom_type_script = "uid://1earqwnlamir"
