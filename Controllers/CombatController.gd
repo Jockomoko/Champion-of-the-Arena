@@ -89,7 +89,10 @@ func _next_turn() -> void:
 
 @rpc("authority", "call_local", "reliable")
 func _broadcast_turn(turn_index: int) -> void:
-	current_turn_index = turn_index
+	turn_order = _get_alive_champions()
+	if turn_order.is_empty():
+		return
+	current_turn_index = turn_index % turn_order.size()
 	_start_turn()
 
 func _check_combat_end() -> bool:
