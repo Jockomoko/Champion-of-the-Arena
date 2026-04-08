@@ -26,13 +26,18 @@ func show_ability_menu(abilities: Array[Ability]) -> void:
 		return
 	action_container.show()
 	action_container.clear_abilities()
+	
+	# Disconnect any existing connections before reconnecting
+	if action_container.ability_selected.is_connected(_on_ability_selected):
+		action_container.ability_selected.disconnect(_on_ability_selected)
+	
 	for ability in abilities:
 		if ability == null:
 			push_warning("champion_sheet: skipping null ability in list")
 			continue
 		action_container.add_ability(ability.icon if ability.icon else defualt_image, ability.ability_name, ability.mana_cost)
-	if not action_container.ability_selected.is_connected(_on_ability_selected):
-		action_container.ability_selected.connect(_on_ability_selected)
+	
+	action_container.ability_selected.connect(_on_ability_selected)
 
 func _on_ability_selected(ability_name: String) -> void:
 	selected_ability = ability_name
