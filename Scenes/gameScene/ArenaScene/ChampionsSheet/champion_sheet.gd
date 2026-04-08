@@ -5,7 +5,6 @@ const defualt_image = preload("uid://dfu43kjmmua2x")
 
 @onready var champions_bar: VBoxContainer = $TextureRect/Control/HBoxContainer/Champions_Bar
 @onready var action_container: Control = $TextureRect/Control/HBoxContainer/VBoxContainer2/ActionContainer
-@onready var waiting_label: AutoSizeLabel = $TextureRect/Control/HBoxContainer/VBoxContainer2/ActionContainer/waiting_lable
 
 signal ability_selected(ability_name: String)
 
