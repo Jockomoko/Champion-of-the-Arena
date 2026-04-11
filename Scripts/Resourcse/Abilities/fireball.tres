@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="Ability" format=3 uid="uid://cetybdc0e465a"]
 
 [ext_resource type="Script" uid="uid://1earqwnlamir" path="res://Scripts/Resourcse/Abilities/Ability.gd" id="1_l20e4"]
-[ext_resource type="Texture2D" uid="uid://dfu43kjmmua2x" path="res://Sprite/Ability/ability_Melee/Målarlager 1.PNG" id="1_uijio"]
+[ext_resource type="Texture2D" uid="uid://yq53egp6auny" path="res://Sprite/Ability/ability_Melee/Målarlager 4.PNG" id="1_uijio"]
 
 [resource]
 script = ExtResource("1_l20e4")
+icon = ExtResource("1_uijio")
 id = "fireball"
 ability_name = "Fireball"
 type = 1
