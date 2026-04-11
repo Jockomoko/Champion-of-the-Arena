@@ -96,8 +96,7 @@ func _broadcast_spawn(teams: Dictionary) -> void:
 	if opponent_id != -1 and teams.has(opponent_id):
 		spawn_team(teams[opponent_id], enemy_spawns, false, opponent_id)
 
-	CombatController.turn_order = all_champions.duplicate()
-	CombatController.sort_by_speed()
+	CombatController.start_combat(all_champions)
 
 	if Globals.is_host:
 		_confirm_ready()
@@ -111,7 +110,7 @@ func _confirm_ready() -> void:
 	ready_players += 1
 	print("Ready: %d / 2" % ready_players)
 	if ready_players >= 2:
-		CombatController.broadcast_turn(0)
+		CombatController.broadcast_first_turn()
 
 func spawn_team(team_data: Array, spawns: Array, own_team: bool, owner_steam_id: int) -> void:
 	if spawns.size() < team_data.size():
@@ -181,7 +180,9 @@ func _on_champion_clicked(champion: Champion) -> void:
 		c.set_clickable(false)
 	CombatController.request_use_ability(pending_ability, champion.champion_name)
 	pending_ability = ""
-	ability_sheet.hide_ability_menu()
+
+	if not Globals.is_host:
+		ability_sheet.hide_ability_menu()
 
 func _on_player_waiting(steam_id: int) -> void:
 	if steam_id == Globals.STEAM_ID:

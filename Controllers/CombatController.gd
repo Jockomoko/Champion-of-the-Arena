@@ -5,16 +5,18 @@ signal turn_ended(champion: Champion)
 signal combat_ended(winner: Champion)
 
 var turn_order: Array[Champion] = []
+var all_champions: Array[Champion] = []  # permanent list, never shrinks
 var current_turn_index: int = 0
 var champion_owners: Dictionary = {}
 
 func start_combat(champions: Array[Champion]) -> void:
-	turn_order = champions
+	all_champions = champions.duplicate()
+	turn_order = champions.duplicate()
 	sort_by_speed()
 	current_turn_index = 0
 
 func register_owner(champion: Champion, steam_id: int) -> void:
-	champion_owners[champion.champion_name] = steam_id  # FIX 3: use champion_name not node name
+	champion_owners[champion.champion_name] = steam_id
 
 func sort_by_speed() -> void:
 	turn_order.sort_custom(func(a, b):
@@ -81,18 +83,29 @@ func _get_alive_champions() -> Array[Champion]:
 	return alive
 
 func _next_turn() -> void:
+	var current_champion = get_current_champion()  # save before refresh
 	turn_order = _get_alive_champions()
 	if _check_combat_end():
 		return
-	current_turn_index = (current_turn_index + 1) % turn_order.size()
-	_broadcast_turn.rpc(current_turn_index)
+	# Find the attacker's new position in the refreshed array before advancing
+	var new_index = turn_order.find(current_champion)
+	if new_index == -1:
+		new_index = current_turn_index - 1  # attacker died; back up so +1 is correct
+	current_turn_index = (new_index + 1) % turn_order.size()
+	_broadcast_turn.rpc(turn_order[current_turn_index].champion_name)
 
 @rpc("authority", "call_local", "reliable")
-func _broadcast_turn(turn_index: int) -> void:
+func _broadcast_turn(next_champion_name: String) -> void:
+	# Refresh local turn_order so dead champions are removed on every peer
 	turn_order = _get_alive_champions()
 	if turn_order.is_empty():
 		return
-	current_turn_index = turn_index % turn_order.size()
+	var champion = _find_champion_by_name(next_champion_name)
+	if not champion:
+		return
+	current_turn_index = turn_order.find(champion)
+	if current_turn_index == -1:
+		current_turn_index = 0
 	_start_turn()
 
 func _check_combat_end() -> bool:
@@ -115,13 +128,16 @@ func get_current_champion() -> Champion:
 
 func is_my_turn() -> bool:
 	var champion = get_current_champion()
-	return champion_owners.get(champion.champion_name, -1) == Globals.STEAM_ID  # FIX 3
+	return champion_owners.get(champion.champion_name, -1) == Globals.STEAM_ID
 
 func _find_champion_by_name(champion_name: String) -> Champion:
-	for champion in turn_order:
+	# Search all_champions so dead champions can still be found (e.g. for mana changes)
+	for champion in all_champions:
 		if champion.champion_name == champion_name:
 			return champion
 	return null
 
-func broadcast_turn(turn_index: int) -> void:
-	_broadcast_turn.rpc(turn_index)
+func broadcast_first_turn() -> void:
+	if turn_order.is_empty():
+		return
+	_broadcast_turn.rpc(turn_order[0].champion_name)
