@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://de1r1njqponmy"]
 
 [ext_resource type="Script" uid="uid://0pr0u8moajix" path="res://Scenes/Lobby/lobby_scene.gd" id="1_ayjqp"]
-[ext_resource type="Texture2D" uid="uid://35fyop5ogfcc" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 1.PNG" id="1_ysnny"]
-[ext_resource type="Texture2D" uid="uid://dkrm3mv746gfe" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 3.PNG" id="2_ayjqp"]
-[ext_resource type="Texture2D" uid="uid://den504khfhrn7" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 5.PNG" id="3_0c8wp"]
+[ext_resource type="Texture2D" uid="uid://35fyop5ogfcc" path="res://Sprite/LobbyMeny/Målarlager 1.PNG" id="1_ysnny"]
+[ext_resource type="Texture2D" uid="uid://dkrm3mv746gfe" path="res://Sprite/LobbyMeny/Målarlager 3.PNG" id="2_ayjqp"]
+[ext_resource type="Texture2D" uid="uid://den504khfhrn7" path="res://Sprite/LobbyMeny/Målarlager 5.PNG" id="3_0c8wp"]
 [ext_resource type="Texture2D" uid="uid://bxd63ltm85121" path="res://Sprite/Målarlager 2.PNG" id="4_7t7gg"]
 [ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="5_csyuu"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="6_18gv8"]
+
 
 [node name="LobbyScene" type="Node2D" unique_id=1733333752]
 script = ExtResource("1_ayjqp")

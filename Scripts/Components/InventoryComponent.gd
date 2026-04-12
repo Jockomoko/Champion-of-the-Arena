@@ -25,7 +25,3 @@ func has_item(item_id: String) -> bool:
 
 func get_amount(item_id: String) -> int:
 	return items.get(item_id, 0)
-
-func can_afford(_item_id: String) -> bool:
-	# Hook this into currency later
-	return true

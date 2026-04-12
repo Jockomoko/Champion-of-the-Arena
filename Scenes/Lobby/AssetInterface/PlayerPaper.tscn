@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://diuguoosinp8u"]
+[gd_scene format=3 uid="uid://diuguoosinp8u"]
 
 [ext_resource type="Script" uid="uid://56crv8igwd1f" path="res://Scenes/Lobby/AssetInterface/player_paper.gd" id="1_lvxr4"]
-[ext_resource type="Texture2D" uid="uid://bsh5gh1l4pgl8" path="res://Sprite/LobbyMeny/LobbyMeny/Målarlager 4.PNG" id="1_n5pxo"]
-[ext_resource type="Texture2D" uid="uid://dsh22u2contej" path="res://Sprite/LobbyMeny/LobbyMeny/Kopia av Målarlager 4.PNG" id="3_7boi1"]
+[ext_resource type="Texture2D" uid="uid://bsh5gh1l4pgl8" path="res://Sprite/LobbyMeny/Målarlager 4.PNG" id="1_n5pxo"]
+[ext_resource type="Texture2D" uid="uid://dsh22u2contej" path="res://Sprite/LobbyMeny/Kopia av Målarlager 4.PNG" id="3_7boi1"]
 [ext_resource type="Texture2D" uid="uid://hukchg1ey28l" path="res://icon.svg" id="3_lvxr4"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="4_a5nd1"]
 [ext_resource type="SystemFont" uid="uid://ddxgfq8huo6yb" path="res://Scenes/Lobby/AssetInterface/PlayerPaper.tres" id="5_7boi1"]
+
 
 [node name="PlayerPaper" type="Control"]
 layout_mode = 3

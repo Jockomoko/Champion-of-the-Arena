@@ -14,7 +14,7 @@ func add_ability(icon: Texture2D, ability_name: String, mana_cost: int) -> void:
 	v_box_container.add_child(action)
 	action.set_button(icon, ability_name, mana_cost)
 	
-	action.custom_minimum_size = Vector2(0, 300)
+	action.custom_minimum_size = Vector2(0, 100)
 	action.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	action.size_flags_vertical = Control.SIZE_FILL
 	

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Mouth" format=3 uid="uid://chuycv1biitd5"]
+
+[ext_resource type="Texture2D" uid="uid://chaltmkqb4drk" path="res://Sprite/HumanBody/Mouths/old_mouth.PNG" id="1_5w3wv"]
+[ext_resource type="Script" uid="uid://c0ny3maadipav" path="res://Scripts/Resourcse/Mouth/mouth.gd" id="2_cfrp1"]
+
+[resource]
+script = ExtResource("2_cfrp1")
+name = "old_mouth"
+icon = ExtResource("1_5w3wv")
+metadata/_custom_type_script = "uid://c0ny3maadipav"

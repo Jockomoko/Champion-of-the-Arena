@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bn8dkf4ds57b7"]
 
 [ext_resource type="Script" uid="uid://xeah8q68h5lw" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/champion_sheet.gd" id="1_afqq2"]
-[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="1_jngoq"]
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Målarlager 4.PNG" id="1_jngoq"]
 [ext_resource type="PackedScene" uid="uid://b33lk3svy5ljd" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/Champions_ActionList/Action_Container.tscn" id="3_afqq2"]
 
 [node name="AbilitySheet" type="Control" unique_id=334912242]

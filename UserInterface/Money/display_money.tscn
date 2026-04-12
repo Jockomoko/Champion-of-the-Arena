@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://b5uydwffsvleq"]
+
+[ext_resource type="Script" uid="uid://ddfg8vw8gb4if" path="res://UserInterface/Money/display_money.gd" id="1_niqr6"]
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Målarlager 4.PNG" id="1_ol3je"]
+[ext_resource type="Texture2D" uid="uid://duui6i7va6ml1" path="res://Sprite/money/moneybag.PNG" id="2_niqr6"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="3_qtbrm"]
+
+[node name="DisplayMoney" type="Control" unique_id=390639813]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_niqr6")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2015860302]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ol3je")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect" unique_id=36211157]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.167
+anchor_right = 0.889
+anchor_bottom = 0.822
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/HBoxContainer" unique_id=1859279648]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_niqr6")
+expand_mode = 1
+
+[node name="AutoSizeLabel" type="Label" parent="TextureRect/HBoxContainer" unique_id=1280601689]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 400
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("3_qtbrm")
+min_font_size = 10
+max_font_size = 400
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"

@@ -14,7 +14,11 @@ var LOBBY_INVITE_ARG: bool = false
 var is_host: bool = false
 
 # ── Game ──────────────────────────────────────
-var MY_PLAYERCONTROLLER: PlayerController
+var MY_PLAYERCONTROLLER: PlayerController:
+	set(value):
+		MY_PLAYERCONTROLLER = value
+		if value != null:
+			player_controller_ready.emit(value)
 const SAVED_CHAMPION_PATH = "user://champion_stats.json"
 
 var peer_to_steam: Dictionary = {}
@@ -22,6 +26,7 @@ var steam_to_peer: Dictionary = {}
 # ─────────────────────────────────────────────
 #  Signals (LobbyScene listens to these)
 # ─────────────────────────────────────────────
+signal player_controller_ready(controller: PlayerController)
 signal member_updated(steam_id: int, chat_state: int)
 signal player_disconnected(steam_id: int)
 

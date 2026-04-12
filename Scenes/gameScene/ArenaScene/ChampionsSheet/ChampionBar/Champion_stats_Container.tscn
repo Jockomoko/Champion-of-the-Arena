@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://rk3vhw2cs1xl"]
 
-[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="1_3ghpm"]
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Målarlager 4.PNG" id="1_3ghpm"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="1_bpd7b"]
 [ext_resource type="Script" uid="uid://t23bdrsb1imv" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/ChampionBar/champion_stats_container.gd" id="1_wm8rb"]
+
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ghpm"]
 bg_color = Color(0.5921569, 0, 0, 0.23529412)

@@ -21,9 +21,11 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("1_x8pj5")
+ignore_texture_size = true
 stretch_mode = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextureButton" unique_id=1162305098]
@@ -78,6 +80,7 @@ theme_override_font_sizes/font_size = 100
 text = "Cost: "
 horizontal_alignment = 2
 autowrap_mode = 3
+clip_text = true
 text_overrun_behavior = 3
 script = ExtResource("2_xm5pu")
 max_font_size = 100

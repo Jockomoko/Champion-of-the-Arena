@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Hair" format=3 uid="uid://bd2orft261g53"]
+
+[ext_resource type="Texture2D" uid="uid://bqwhnmhujt1ad" path="res://Sprite/HumanBody/Hair/trumphair.PNG" id="1_rdacq"]
+[ext_resource type="Script" uid="uid://d4k6u5hs8e5xk" path="res://Scripts/Resourcse/Hair/hair.gd" id="2_huvpd"]
+
+[resource]
+script = ExtResource("2_huvpd")
+name = "trumphair"
+icon = ExtResource("1_rdacq")
+metadata/_custom_type_script = "uid://d4k6u5hs8e5xk"

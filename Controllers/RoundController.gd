@@ -3,6 +3,8 @@ signal round_started(matches: Array)
 signal player_waiting(steam_id: int)
 signal all_matches_done
 signal solo_detected
+signal player_eliminated(steam_id: int)
+signal tournament_winner(steam_id: int)
 
 var active_players: Array = []
 var current_matches: Dictionary = {}
@@ -63,20 +65,28 @@ func report_match_result(winner_id: int, loser_id: int) -> void:
 @rpc("authority", "call_local", "reliable")
 func _broadcast_match_result(winner_id: int, loser_id: int) -> void:
 	print("Match done — winner: %d, loser: %d" % [winner_id, loser_id])
+	var my_id = Globals.STEAM_ID
+	if my_id == winner_id:
+		Globals.MY_PLAYERCONTROLLER.win_match()
+	elif my_id == loser_id:
+		Globals.MY_PLAYERCONTROLLER.lose_match()
 
 func _on_all_matches_done() -> void:
-	# Build next round from winners + bye player
-	var next_players: Array[int] = []
-	for match_result in finished_matches:
-		next_players.append(match_result["winner"])
-	if waiting_player != -1:
-		next_players.append(waiting_player)
-	
+	# Wait briefly so any in-flight elimination RPCs can arrive before we
+	# decide who plays next round.
+	await get_tree().create_timer(0.3).timeout
+
+	# All non-eliminated players (winners AND losers who still have glory)
+	# continue to the next round.
+	var next_players: Array = active_players.duplicate()
+
 	if next_players.size() == 1:
-		# Tournament over
+		# Tournament over — last player standing wins.
 		_broadcast_tournament_end.rpc(next_players[0])
+	elif next_players.is_empty():
+		# Everyone was eliminated simultaneously.
+		_broadcast_tournament_end.rpc(-1)
 	else:
-		# Set up next round matches before telling everyone to transition
 		start_round(next_players)
 		_broadcast_all_matches_done.rpc()
 
@@ -88,6 +98,26 @@ func _broadcast_all_matches_done() -> void:
 func _broadcast_tournament_end(winner_id: int) -> void:
 	print("Tournament winner: %d" % winner_id)
 	all_matches_done.emit()
+
+# Called on host only — removes a player and checks if the game is over
+func eliminate_player(steam_id: int) -> void:
+	if not Globals.is_host:
+		return
+	active_players.erase(steam_id)
+	_broadcast_player_eliminated.rpc(steam_id)
+	if active_players.size() == 1:
+		_broadcast_tournament_winner.rpc(active_players[0])
+	elif active_players.is_empty():
+		# Edge case: last two players lost simultaneously
+		_broadcast_tournament_winner.rpc(-1)
+
+@rpc("authority", "call_local", "reliable")
+func _broadcast_player_eliminated(steam_id: int) -> void:
+	player_eliminated.emit(steam_id)
+
+@rpc("authority", "call_local", "reliable")
+func _broadcast_tournament_winner(steam_id: int) -> void:
+	tournament_winner.emit(steam_id)
 
 func get_my_opponent() -> int:
 	return current_matches.get(Globals.STEAM_ID, -1)

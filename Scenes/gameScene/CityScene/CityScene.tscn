@@ -1,21 +1,24 @@
 [gd_scene format=3 uid="uid://c3cm1plumvu6e"]
 
 [ext_resource type="Script" uid="uid://cfjjb5qo3tarc" path="res://Scenes/gameScene/CityScene/city_scene.gd" id="1_bsw3j"]
-[ext_resource type="Texture2D" uid="uid://1cb7y882j0gs" path="res://Sprite/city/sky.PNG" id="2_mro6r"]
+[ext_resource type="PackedScene" uid="uid://dqnc3tbvl440i" path="res://Sprite/Animation/sky/sky_animation.tscn" id="2_bley2"]
 [ext_resource type="Texture2D" uid="uid://cianv52mpahjd" path="res://Sprite/city/Grass.PNG" id="3_bley2"]
 [ext_resource type="Texture2D" uid="uid://cyrv85ajmde5b" path="res://Sprite/city/road.PNG" id="4_uv2kv"]
 [ext_resource type="Texture2D" uid="uid://yxcbqvcgi0h6" path="res://Sprite/city/curch.PNG" id="5_xecl3"]
 [ext_resource type="Texture2D" uid="uid://dtvbu43e40nkq" path="res://Sprite/city/smith.PNG" id="6_36o41"]
 [ext_resource type="Texture2D" uid="uid://cmuusqmtsiic0" path="res://Sprite/city/arena.PNG" id="7_ow8e4"]
 [ext_resource type="PackedScene" uid="uid://b8nm6ef7nlesr" path="res://UserInterface/Clock/Timer.tscn" id="8_mro6r"]
+[ext_resource type="PackedScene" uid="uid://b5uydwffsvleq" path="res://UserInterface/Money/display_money.tscn" id="9_bley2"]
 
 [node name="CityScene" type="Node2D" unique_id=394205669]
 script = ExtResource("1_bsw3j")
 
-[node name="Sky" type="Sprite2D" parent="." unique_id=1159721]
-position = Vector2(-59, -209)
-scale = Vector2(0.62380946, 0.442446)
-texture = ExtResource("2_mro6r")
+[node name="SkyAnimation" parent="." unique_id=115424791 instance=ExtResource("2_bley2")]
+custom_minimum_size = Vector2(10.755, 11.475)
+offset_left = -1262.0
+offset_top = -634.0
+offset_right = 1177.0
+offset_bottom = 71.0
 
 [node name="Grass" type="Sprite2D" parent="." unique_id=1171426681]
 position = Vector2(-171, 329)
@@ -61,6 +64,15 @@ offset_top = -519.0
 offset_right = 933.0
 offset_bottom = -444.0
 grow_horizontal = 1
+
+[node name="DisplayMoney" parent="." unique_id=390639813 instance=ExtResource("9_bley2")]
+anchors_preset = 10
+anchor_bottom = 0.0
+offset_left = -919.0
+offset_top = -508.0
+offset_right = -702.0
+offset_bottom = -403.0
+grow_vertical = 1
 
 [connection signal="mouse_entered" from="Church" to="." method="_on_church_mouse_entered"]
 [connection signal="mouse_exited" from="Church" to="." method="_on_church_mouse_exited"]

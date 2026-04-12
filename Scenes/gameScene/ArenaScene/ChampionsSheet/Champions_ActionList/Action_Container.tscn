@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b33lk3svy5ljd"]
 
-[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="1_3bi8d"]
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Målarlager 4.PNG" id="1_3bi8d"]
 [ext_resource type="Script" uid="uid://ctj2wo78weyq6" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/Champions_ActionList/action_container.gd" id="1_aqldg"]
 
 [node name="ActionContainer" type="Control" unique_id=196306182]
@@ -8,6 +8,7 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3

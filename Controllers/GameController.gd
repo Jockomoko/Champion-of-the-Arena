@@ -7,6 +7,11 @@ extends Node
 const CITY_SCENE := "res://Scenes/gameScene/CityScene/CityScene.tscn"
 const ARENA_SCENE := "res://Scenes/gameScene/ArenaScene/Arena_Scene.tscn"
 
+const glory_gain := 10
+const glory_loss := 10
+
+const START_SCENE := "res://Scenes/gameScene/start meny/StartScene.tscn"
+
 var city_wait_time := 10
 var countdown_running := false
 
@@ -15,6 +20,7 @@ signal arena_started(opponent_id: int)
 
 func _ready() -> void:
 	RoundController.all_matches_done.connect(_on_all_matches_done)
+	RoundController.tournament_winner.connect(_on_tournament_winner)
 	Globals.player_disconnected.connect(_on_player_disconnected)
 
 @rpc("any_peer", "reliable", "call_local")
@@ -61,6 +67,7 @@ func start_game() -> void:
 
 @rpc("authority", "call_local", "reliable")
 func load_city_scene() -> void:
+	Globals.MY_PLAYERCONTROLLER.wallet.add_money(1)
 	get_tree().change_scene_to_file(CITY_SCENE)
 
 
@@ -123,6 +130,47 @@ func _load_lobby() -> void:
 	get_tree().change_scene_to_file(
 		"res://Scenes/Lobby/LobbyScene.tscn"
 	)
+
+# =========================
+# ELIMINATION & VICTORY
+# =========================
+
+# Called locally when this player's glory hits the minimum.
+func player_lost(controller: PlayerController) -> void:
+	# Notify host so it can remove this player from active_players.
+	if Globals.is_host:
+		RoundController.eliminate_player(controller.player_id)
+	else:
+		_report_elimination.rpc_id(1, controller.player_id)
+	# Show game over on this machine.
+	_show_game_over()
+
+# Called locally when this player's glory hits the maximum (alternative win path).
+func player_won(_controller: PlayerController) -> void:
+	pass  # Handled via tournament_winner signal from RoundController
+
+# Host sends elimination notice to host itself; clients send it to host.
+@rpc("any_peer", "reliable")
+func _report_elimination(steam_id: int) -> void:
+	if not Globals.is_host:
+		return
+	RoundController.eliminate_player(steam_id)
+
+# Fired on all clients when a tournament winner is determined.
+# tournament_winner is broadcast via RPC so every client receives it.
+func _on_tournament_winner(winner_steam_id: int) -> void:
+	if Globals.STEAM_ID == winner_steam_id:
+		_show_win_screen()
+
+# ── HOOK: swap scene path for a real game-over screen when ready ──
+func _show_game_over() -> void:
+	Globals.leave_lobby()
+	get_tree().change_scene_to_file(START_SCENE)
+
+# ── HOOK: swap scene path for a real win screen when ready ──
+func _show_win_screen() -> void:
+	Globals.leave_lobby()
+	get_tree().change_scene_to_file(START_SCENE)
 
 func _on_all_matches_done() -> void:
 	if not Globals.is_host:

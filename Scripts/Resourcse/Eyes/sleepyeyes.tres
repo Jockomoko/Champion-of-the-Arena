@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Eye" format=3 uid="uid://4ootlxyo0r7n"]
 
-[ext_resource type="Texture2D" uid="uid://dmmqyqvdirtpt" path="res://Sprite/HumanBody/Eyes/sleepyeyes.PNG" id="1_81lsu"]
+[ext_resource type="Texture2D" uid="uid://cihmctmauwysn" path="res://Sprite/HumanBody/Eyes/big_eyes.PNG" id="1_81lsu"]
 [ext_resource type="Script" uid="uid://dx4jkw20luxxu" path="res://Scripts/Resourcse/Eyes/eye.gd" id="1_xmqq1"]
 
 [resource]
 script = ExtResource("1_xmqq1")
-name = "sleepyeyes"
+name = "big_eyes"
 icon = ExtResource("1_81lsu")
 metadata/_custom_type_script = "uid://dx4jkw20luxxu"

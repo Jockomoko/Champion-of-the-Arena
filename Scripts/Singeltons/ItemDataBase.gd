@@ -2,13 +2,10 @@ extends Node
 class_name ItemDatabase
 
 # item_id : Item
-var items: Dictionary[String, Item] = {}
+static var items: Dictionary[String, Item] = {}
 
-func _ready() -> void:
-	_register_items()
-
-func _register_items() -> void:
+static func _static_init() -> void:
 	items["iron_sword"] = preload("res://Scripts/Resourcse/iron_sword.tres")
 
-func get_item(item_id: String) -> Item:
+static func get_item(item_id: String) -> Item:
 	return items.get(item_id)

@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ddjwn7v0jh2gs" path="res://Scenes/gameScene/ChampionCreationScene/StatsMeny/stats_changer.gd" id="1_p5lxi"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_6v7rw"]
-[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Arena/Målarlager 4.PNG" id="2_dm5ip"]
+[ext_resource type="Texture2D" uid="uid://dtqvcjuql2hh5" path="res://Sprite/Målarlager 4.PNG" id="2_dm5ip"]
 [ext_resource type="Texture2D" uid="uid://b2yregdob5wt7" path="res://Sprite/pl/Målarlager 4.PNG" id="3_uo62j"]
+
 
 [node name="StatsChanger" type="Control" unique_id=34320255]
 layout_mode = 3

@@ -7,6 +7,7 @@ var player_name : String
 var glory := GloryComponent.new()
 var inventory := InventoryComponent.new()
 var team := TeamComponent.new()
+var wallet := WalletComponent.new()
 
 signal player_won
 signal player_lost
@@ -20,7 +21,10 @@ func _ready():
 	
 	if not team.is_inside_tree():
 		add_child(team)
-	
+
+	if not wallet.is_inside_tree():
+		add_child(wallet)
+
 	_register_controller()
 	# React to glory changes
 	glory.arena_won.connect(_on_arena_won)
@@ -49,12 +53,18 @@ func _on_arena_lost():
 # =====================================
 # MENU ACTIONS
 # =====================================
-func buy_item(item_id: String):
-	if inventory.can_afford(item_id):
-		inventory.add_item(item_id)
+func buy_item(item_id: String) -> bool:
+	var item: Item = ItemDatabase.get_item(item_id)
+	if item == null:
+		return false
+	if not wallet.has_enough(item.cost):
+		return false
+	wallet.remove_money(item.cost)
+	inventory.add_item(item_id)
+	return true
 
 func lose_match():
-	glory.remove_glory(GameController.glory_loss)
+	glory.subtract_glory(GameController.glory_loss)
 
 func win_match():
 	glory.add_glory(GameController.glory_gain)

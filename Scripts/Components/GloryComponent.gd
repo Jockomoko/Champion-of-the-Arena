@@ -6,8 +6,8 @@ signal glory_changed(current: float)
 signal arena_won
 signal arena_lost
 
-@export var starting_glory: float = 0.0
-@export var min_glory: float = -10.0
+@export var starting_glory: float = 30.0
+@export var min_glory: float = 0.0
 @export var max_glory: float = 100.0
 
 var current_glory: float = 0.0
