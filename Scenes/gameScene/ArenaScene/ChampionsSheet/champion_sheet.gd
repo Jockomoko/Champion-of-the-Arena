@@ -15,7 +15,7 @@ func add_player_bar(champion: Champion) -> void:
 	champions_bar.add_child(container)
 	container.size_flags_vertical   = Control.SIZE_EXPAND_FILL
 	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	container.init(champion.get_max_health(), champion.get_max_mana())
+	container.init(champion.get_max_health(), champion.get_max_mana(), champion.champion_name)
 	champion.health_changed.connect(func(current, _max): container.set_health_value(current))
 	champion.mana_changed.connect(func(current, _max): container.set_mana_value(current))
 

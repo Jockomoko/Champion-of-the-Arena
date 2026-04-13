@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://ckbaoe6e6lv51"]
+
+[ext_resource type="Script" uid="uid://cmayr0ok0phgf" path="res://Scenes/gameScene/ShopScene/shop_scene.gd" id="0_script"]
+[ext_resource type="PackedScene" uid="uid://ipi0mpfydrov" path="res://UserInterface/Shop/ShopWender.tscn" id="1_68gol"]
+[ext_resource type="Texture2D" uid="uid://g884bpjnxv2m" path="res://Sprite/shopscene/Målarlager 5.PNG" id="1_m8yul"]
+[ext_resource type="Texture2D" uid="uid://cq6y7wlgt0kqw" path="res://Sprite/shopscene/Bakgrund.PNG" id="2_m8yul"]
+[ext_resource type="PackedScene" uid="uid://dneqhmsf7xhre" path="res://UserInterface/Shop/owen_scene.tscn" id="2_rgo4b"]
+[ext_resource type="PackedScene" uid="uid://n6kbb2f1fma6" path="res://UserInterface/Shop/weapon_rack/weapon_rack.tscn" id="5_rack"]
+
+[node name="ShopScene" type="Node2D" unique_id=1062869610]
+script = ExtResource("0_script")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1226083852]
+offset_left = -291.0
+offset_top = -276.0
+offset_right = 2109.0
+offset_bottom = 1316.0
+texture = ExtResource("1_m8yul")
+
+[node name="OwenScene" parent="." unique_id=125425771 instance=ExtResource("2_rgo4b")]
+offset_left = 1121.0
+offset_top = -118.0
+offset_right = 1121.0
+offset_bottom = -118.0
+
+[node name="ShopWender" parent="." unique_id=163162349 instance=ExtResource("1_68gol")]
+position = Vector2(-6, 176)
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=2124078162]
+offset_left = -284.0
+offset_top = 780.0
+offset_right = 2239.0
+offset_bottom = 1171.0
+texture = ExtResource("2_m8yul")
+
+[node name="WeaponRack" parent="." unique_id=1153832627 instance=ExtResource("5_rack")]
+custom_minimum_size = Vector2(2.57, 0)
+offset_left = 664.99994
+offset_top = -26.000002
+offset_right = 1971.2046
+offset_bottom = 906.2918

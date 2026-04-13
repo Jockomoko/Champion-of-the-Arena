@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="1_bpd7b"]
 [ext_resource type="Script" uid="uid://t23bdrsb1imv" path="res://Scenes/gameScene/ArenaScene/ChampionsSheet/ChampionBar/champion_stats_container.gd" id="1_wm8rb"]
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ghpm"]
 bg_color = Color(0.5921569, 0, 0, 0.23529412)
 
@@ -40,11 +39,25 @@ expand_mode = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.136
-anchor_top = 0.221
+anchor_top = 0.199
 anchor_right = 0.87
 anchor_bottom = 0.745
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Player_name" type="Label" parent="TextureRect/VBoxContainer" unique_id=1002638562]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 141
+text = "Player_name"
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("1_bpd7b")
+min_font_size = 10
+max_font_size = 300
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
 [node name="HealthContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=134500223]
 layout_mode = 2
@@ -54,13 +67,14 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 69
 text = "Health"
 vertical_alignment = 2
 autowrap_mode = 3
 clip_text = true
 text_overrun_behavior = 3
 script = ExtResource("1_bpd7b")
+max_font_size = 400
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
 [node name="Health_Bar" type="ProgressBar" parent="TextureRect/VBoxContainer/HealthContainer" unique_id=798067389]
@@ -79,13 +93,14 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 69
 text = "Mana"
 vertical_alignment = 2
 autowrap_mode = 3
 clip_text = true
 text_overrun_behavior = 3
 script = ExtResource("1_bpd7b")
+max_font_size = 400
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
 [node name="Mana_bar" type="ProgressBar" parent="TextureRect/VBoxContainer/ManaContainer" unique_id=1925387004]

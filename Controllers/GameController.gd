@@ -12,8 +12,12 @@ const glory_loss := 10
 
 const START_SCENE := "res://Scenes/gameScene/start meny/StartScene.tscn"
 
-var city_wait_time := 10
+var city_wait_time := 30
 var countdown_running := false
+
+# ── Shop ──────────────────────────────────────
+const SHOP_WEAPON_COUNT := 3
+var shop_weapon_ids: Array[String] = []
 
 signal countdown_updated(time_left: int)
 signal arena_started(opponent_id: int)
@@ -57,7 +61,6 @@ func start_game() -> void:
 	print("Lobby members: ", player_ids)
 
 	RoundController.start_round(player_ids)
-	
 	load_city_scene.rpc()
 
 
@@ -68,6 +71,7 @@ func start_game() -> void:
 @rpc("authority", "call_local", "reliable")
 func load_city_scene() -> void:
 	Globals.MY_PLAYERCONTROLLER.wallet.add_money(1)
+	_roll_shop_weapons()
 	get_tree().change_scene_to_file(CITY_SCENE)
 
 
@@ -178,3 +182,13 @@ func _on_all_matches_done() -> void:
 	# Small delay so players can see the result before transitioning
 	await get_tree().create_timer(2.0).timeout
 	load_city_scene.rpc()
+
+# Each player rolls their own shop independently.
+func _roll_shop_weapons() -> void:
+	var all_weapon_ids: Array[String] = []
+	for item_id in ItemDatabase.items:
+		var item = ItemDatabase.items[item_id]
+		if item.validSlotIndex == EquipmentComponent.VALID_SLOTS.WEAPON:
+			all_weapon_ids.append(item_id)
+	all_weapon_ids.shuffle()
+	shop_weapon_ids = all_weapon_ids.slice(0, min(SHOP_WEAPON_COUNT, all_weapon_ids.size()))

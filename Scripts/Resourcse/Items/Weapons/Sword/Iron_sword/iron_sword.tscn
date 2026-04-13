@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cefnc7qsrw1y8"]
+
+[ext_resource type="Texture2D" uid="uid://7lq6dhcddwp8" path="res://Sprite/item/Irons_sword.PNG" id="1_s03k7"]
+
+[node name="IronSword" type="Node2D" unique_id=815751304]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=593767392]
+offset_right = 179.0
+offset_bottom = 60.0
+pivot_offset = Vector2(41, 26)
+texture = ExtResource("1_s03k7")

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://n6kbb2f1fma6"]
+
+[ext_resource type="Script" uid="uid://c5tecfedtbmkp" path="res://UserInterface/Shop/weapon_rack/weapon_rack.gd" id="0_script"]
+[ext_resource type="Texture2D" uid="uid://dddnjefa2a76c" path="res://Sprite/shopscene/Målarlager 9.PNG" id="1_h8kel"]
+[ext_resource type="PackedScene" uid="uid://4sv3yoki1s2n" path="res://UserInterface/Shop/weapon_haning/weapon_haning.tscn" id="2_q06bt"]
+
+[node name="WeaponRack" type="Control" unique_id=1639322774]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0021402, 1.0039775)
+script = ExtResource("0_script")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=908522036]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.156
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_h8kel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1641954489]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.195
+anchor_top = 0.086
+anchor_right = 0.984
+anchor_bottom = 0.16
+offset_right = 4.0
+offset_bottom = 1.5258789e-05
+
+[node name="WeaponHaning" parent="HBoxContainer" unique_id=1759019814 instance=ExtResource("2_q06bt")]
+layout_mode = 2

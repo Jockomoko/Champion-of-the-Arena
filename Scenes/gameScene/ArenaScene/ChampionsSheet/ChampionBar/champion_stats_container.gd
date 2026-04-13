@@ -1,9 +1,11 @@
 extends Control
 @onready var health_bar: ProgressBar = $TextureRect/VBoxContainer/HealthContainer/Health_Bar
 @onready var mana_bar: ProgressBar = $TextureRect/VBoxContainer/ManaContainer/Mana_bar
+@onready var player_name_label: AutoSizeLabel = $TextureRect/VBoxContainer/Player_name
 
 
-func init(health_max_value : int, mana_max_value : int):
+func init(health_max_value : int, mana_max_value : int, player_name : String):
+	player_name_label.text = player_name
 	set_health_max_value(health_max_value)
 	set_health_value(health_max_value)
 	

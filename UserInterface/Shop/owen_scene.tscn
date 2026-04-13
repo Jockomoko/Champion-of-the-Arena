@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dneqhmsf7xhre"]
+
+[ext_resource type="Texture2D" uid="uid://bb2mhivcbaqy4" path="res://Sprite/shopscene/Målarlager 7.PNG" id="1_1c5ec"]
+[ext_resource type="Texture2D" uid="uid://811tv5l8f4ru" path="res://Sprite/shopscene/Målarlager 6.PNG" id="2_8q7ld"]
+
+[node name="OwenScene" type="Control" unique_id=125425771]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=182659975]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 373.0
+offset_right = 452.0
+offset_bottom = 598.0
+texture = ExtResource("1_1c5ec")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1176442280]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_8q7ld")

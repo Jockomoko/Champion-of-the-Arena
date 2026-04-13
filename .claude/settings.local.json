@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(find C:\\\\Users\\\\fabia\\\\Documents\\\\champion-of-the-arena\\\\Champion-of-the-Arena:*)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "WebFetch(domain:docs.godotengine.org)"
     ]
   }
 }

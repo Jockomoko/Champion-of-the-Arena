@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://ipi0mpfydrov"]
+
+[ext_resource type="Script" uid="uid://bbax8pr2dpvkg" path="res://UserInterface/Shop/shop_wender.gd" id="1_p2sb5"]
+[ext_resource type="Texture2D" uid="uid://djonufd5f4a28" path="res://Sprite/shopscene/Målarlager 2.PNG" id="1_ygf67"]
+[ext_resource type="Texture2D" uid="uid://dtpydbsa4rtgy" path="res://Sprite/shopscene/Målarlager 1.PNG" id="2_kcify"]
+[ext_resource type="Texture2D" uid="uid://c2q2rvkhp17s0" path="res://Sprite/shopscene/Målarlager 3.PNG" id="3_pdmxp"]
+[ext_resource type="Texture2D" uid="uid://b0j1gfn0j3t0u" path="res://Sprite/shopscene/Målarlager 4.PNG" id="4_mbgmn"]
+[ext_resource type="Texture2D" uid="uid://b1et06rv0t2uj" path="res://Sprite/shopscene/Målarlager 12.PNG" id="5_mbgmn"]
+
+[node name="ShopWender" type="Node2D" unique_id=163162349]
+script = ExtResource("1_p2sb5")
+
+[node name="Right_arm" type="TextureRect" parent="." unique_id=550533334]
+offset_left = 247.68758
+offset_top = 272.6379
+offset_right = 645.68756
+offset_bottom = 669.3313
+rotation = -0.13822643
+texture = ExtResource("2_kcify")
+flip_h = true
+
+[node name="Body" type="TextureRect" parent="." unique_id=787578230]
+offset_right = 554.0
+offset_bottom = 798.0
+texture = ExtResource("1_ygf67")
+
+[node name="Right_arm2" type="TextureRect" parent="." unique_id=1372533832]
+offset_left = 572.00006
+offset_top = -146.99998
+offset_right = 1126.0001
+offset_bottom = 651.0
+rotation = 0.5998626
+scale = Vector2(0.595, 0.601)
+pivot_offset = Vector2(59.310127, 714.48676)
+texture = ExtResource("2_kcify")
+
+[node name="Head" type="TextureRect" parent="." unique_id=1048493969]
+offset_left = 240.0
+offset_top = -19.0
+offset_right = 590.0
+offset_bottom = 297.0
+texture = ExtResource("3_pdmxp")
+
+[node name="Left_arm" type="TextureRect" parent="." unique_id=744490858]
+z_index = 100
+offset_left = -11.999999
+offset_top = -121.0
+offset_right = 542.0
+offset_bottom = 677.0
+rotation = 0.9903089
+scale = Vector2(0.7250027, 0.73199403)
+pivot_offset = Vector2(59.310127, 714.48676)
+texture = ExtResource("2_kcify")
+
+[node name="eyes" type="TextureRect" parent="." unique_id=307762054]
+offset_left = 343.0
+offset_top = 17.0
+offset_right = 524.0
+offset_bottom = 92.0
+texture = ExtResource("4_mbgmn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1491719101]
+offset_left = 406.0
+offset_top = 213.0
+offset_right = 492.0
+offset_bottom = 229.0
+texture = ExtResource("5_mbgmn")

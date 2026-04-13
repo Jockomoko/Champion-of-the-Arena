@@ -1,0 +1,255 @@
+[gd_scene format=3 uid="uid://crcg1eq8x8rew"]
+
+[ext_resource type="Script" uid="uid://ckdmgvjk8ouyg" path="res://UserInterface/ChampionCreationScene/champion_creation_scene.gd" id="1_53xoa"]
+[ext_resource type="Texture2D" uid="uid://c56bg8uvrrhtn" path="res://Sprite/pl/Målarlager 1.PNG" id="2_bdbgo"]
+[ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/button/Sign1.PNG" id="3_0b65l"]
+[ext_resource type="Texture2D" uid="uid://63uilqd8npdw" path="res://Sprite/pl/Målarlager 2.PNG" id="3_uk5nh"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="4_xtkc7"]
+[ext_resource type="Script" uid="uid://cs3okxqop883t" path="res://addons/AutoSizeText/ui/AutoSizeLineEdit.gd" id="5_bdbgo"]
+
+
+[node name="ChampionCreationScene" type="Node2D" unique_id=1310155521]
+script = ExtResource("1_53xoa")
+
+[node name="Control" type="Control" parent="." unique_id=265785860]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1924.0
+offset_bottom = 1082.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=1849626582]
+position = Vector2(795, 773)
+scale = Vector2(1.2135359, 1.0849328)
+texture = ExtResource("2_bdbgo")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=1087972864]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer" unique_id=855112702]
+layout_mode = 2
+
+[node name="BodyContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=2077861065]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Champion1_margincontainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer" unique_id=1877896499]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer" unique_id=607707079]
+layout_mode = 2
+texture = ExtResource("3_uk5nh")
+expand_mode = 1
+
+[node name="stat_point_champion1_txt" type="Label" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect" unique_id=518875257]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09
+anchor_top = 0.049
+anchor_right = 0.266
+anchor_bottom = 0.138
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 59
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("4_xtkc7")
+max_font_size = 200
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="ChampionsContainer" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect" unique_id=1328851019]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.223
+anchor_top = 0.16
+anchor_right = 0.786
+anchor_bottom = 0.932
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer" unique_id=169157154]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
+
+[node name="Champion1_stats" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect/ChampionsContainer/MarginContainer" unique_id=826379593]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Champion1_name" type="LineEdit" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion1_margincontainer/TextureRect" unique_id=1367702659]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.358
+anchor_top = 0.06
+anchor_right = 0.78
+anchor_bottom = 0.128
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Champion Name"
+alignment = 1
+max_length = 10
+script = ExtResource("5_bdbgo")
+min_size = 10
+max_size = 400
+metadata/_custom_type_script = "uid://cs3okxqop883t"
+
+[node name="Champion2_margincontainer2" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer" unique_id=1195207244]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2" unique_id=982171260]
+layout_mode = 2
+texture = ExtResource("3_uk5nh")
+expand_mode = 1
+
+[node name="stat_point_champion2_txt" type="Label" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect" unique_id=128132048]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.082
+anchor_top = 0.045
+anchor_right = 0.28
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("4_xtkc7")
+max_font_size = 200
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="ChampionsContainer" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect" unique_id=1953546515]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.209
+anchor_top = 0.195
+anchor_right = 0.786
+anchor_bottom = 0.932
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer" unique_id=2128437400]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
+
+[node name="Champion2_stats" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect/ChampionsContainer/MarginContainer" unique_id=843467295]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Champion2_name" type="LineEdit" parent="Control/MarginContainer/VBoxContainer/BodyContainer/Champion2_margincontainer2/TextureRect" unique_id=2064655640]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.358
+anchor_top = 0.078
+anchor_right = 0.78
+anchor_bottom = 0.128
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 39
+placeholder_text = "Champion Name"
+alignment = 1
+max_length = 10
+script = ExtResource("5_bdbgo")
+min_size = 10
+max_size = 400
+metadata/_custom_type_script = "uid://cs3okxqop883t"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=1056163932]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Exit_btn" type="TextureButton" parent="Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=284797347]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("3_0b65l")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AutoSizeLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/HBoxContainer2/Exit_btn" unique_id=2126102514]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 72
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("4_xtkc7")
+min_font_size = 10
+max_font_size = 100
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Save_btn" type="TextureButton" parent="Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1213728535]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 10
+texture_normal = ExtResource("3_0b65l")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AutoSizeLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/HBoxContainer2/Save_btn" unique_id=2103530972]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = 7.0
+offset_right = -36.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+text = "Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("4_xtkc7")
+min_font_size = 10
+max_font_size = 80
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/HBoxContainer2/Exit_btn" to="." method="_on_exit_btn_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/HBoxContainer2/Save_btn" to="." method="_on_save_btn_pressed"]

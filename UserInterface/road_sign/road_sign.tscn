@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cytedn1levv5y"]
 
 [ext_resource type="Script" uid="uid://3ou6bbwy7lcy" path="res://UserInterface/road_sign/road_sign.gd" id="1_rsign"]
-[ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/Sign1.PNG" id="2_rsign"]
+[ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/button/Sign1.PNG" id="2_rsign"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="3_rsign"]
 
 [node name="RoadSign" type="TextureButton" unique_id=70213003]
