@@ -126,8 +126,10 @@ func spawn_team(team_data: Array, spawns: Array, own_team: bool, owner_steam_id:
 		CombatController.register_owner(champion, owner_steam_id)
 		add_child(champion)
 		champion.global_position = spawns[i].global_position
+		champion.home_position = spawns[i].global_position
 		champion.apply_appearance(team_data[i]["appearance"])
 		all_champions.append(champion)
+		champion.champion_clicked.connect(_on_champion_clicked)
 
 		if own_team:
 			player_champions.append(champion)
@@ -135,7 +137,6 @@ func spawn_team(team_data: Array, spawns: Array, own_team: bool, owner_steam_id:
 		else:
 			#Flip champions for opponents
 			champion.scale.x *= -1
-			champion.champion_clicked.connect(_on_champion_clicked)
 
 # ── Combat events ──────────────────────────────────────────────────────────────
 func _on_turn_started(champion: Champion) -> void:
@@ -169,22 +170,59 @@ func _on_combat_ended(winner: Champion) -> void:
 
 # ── UI ─────────────────────────────────────────────────────────────────────────
 func _on_ability_selected(ability_name: String) -> void:
+	# Clear any clickable state left over from a previously selected ability
+	for c in all_champions:
+		c.set_clickable(false)
 	pending_ability = ability_name
 	print(current_champion.champion_name + " is casting " + pending_ability)
-	for champion in all_champions:
-		if not player_champions.has(champion):
+	var ability = AbilitiesDataBase.get_ability(ability_name)
+	if ability:
+		for champion in ability.get_valid_targets(player_champions, all_champions):
 			champion.set_clickable(true)
 
 func _on_champion_clicked(champion: Champion) -> void:
-	if pending_ability == "" or player_champions.has(champion):
+	if pending_ability == "":
 		return
 	for c in all_champions:
 		c.set_clickable(false)
-	CombatController.request_use_ability(pending_ability, champion.champion_name)
+
+	var ability = AbilitiesDataBase.get_ability(pending_ability)
+	var ability_id = pending_ability
 	pending_ability = ""
+	# Capture attacker NOW — current_champion gets overwritten by _on_turn_started
+	# before walk_home() runs (the RPC chain on the host is synchronous).
+	var attacker = current_champion
 
 	if not Globals.is_host:
 		ability_sheet.hide_ability_menu()
+
+	# Tell all other peers to play the same animation sequence
+	var anim_name = ability.animation_name if ability else ""
+	_broadcast_animation.rpc(attacker.champion_name, champion.champion_name, anim_name)
+
+	# Walk to the target, play the ability animation, then walk back
+	await attacker.walk_to(champion.global_position)
+	if ability:
+		await attacker.play_ability_animation(anim_name)
+	CombatController.request_use_ability(ability_id, champion.champion_name)
+	await attacker.walk_home()
+
+# Received by all OTHER peers so they see the attacker move and animate.
+@rpc("any_peer", "reliable")
+func _broadcast_animation(attacker_name: String, target_name: String, anim_name: String) -> void:
+	var attacker = _find_champion_by_name(attacker_name)
+	var target   = _find_champion_by_name(target_name)
+	if not attacker or not target:
+		return
+	await attacker.walk_to(target.global_position)
+	await attacker.play_ability_animation(anim_name)
+	await attacker.walk_home()
+
+func _find_champion_by_name(search_name: String) -> Champion:
+	for c in all_champions:
+		if c.champion_name == search_name:
+			return c
+	return null
 
 func _on_player_waiting(steam_id: int) -> void:
 	if steam_id == Globals.STEAM_ID:

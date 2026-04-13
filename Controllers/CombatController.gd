@@ -54,21 +54,24 @@ func _server_use_ability(ability_id: String, target_name: String) -> void:
 		push_error("'%s' is not a valid target" % target_name)
 		return
 
-	var damage = ability.get_damage(attacker.stats)
-	var mana_change = ability.mana_restore - ability.mana_cost
-
-	_apply_ability_result.rpc(attacker.champion_name, target.champion_name, damage, mana_change)
+	var result = ability.apply(attacker, target)
+	_apply_ability_result.rpc(attacker.champion_name, target.champion_name, result)
 
 @rpc("authority", "call_local", "reliable")
-func _apply_ability_result(attacker_name: String, target_name: String, damage: float, mana_change: int) -> void:
+func _apply_ability_result(attacker_name: String, target_name: String, result: Dictionary) -> void:
 	var attacker = _find_champion_by_name(attacker_name)
 	var target   = _find_champion_by_name(target_name)
 
-	if attacker:
-		attacker.current_mana += mana_change
+	if attacker and result.has("mana_change"):
+		attacker.current_mana += result["mana_change"]
 
-	if target and damage > 0:
-		target.health.take_damage(damage)
+	if target and result.get("damage", 0) > 0:
+		target.health.take_damage(result["damage"])
+
+	if target and result.has("stat_bonus"):
+		for stat in result["stat_bonus"].keys():
+			if target.stats.base_stats.has(stat):
+				target.stats.base_stats[stat] += result["stat_bonus"][stat]
 
 	turn_ended.emit(attacker)
 

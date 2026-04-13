@@ -3,9 +3,11 @@ class_name Champion
 
 var champion_name: String = "Unnamed"
 var icon: Texture2D
+var home_position: Vector2 = Vector2.ZERO
 
 @onready var turn_icon: Node2D = $turn_icon
 @onready var select_icon: Node2D = $select_icon
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 
 @onready var head_sprite: Sprite2D = $body/Head
@@ -212,3 +214,32 @@ func start_turn():
 
 func end_turn():
 	turn_icon.hide()
+
+# Walks toward target_pos, stopping just before it. Awaitable.
+func walk_to(target_pos: Vector2) -> void:
+	var direction = (target_pos - global_position).normalized()
+	var stop_pos = target_pos - direction * 100.0
+	var duration = global_position.distance_to(stop_pos) / 400.0
+	anim_player.play("Walking")
+	var tween = create_tween()
+	tween.tween_property(self, "global_position", stop_pos, duration)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+	anim_player.play("Idle")
+
+# Walks back to the spawn position. Awaitable.
+func walk_home() -> void:
+	var duration = global_position.distance_to(home_position) / 400.0
+	anim_player.play("Walking")
+	var tween = create_tween()
+	tween.tween_property(self, "global_position", home_position, duration)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+	anim_player.play("Idle")
+
+# Plays the given animation then returns to Idle. Awaitable.
+func play_ability_animation(anim_name: String) -> void:
+	if anim_name != "" and anim_player.has_animation(anim_name):
+		anim_player.play(anim_name)
+		await anim_player.animation_finished
+	anim_player.play("Idle")

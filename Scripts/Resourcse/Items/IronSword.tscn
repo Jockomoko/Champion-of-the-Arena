@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bgto5mpcuaaa0"]
+
+[ext_resource type="Texture2D" uid="uid://7lq6dhcddwp8" path="res://Sprite/item/Irons_sword.PNG" id="1_texture"]
+
+[node name="IronSword" type="Node2D" unique_id=1502916379]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2092759066]
+texture = ExtResource("1_texture")

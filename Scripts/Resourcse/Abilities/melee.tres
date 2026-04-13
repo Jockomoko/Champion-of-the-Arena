@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://fn774k7n5snu"]
+[gd_resource type="Resource" script_class="MeleeAbility" format=3 uid="uid://fn774k7n5snu"]
 
 [ext_resource type="Texture2D" uid="uid://dfu43kjmmua2x" path="res://Sprite/Ability/ability_Melee/Målarlager 1.PNG" id="1_8wqrq"]
-[ext_resource type="Script" uid="uid://1earqwnlamir" path="res://Scripts/Resourcse/Abilities/Ability.gd" id="1_t5v6f"]
+[ext_resource type="Script" uid="uid://df6g5dlhiykmw" path="res://Scripts/Resourcse/Abilities/MeleeAbility.gd" id="1_t5v6f"]
 
 [resource]
 script = ExtResource("1_t5v6f")
