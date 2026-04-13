@@ -1,12 +1,14 @@
 [gd_resource type="Resource" script_class="Item" format=3 uid="uid://bvhos0b84vrck"]
 
 [ext_resource type="Script" uid="uid://chjhub7tchfkn" path="res://Scripts/Resourcse/Items/Item.gd" id="1_qnk6x"]
+[ext_resource type="Texture2D" uid="uid://7lq6dhcddwp8" path="res://Sprite/item/Irons_sword.PNG" id="1_r2c4u"]
 
 [resource]
 script = ExtResource("1_qnk6x")
 name = "Iron Sword"
 description = "Hard sword out of iron"
+icon = ExtResource("1_r2c4u")
+texture = ExtResource("1_r2c4u")
 validSlotIndex = 4
 cost = 1
-modifiers = null
 metadata/_custom_type_script = "uid://chjhub7tchfkn"

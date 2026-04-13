@@ -22,7 +22,6 @@ config/icon="uid://xv2tmy1kmt21"
 [autoload]
 
 Globals="*res://Scripts/Globals/Globals.gd"
-ItemDataBase="*res://Scripts/Singeltons/ItemDataBase.gd"
 AbilitiesDataBase="*uid://cnxbnrnr2qi54"
 GameController="*res://Controllers/GameController.gd"
 CombatController="*uid://iissfupecuny"

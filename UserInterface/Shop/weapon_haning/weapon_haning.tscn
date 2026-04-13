@@ -29,9 +29,20 @@ offset_right = 66.0
 offset_bottom = 124.0
 texture = ExtResource("2_myxw5")
 
-[node name="Weapon" type="TextureRect" parent="." unique_id=726310723]
-layout_mode = 0
-offset_top = 104.0
-offset_right = 557.0
-offset_bottom = 2368.0
-scale = Vector2(0.125, 0.125)
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=1111568962]
+position = Vector2(27, 114)
+rotation = 1.5132779
+
+[node name="Bone2D2" type="Bone2D" parent="Skeleton2D" unique_id=1363046223]
+rotation = 0.077628896
+rest = Transform2D(0.9969884, 0.077550955, -0.077550955, 0.9969884, 0, 0)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Bone2D2" unique_id=1096340029]
+scale = Vector2(0.99999994, 1)
+remote_path = NodePath("../../../Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=827796666]
+position = Vector2(27, 114)
+rotation = 1.5909067
+scale = Vector2(0.99999994, 1)
+offset = Vector2(73.69, 2.995)

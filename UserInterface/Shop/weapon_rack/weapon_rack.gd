@@ -16,6 +16,6 @@ func add_weapon(item_id: String) -> void:
 
 func _weapon_exists(item_id: String) -> bool:
 	for child in hbox.get_children():
-		if child.has_method("set_weapon") and child.item_id == item_id:
+		if child.has_method("set_weapon") and child.get("item_id") == item_id:
 			return true
 	return false

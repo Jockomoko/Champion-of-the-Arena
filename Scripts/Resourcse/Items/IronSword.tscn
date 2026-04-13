@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://dc4iron5sword1"]
-
-[ext_resource type="Texture2D" uid="uid://7lq6dhcddwp8" path="res://Sprite/item/Irons_sword.PNG" id="1_texture"]
-
-[node name="IronSword" type="Node2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_texture")

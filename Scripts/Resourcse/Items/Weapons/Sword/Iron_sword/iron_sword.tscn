@@ -7,5 +7,5 @@
 [node name="TextureRect" type="TextureRect" parent="." unique_id=593767392]
 offset_right = 179.0
 offset_bottom = 60.0
-pivot_offset = Vector2(41, 26)
+pivot_offset = Vector2(39, 26)
 texture = ExtResource("1_s03k7")

@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cq6y7wlgt0kqw" path="res://Sprite/shopscene/Bakgrund.PNG" id="2_m8yul"]
 [ext_resource type="PackedScene" uid="uid://dneqhmsf7xhre" path="res://UserInterface/Shop/owen_scene.tscn" id="2_rgo4b"]
 [ext_resource type="PackedScene" uid="uid://n6kbb2f1fma6" path="res://UserInterface/Shop/weapon_rack/weapon_rack.tscn" id="5_rack"]
+[ext_resource type="PackedScene" uid="uid://cytedn1levv5y" path="res://UserInterface/road_sign/road_sign.tscn" id="7_oc8eh"]
 
 [node name="ShopScene" type="Node2D" unique_id=1062869610]
 script = ExtResource("0_script")
@@ -39,3 +40,13 @@ offset_left = 664.99994
 offset_top = -26.000002
 offset_right = 1971.2046
 offset_bottom = 906.2918
+
+[node name="RoadSign" parent="." unique_id=70213003 instance=ExtResource("7_oc8eh")]
+offset_left = 47.0
+offset_top = 24.0
+offset_right = 357.0
+offset_bottom = 145.0
+flip_h = true
+label_text = "Exit"
+
+[connection signal="pressed" from="RoadSign" to="." method="_on_exit_pressed"]

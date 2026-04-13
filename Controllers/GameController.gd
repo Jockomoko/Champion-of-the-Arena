@@ -16,11 +16,10 @@ var city_wait_time := 30
 var countdown_running := false
 
 # ── Shop ──────────────────────────────────────
-const SHOP_WEAPON_COUNT := 3
+const SHOP_WEAPON_COUNT := 4
 var shop_weapon_ids: Array[String] = []
 
 signal countdown_updated(time_left: int)
-signal arena_started(opponent_id: int)
 
 func _ready() -> void:
 	RoundController.all_matches_done.connect(_on_all_matches_done)
@@ -78,7 +77,8 @@ func load_city_scene() -> void:
 # Call this from CityScene._ready() so the countdown starts
 # after the scene is fully loaded on the host.
 func on_city_scene_ready() -> void:
-	countdown_running = false  # reset before starting new countdown
+	if countdown_running:
+		return  # player returned from shop, countdown already in progress
 	if not Globals.is_host:
 		return
 	var end_time := int(Time.get_unix_time_from_system()) + city_wait_time
