@@ -133,6 +133,8 @@ func spawn_team(team_data: Array, spawns: Array, own_team: bool, owner_steam_id:
 			player_champions.append(champion)
 			ability_sheet.add_player_bar(champion)
 		else:
+			#Flip champions for opponents
+			champion.scale.x *= -1
 			champion.champion_clicked.connect(_on_champion_clicked)
 
 # ── Combat events ──────────────────────────────────────────────────────────────

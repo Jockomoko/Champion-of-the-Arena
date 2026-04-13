@@ -3,6 +3,11 @@ class_name Champion
 
 var champion_name: String = "Unnamed"
 var icon: Texture2D
+
+@onready var turn_icon: Node2D = $turn_icon
+@onready var select_icon: Node2D = $select_icon
+
+
 @onready var head_sprite: Sprite2D = $body/Head
 @onready var left_arm: Sprite2D = $body/LeftArm
 @onready var body_sprite: Sprite2D = $body/Body_sprite
@@ -35,6 +40,9 @@ var abilities := AbilityComponent.new()
 var appearance:= AppearanceComponent.new()
 
 func _ready():
+	turn_icon.hide()
+	select_icon.hide()
+
 	# Set health and mana based on effective stats
 	health.max_health = stats.get_health() * 10
 	health.current_health = health.max_health
@@ -151,7 +159,7 @@ func apply_appearance(new_appearance: Dictionary) -> void:
 
 func set_clickable(value: bool) -> void:
 	is_clickable = value
-	modulate = Color(1.0, 0.55, 0.55, 1.0) if value else Color.WHITE
+	select_icon.visible = value
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -173,6 +181,13 @@ func _input(event: InputEvent) -> void:
 			champion_clicked.emit(self)
 			return
 
+# Called by _input() every time the mouse moves (InputEventMouseMotion).
+# We can't use Area2D.mouse_entered/mouse_exited signals here because those
+# signals are blocked when a Control node sits on top of the champion in the
+# scene (e.g. the ability sheet UI). Instead we manually do a physics point
+# query each frame the mouse moves, check if the Area2D collider is under the
+# cursor, and emit champion_hovered / champion_unhovered ourselves so the rest
+# of the game can react regardless of what UI is on top.
 func _check_hover() -> void:
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsPointQueryParameters2D.new()
@@ -193,7 +208,7 @@ func _check_hover() -> void:
 		champion_unhovered.emit(self)
 
 func start_turn():
-	modulate = Color(1.0, 0.891, 0.0, 1.0)
+	turn_icon.show()
 
 func end_turn():
-	modulate = Color(1.0, 1.0, 1.0, 1.0)
+	turn_icon.hide()
