@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b82b16imxl45y"]
+
+[ext_resource type="PackedScene" path="res://UserInterface/house/HouseDisplay.tscn" id="1_hd"]
+[ext_resource type="Texture2D" uid="uid://dtvbu43e40nkq" path="res://Sprite/city/smith.PNG" id="2_smith"]
+
+[node name="ShopHouseDisplay" unique_id=1956578259 instance=ExtResource("1_hd")]
+layout_mode = 3
+anchors_preset = 0
+script = null
+
+[node name="Walls" type="TextureRect" parent="." index="0" unique_id=1748264754]
+layout_mode = 0
+texture = ExtResource("2_smith")

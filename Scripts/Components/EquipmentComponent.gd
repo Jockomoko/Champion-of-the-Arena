@@ -15,8 +15,7 @@ signal equipment_changed(slot_name: String, item)
 # ------------------------------
 # Initialization
 # ------------------------------
-func _ready():
-	# Automatically create a key for each valid slot
+func _init():
 	for slot_name in VALID_SLOTS:
 		slots[slot_name] = null
 

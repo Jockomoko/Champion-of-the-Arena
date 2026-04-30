@@ -12,5 +12,5 @@ func _register_hairs() -> void:
 	
 func get_hair(hair_id: int) -> Hair:
 	if not hairs.has(hair_id):
-		return
+		return null
 	return hairs.get(hair_id)

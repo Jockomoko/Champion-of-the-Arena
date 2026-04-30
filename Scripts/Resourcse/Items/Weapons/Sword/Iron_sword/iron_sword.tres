@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://chjhub7tchfkn" path="res://Scripts/Resourcse/Items/Item.gd" id="1_qnk6x"]
 [ext_resource type="Texture2D" uid="uid://7lq6dhcddwp8" path="res://Sprite/item/Irons_sword.PNG" id="1_r2c4u"]
+[ext_resource type="PackedScene" uid="uid://cefnc7qsrw1y8" path="res://Scripts/Resourcse/Items/Weapons/Sword/Iron_sword/iron_sword.tscn" id="2_fe7hk"]
 
 [resource]
 script = ExtResource("1_qnk6x")
 name = "Iron Sword"
 description = "Hard sword out of iron"
 icon = ExtResource("1_r2c4u")
-texture = ExtResource("1_r2c4u")
+item_scene = ExtResource("2_fe7hk")
 validSlotIndex = 4
-cost = 1
+cost = 2
 metadata/_custom_type_script = "uid://chjhub7tchfkn"

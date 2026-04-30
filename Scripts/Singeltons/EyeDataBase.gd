@@ -11,5 +11,5 @@ func _register_eye() -> void:
 	eyes[2] = preload("uid://djsf3ollen4xj")
 func get_eye(eyes_id: int) -> Eye:
 	if not eyes.has(eyes_id):
-		return
+		return null
 	return eyes.get(eyes_id)

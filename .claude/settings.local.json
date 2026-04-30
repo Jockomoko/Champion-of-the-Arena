@@ -3,7 +3,9 @@
     "allow": [
       "Bash(find C:\\\\Users\\\\fabia\\\\Documents\\\\champion-of-the-arena\\\\Champion-of-the-Arena:*)",
       "Bash(xargs grep:*)",
-      "WebFetch(domain:docs.godotengine.org)"
+      "WebFetch(domain:docs.godotengine.org)",
+      "Bash('/c/Users/fabia/Downloads/Godot_v4.6.1-stable_win64.exe/Godot_v4.6.1-stable_win64_console.exe' --headless --check-only --quit)",
+      "Bash('/c/Users/fabia/Downloads/Godot_v4.6.1-stable_win64.exe/Godot_v4.6.1-stable_win64_console.exe' --headless --quit-after 30 --path . res://Scenes/gameScene/CityScene/CityScene.tscn)"
     ]
   }
 }

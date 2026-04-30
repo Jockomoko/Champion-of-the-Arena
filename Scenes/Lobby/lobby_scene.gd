@@ -158,4 +158,5 @@ func _exit_tree() -> void:
 func _on_start_game_btn_pressed() -> void:
 	if not Globals.is_host:
 		return
+	print(Globals.name + " pressed start game")
 	GameController.start_game()

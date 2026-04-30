@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://iron_chestplate_scene"]
+
+[node name="IronChestplate" type="Node2D"]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+
+[node name="ArmorBone" type="Bone2D" parent="Skeleton2D"]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Skeleton2D/ArmorBone"]

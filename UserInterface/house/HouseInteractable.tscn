@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ubedwx8hwic7"]
+
+[ext_resource type="Script" uid="uid://dn3w7fsof80ot" path="res://UserInterface/house/house_interactable.gd" id="1_hint"]
+
+[node name="HouseInteractable" type="Control" unique_id=637026124]
+script = ExtResource("1_hint")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=918382803]
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

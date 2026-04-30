@@ -1,8 +1,8 @@
 extends Node
 
-const SAVE_PATH = Globals.SAVED_CHAMPION_PATH
+const SAVE_PATH = "user://champion_stats.json"
 const START_SCENE := "res://Scenes/gameScene/start meny/StartScene.tscn"
-const CHAMPION_CREATION_SCENE := "res://Scenes/gameScene/ChampionCreationScene/ChampionCreationScene.tscn"
+const CHAMPION_CREATION_SCENE := "res://UserInterface/ChampionCreationScene/ChampionCreationScene.tscn"
 
 func _ready():
 	if !FileAccess.file_exists(SAVE_PATH):

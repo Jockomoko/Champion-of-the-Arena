@@ -26,7 +26,7 @@ func _ready() -> void:
 	RoundController.tournament_winner.connect(_on_tournament_winner)
 	Globals.player_disconnected.connect(_on_player_disconnected)
 
-@rpc("any_peer", "reliable", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func player_left(steam_id: int) -> void:
 	Globals.LOBBY_MEMBERS.erase(steam_id)
 	print("Player left, SteamID: ", steam_id)
@@ -102,10 +102,6 @@ func _host_city_countdown(end_time: int) -> void:
 func _sync_countdown(time_left: int) -> void:
 	countdown_updated.emit(time_left)
 
-func on_lobby_data_updated() -> void:
-	pass
-
-
 # =========================
 # ARENA TRANSITION
 # =========================
@@ -139,19 +135,12 @@ func _load_lobby() -> void:
 # ELIMINATION & VICTORY
 # =========================
 
-# Called locally when this player's glory hits the minimum.
 func player_lost(controller: PlayerController) -> void:
-	# Notify host so it can remove this player from active_players.
 	if Globals.is_host:
 		RoundController.eliminate_player(controller.player_id)
 	else:
 		_report_elimination.rpc_id(1, controller.player_id)
-	# Show game over on this machine.
 	_show_game_over()
-
-# Called locally when this player's glory hits the maximum (alternative win path).
-func player_won(_controller: PlayerController) -> void:
-	pass  # Handled via tournament_winner signal from RoundController
 
 # Host sends elimination notice to host itself; clients send it to host.
 @rpc("any_peer", "reliable")
@@ -160,16 +149,33 @@ func _report_elimination(steam_id: int) -> void:
 		return
 	RoundController.eliminate_player(steam_id)
 
-# Fired on all clients when a tournament winner is determined.
-# tournament_winner is broadcast via RPC so every client receives it.
 func _on_tournament_winner(winner_steam_id: int) -> void:
 	if Globals.STEAM_ID == winner_steam_id:
 		_show_win_screen()
 
-# ── HOOK: swap scene path for a real game-over screen when ready ──
 func _show_game_over() -> void:
-	Globals.leave_lobby()
-	get_tree().change_scene_to_file(START_SCENE)
+	var lobby_id := Globals.LOBBY_ID
+	if Globals.is_host:
+		# Leave Steam lobby first so it can assign a new owner before we close the peer.
+		Steam.leaveLobby(lobby_id)
+		get_tree().change_scene_to_file(START_SCENE)
+		await get_tree().create_timer(1.0).timeout
+		if multiplayer.multiplayer_peer != null:
+			multiplayer.multiplayer_peer.close()
+			multiplayer.multiplayer_peer = null
+	else:
+		# Close peer first so we stop receiving game RPCs, then leave Steam lobby.
+		if multiplayer.multiplayer_peer != null:
+			multiplayer.multiplayer_peer.close()
+			multiplayer.multiplayer_peer = null
+		get_tree().change_scene_to_file(START_SCENE)
+		await get_tree().create_timer(0.5).timeout
+		Steam.leaveLobby(lobby_id)
+	Globals.LOBBY_ID = 0
+	Globals.LOBBY_MEMBERS.clear()
+	Globals.peer_to_steam.clear()
+	Globals.steam_to_peer.clear()
+	Globals.is_host = false
 
 # ── HOOK: swap scene path for a real win screen when ready ──
 func _show_win_screen() -> void:
@@ -186,8 +192,8 @@ func _on_all_matches_done() -> void:
 # Each player rolls their own shop independently.
 func _roll_shop_weapons() -> void:
 	var all_weapon_ids: Array[String] = []
-	for item_id in ItemDatabase.items:
-		var item = ItemDatabase.items[item_id]
+	for item_id in ItemDataBase.items:
+		var item = ItemDataBase.items[item_id]
 		if item.validSlotIndex == EquipmentComponent.VALID_SLOTS.WEAPON:
 			all_weapon_ids.append(item_id)
 	all_weapon_ids.shuffle()

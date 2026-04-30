@@ -2,6 +2,7 @@ extends Node2D
 class_name Champion
 
 var champion_name: String = "Unnamed"
+var combat_id: String = ""
 var icon: Texture2D
 var home_position: Vector2 = Vector2.ZERO
 
@@ -26,13 +27,14 @@ signal champion_clicked(champion: Champion)
 signal champion_hovered(champion: Champion)
 signal champion_unhovered(champion: Champion)
 signal health_changed(current: float, max_val: float)
-signal mana_changed(current: int, max_val: int)
+signal mana_changed(current: float, max_val: float)
 var is_clickable: bool = false
 var _is_hovered: bool = false
+var _default_opacity: float = 1.0
 
-var current_mana: int = 0:
+var current_mana: float = 0.0:
 	set(value):
-		current_mana = clampi(value, 0, get_max_mana())
+		current_mana = clampf(value, 0.0, get_max_mana())
 		mana_changed.emit(current_mana, get_max_mana())
 # Components
 var stats := StatsComponent.new()
@@ -42,6 +44,9 @@ var abilities := AbilityComponent.new()
 var appearance:= AppearanceComponent.new()
 
 func _ready():
+	if home_position != Vector2.ZERO:
+		position = home_position
+	_default_opacity = modulate.a
 	turn_icon.hide()
 	select_icon.hide()
 
@@ -88,7 +93,8 @@ func _on_equipment_changed(slot_name: String, item) -> void:
 		"speed": 1.0,
 		"mana": 1.0
 	}
-	health.current_health = stats.get_health()
+	health.max_health = stats.get_health() * 10
+	health.current_health = health.max_health
 	_apply_equipment_modifiers()
 	_sync_abilities()
 
@@ -96,7 +102,7 @@ func _sync_abilities() -> void:
 	abilities.equipped_ability_ids.clear()
 	for slot_item in equipment.get_all_items():
 		if slot_item and slot_item.get("ability_name", "") != "":
-			abilities.equip_ability(slot_item.ability_name)
+			abilities.equip_ability(slot_item.get("ability_name"))
 
 # Health signal handlers
 func _on_damaged(amount: float) -> void:
@@ -107,6 +113,7 @@ func _on_healed(amount: float) -> void:
 
 func _on_died() -> void:
 	print("%s has died!" % champion_name)
+	hide()
 
 func _on_revived() -> void:
 	print("%s has been revived!" % champion_name)
@@ -115,16 +122,16 @@ func _on_health_changed(current: float, max: float) -> void:
 	print("%s HP: %f / %f" % [champion_name, current, max])
 	health_changed.emit(current, max)
 	
-func get_max_health() -> int:
-	return int(health.max_health)
+func get_max_health() -> float:
+	return health.max_health
 
-func get_max_mana() -> int:
-	return stats.get_mana() * 10
+func get_max_mana() -> float:
+	return stats.get_mana() * 10.0
 
 func get_all_stats() -> Dictionary :
 	return stats.base_stats
 
-func set_stat(stat_name : String, stat_value : int) :
+func set_stat(stat_name: String, stat_value: float) -> void:
 	stats.base_stats[stat_name] = stat_value
 
 func get_dictionary() -> Dictionary:
@@ -155,13 +162,16 @@ func apply_appearance(new_appearance: Dictionary) -> void:
 	var new_hair = HairDataBase.get_hair(new_appearance["hair_id"])
 	var new_eye = EyeDataBase.get_eye(new_appearance["eye_id"])
 	var new_mouth = MouthDataBase.get_mouth(new_appearance["mouth_id"])
-	hair.texture = new_hair.icon
-	eyes.texture = new_eye.icon
-	mouth.texture = new_mouth.icon
+	if new_hair:
+		hair.texture = new_hair.icon
+	if new_eye:
+		eyes.texture = new_eye.icon
+	if new_mouth:
+		mouth.texture = new_mouth.icon
 
 func set_clickable(value: bool) -> void:
-	is_clickable = value
-	select_icon.visible = value
+	is_clickable = value and health.is_alive()
+	select_icon.visible = is_clickable
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -204,9 +214,11 @@ func _check_hover() -> void:
 			break
 	if mouse_over and not _is_hovered:
 		_is_hovered = true
+		modulate.a = 250.0 / 255.0
 		champion_hovered.emit(self)
 	elif not mouse_over and _is_hovered:
 		_is_hovered = false
+		modulate.a = _default_opacity
 		champion_unhovered.emit(self)
 
 func start_turn():
@@ -229,6 +241,7 @@ func walk_to(target_pos: Vector2) -> void:
 
 # Walks back to the spawn position. Awaitable.
 func walk_home() -> void:
+	print("walk_home %s from=%s to home=%s" % [name, global_position, home_position])
 	var duration = global_position.distance_to(home_position) / 400.0
 	anim_player.play("Walking")
 	var tween = create_tween()

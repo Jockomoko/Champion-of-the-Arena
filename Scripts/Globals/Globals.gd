@@ -19,7 +19,6 @@ var MY_PLAYERCONTROLLER: PlayerController:
 		MY_PLAYERCONTROLLER = value
 		if value != null:
 			player_controller_ready.emit(value)
-const SAVED_CHAMPION_PATH = "user://champion_stats.json"
 
 var peer_to_steam: Dictionary = {}
 var steam_to_peer: Dictionary = {}
@@ -55,70 +54,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	Steam.run_callbacks()
 
-func _on_lobby_owner_changed(lobby_id: int, new_owner_id: int) -> void:
-	if lobby_id != LOBBY_ID:
-		return
-	
-	print("Host changed to: ", new_owner_id)
-	var was_host = is_host
-	is_host = (new_owner_id == STEAM_ID)
-	
-	if is_host:
-		print("I am the new host — recreating peer")
-		# Close old client peer
-		if multiplayer.multiplayer_peer != null:
-			multiplayer.multiplayer_peer.close()
-			multiplayer.multiplayer_peer = null
-		
-		# Recreate as host
-		var peer = SteamMultiplayerPeer.new()
-		var err = peer.create_host(0)
-		if err != OK:
-			print("Failed to recreate host peer: ", err)
-			return
-		
-		multiplayer.multiplayer_peer = peer
-		
-		# Re-register own mapping
-		steam_to_peer[STEAM_ID] = 1
-		peer_to_steam[1] = STEAM_ID
-		
-		# Re-listen for peers connecting
-		multiplayer.peer_connected.connect(func(peer_id: int):
-			print("Peer reconnected after migration: ", peer_id)
-			member_updated.emit(peer_id, 1)
-			await get_tree().create_timer(0.1).timeout
-			_request_steam_id.rpc_id(peer_id)
-		)
-		
-		# Tell all clients to reconnect to us
-		_notify_new_host.rpc(STEAM_ID)
-	
-
-@rpc("authority", "call_local", "reliable")
-func _notify_new_host(new_host_steam_id: int) -> void:
-	if is_host:
-		return  # new host doesn't need to reconnect
-	
-	print("Reconnecting to new host: ", new_host_steam_id)
-	
-	# Close old peer
-	if multiplayer.multiplayer_peer != null:
-		multiplayer.multiplayer_peer.close()
-		multiplayer.multiplayer_peer = null
-	
-	# Small delay so new host peer is ready
-	await get_tree().create_timer(0.5).timeout
-	
-	# Reconnect to new host
-	var peer = SteamMultiplayerPeer.new()
-	var err = peer.create_client(new_host_steam_id, 0)
-	if err != OK:
-		print("Failed to reconnect to new host: ", err)
-		return
-	
-	multiplayer.multiplayer_peer = peer
-	print("Reconnected to new host successfully")
 # ─────────────────────────────────────────────
 #  Lobby helpers (called from LobbyScene)
 # ─────────────────────────────────────────────
@@ -177,18 +112,20 @@ func _on_lobby_created(connect: int, lobby_id: int) -> void:
 	multiplayer.multiplayer_peer = peer
 	steam_to_peer[STEAM_ID] = 1 
 	peer_to_steam[1] = STEAM_ID
-	multiplayer.peer_connected.connect(func(peer_id: int):
-		print("Globals: peer fully connected — ", peer_id)
-		print("Globals: all peers — ", multiplayer.get_peers())
-		member_updated.emit(peer_id, 1)
-		await get_tree().create_timer(0.1).timeout
-		_request_steam_id.rpc_id(peer_id)
-	)
+	if not multiplayer.peer_connected.is_connected(_on_peer_connected):
+		multiplayer.peer_connected.connect(_on_peer_connected)
 
 	populate_lobby_members()
 	print("Lobby created: ", LOBBY_ID)
 	
 
+
+func _on_peer_connected(peer_id: int) -> void:
+	print("Globals: peer fully connected — ", peer_id)
+	print("Globals: all peers — ", multiplayer.get_peers())
+	member_updated.emit(peer_id, 1)
+	await get_tree().create_timer(0.1).timeout
+	_request_steam_id.rpc_id(peer_id)
 
 @rpc("authority", "reliable")
 func _request_steam_id() -> void:
@@ -241,7 +178,16 @@ func _on_lobby_chat_update(lobby_id: int, change_id: int, _making_change_id: int
 	if chat_state == 4:
 		player_disconnected.emit(change_id)
 
+const _JOINABLE_SCENES: Array[String] = [
+	"res://Scenes/gameScene/start meny/StartScene.tscn",
+	"res://Scenes/Lobby/LobbyScene.tscn",
+]
+
 func _on_lobby_join_requested(lobby_id: int, _steam_id: int) -> void:
+	var current_scene = get_tree().current_scene.scene_file_path
+	if current_scene not in _JOINABLE_SCENES:
+		print("Invite ignored — not in main menu or lobby (current: %s)" % current_scene)
+		return
 	Steam.joinLobby(lobby_id)
 
 

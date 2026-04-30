@@ -6,11 +6,11 @@ class_name StatsComponent
 # ------------------------------
 # Base stats
 var base_stats: Dictionary = {
-	"attack": 5,
-	"defense": 5,
-	"health": 5,
-	"speed": 5,
-	"mana": 5
+	"attack": 5.0,
+	"defense": 5.0,
+	"health": 5.0,
+	"speed": 5.0,
+	"mana": 5.0
 }
 
 # Modifiers applied from equipment, buffs, etc.
@@ -31,30 +31,30 @@ func get_stat(stat_name: String) -> float:
 	return 0
 
 # Shortcut methods
-func get_attack() -> int:
-	return int(get_stat("attack"))
+func get_attack() -> float:
+	return get_stat("attack")
 
-func get_defense() -> int:
-	return int(get_stat("defense"))
+func get_defense() -> float:
+	return get_stat("defense")
 
-func get_health() -> int:
-	return int(get_stat("health"))
+func get_health() -> float:
+	return get_stat("health")
 
-func get_speed() -> int:
-	return int(get_stat("speed"))
+func get_speed() -> float:
+	return get_stat("speed")
 
-func get_mana() -> int:
-	return int(get_stat("mana"))
+func get_mana() -> float:
+	return get_stat("mana")
 
 # ------------------------------
 # Level up increases base stats
 # ------------------------------
 func level_up():
-	base_stats["attack"] += 2
-	base_stats["defense"] += 1
-	base_stats["health"] += 5
-	base_stats["speed"] += 1
-	base_stats["mana"] += 5
+	base_stats["attack"] += 2.0
+	base_stats["defense"] += 1.0
+	base_stats["health"] += 5.0
+	base_stats["speed"] += 1.0
+	base_stats["mana"] += 5.0
 
 # ------------------------------
 # Apply a modifier (e.g., from an item)

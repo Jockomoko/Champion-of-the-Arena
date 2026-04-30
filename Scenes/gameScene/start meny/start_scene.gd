@@ -17,7 +17,7 @@ func _on_quit_sign_pressed() -> void:
 	get_tree().quit()
 
 func _on_team_sign_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/gameScene/ChampionCreationScene/ChampionCreationScene.tscn")
+	get_tree().change_scene_to_file("res://UserInterface/ChampionCreationScene/ChampionCreationScene.tscn")
 
 func _on_start_sign_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Lobby/LobbyScene.tscn")

@@ -10,10 +10,12 @@ var active_players: Array = []
 var current_matches: Dictionary = {}
 var finished_matches: Array = []
 var waiting_player: int = -1
+var reported_players: Array = []
 
 func start_round(steam_ids: Array) -> void:
 	active_players = steam_ids.duplicate()
-	
+	reported_players.clear()
+
 	if active_players.size() == 1:
 		_broadcast_solo_check.rpc()
 		return
@@ -53,7 +55,12 @@ func report_match_result(winner_id: int, loser_id: int) -> void:
 	# Only host should call this
 	if Steam.getLobbyOwner(Globals.LOBBY_ID) != Globals.STEAM_ID:
 		return
-	
+	# Prevent double-reporting the same match (e.g. from disconnect + normal finish)
+	if loser_id in reported_players or winner_id in reported_players:
+		return
+	reported_players.append(winner_id)
+	reported_players.append(loser_id)
+
 	finished_matches.append({"winner": winner_id, "loser": loser_id})
 	_broadcast_match_result.rpc(winner_id, loser_id)
 	
@@ -104,6 +111,11 @@ func eliminate_player(steam_id: int) -> void:
 	if not Globals.is_host:
 		return
 	active_players.erase(steam_id)
+	# Remove from current_matches so a later disconnect doesn't re-trigger reporting.
+	var opponent_id: int = current_matches.get(steam_id, -1)
+	if opponent_id != -1:
+		current_matches.erase(steam_id)
+		current_matches.erase(opponent_id)
 	_broadcast_player_eliminated.rpc(steam_id)
 	if active_players.size() == 1:
 		_broadcast_tournament_winner.rpc(active_players[0])

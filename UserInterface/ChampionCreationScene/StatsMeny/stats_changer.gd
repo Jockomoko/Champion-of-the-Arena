@@ -10,11 +10,11 @@ signal stat_removed(Stat_Changer)
 @onready var stat_amout_txt: AutoSizeLabel = $TextureRect/VBoxContainer/HBoxContainer/Stat_amout_txt
 @onready var stat_name_txt: AutoSizeLabel = $TextureRect/VBoxContainer/Stat_Name_txt
 
-var amount: int
+var amount: float
 var statName: String
 
 
-func setup(p_stat_name: String, p_amount: int) -> void:
+func setup(p_stat_name: String, p_amount: float) -> void:
 	statName = p_stat_name
 	amount = p_amount
 
@@ -27,7 +27,7 @@ func _ready() -> void:
 
 func _apply() -> void:
 	stat_name_txt.text = statName
-	stat_amout_txt.text = str(amount)
+	stat_amout_txt.text = str(int(amount))
 
 func _on_minus_btn_pressed() -> void:
 	stat_removed.emit(self)

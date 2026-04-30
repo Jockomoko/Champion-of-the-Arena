@@ -15,7 +15,7 @@ var champion_1_design: Control
 var champion_2_design: Control
 var color_picker: ColorPicker
 
-const path := Globals.SAVED_CHAMPION_PATH
+const path = "user://champion_stats.json"
 
 var NewTeamComponent = TeamComponent.new()
 var appearance_1 := AppearanceComponent.new()
@@ -100,7 +100,7 @@ func _clear_vbox(vbox: VBoxContainer) -> void:
 func get_all_stats_from_VBoxContainer(vbox: VBoxContainer) -> Dictionary:
 	var stats: Dictionary = {}
 	for child: Stat_Changer in vbox.get_children():
-		stats[child.stat_name_txt.text] = int(child.stat_amout_txt.text)
+		stats[child.stat_name_txt.text] = float(child.stat_amout_txt.text)
 	return stats
 
 # --- Stat buttons handlers ---

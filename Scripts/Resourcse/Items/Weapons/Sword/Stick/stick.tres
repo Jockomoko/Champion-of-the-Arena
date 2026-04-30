@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://bxplgsety7etc"]
+
+[ext_resource type="Texture2D" uid="uid://cjrermebwm86d" path="res://Sprite/item/ironsword/Stick.PNG" id="1_gordx"]
+[ext_resource type="PackedScene" uid="uid://d4jskxl6mg72s" path="res://Scripts/Resourcse/Items/Weapons/Sword/Stick/stick.tscn" id="2_btltg"]
+[ext_resource type="Script" uid="uid://chjhub7tchfkn" path="res://Scripts/Resourcse/Items/Item.gd" id="2_bu6cp"]
+
+[resource]
+script = ExtResource("2_bu6cp")
+name = "Stick"
+description = "Normal wooden stick"
+icon = ExtResource("1_gordx")
+item_scene = ExtResource("2_btltg")
+validSlotIndex = 4
+cost = 1
+metadata/_custom_type_script = "uid://chjhub7tchfkn"

@@ -9,16 +9,18 @@ var inventory := InventoryComponent.new()
 var team := TeamComponent.new()
 var wallet := WalletComponent.new()
 
-signal player_won
 signal player_lost
 
 
 func _ready():
 	RoundController.solo_detected.connect(_on_solo_detected)
-	
+
 	player_id = Globals.STEAM_ID
 	player_name = Globals.STEAM_NAME
-	
+
+	if not glory.is_inside_tree():
+		add_child(glory)
+
 	if not team.is_inside_tree():
 		add_child(team)
 
@@ -26,8 +28,6 @@ func _ready():
 		add_child(wallet)
 
 	_register_controller()
-	# React to glory changes
-	glory.arena_won.connect(_on_arena_won)
 	glory.arena_lost.connect(_on_arena_lost)
 
 # =====================================
@@ -41,10 +41,6 @@ func _register_controller():
 # =====================================
 # ARENA RESULTS
 # =====================================
-func _on_arena_won():
-	player_won.emit()
-	GameController.player_won(self)
-
 func _on_arena_lost():
 	player_lost.emit()
 	GameController.player_lost(self)
@@ -54,7 +50,7 @@ func _on_arena_lost():
 # MENU ACTIONS
 # =====================================
 func buy_item(item_id: String) -> bool:
-	var item: Item = ItemDatabase.get_item(item_id)
+	var item: Item = ItemDataBase.get_item(item_id)
 	if item == null:
 		return false
 	if not wallet.has_enough(item.cost):
@@ -65,6 +61,10 @@ func buy_item(item_id: String) -> bool:
 
 func lose_match():
 	glory.subtract_glory(GameController.glory_loss)
+	# Eliminated case is handled by the arena_lost signal above.
+	# Non-eliminated: if alone go to start, otherwise wait for all_matches_done → city.
+	if not glory.has_lost() and Globals.LOBBY_MEMBERS.size() <= 1:
+		get_tree().change_scene_to_file(GameController.START_SCENE)
 
 func win_match():
 	glory.add_glory(GameController.glory_gain)

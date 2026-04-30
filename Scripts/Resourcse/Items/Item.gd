@@ -8,7 +8,7 @@ class_name Item
 @export var name: String = "Unnamed Item"
 @export var description: String = ""
 @export var icon : Texture2D
-@export var texture : Texture2D
+@export var item_scene : PackedScene
 
 # Use an int dropdown for slot based on EquipmentComponent.VALID_SLOTS
 @export var validSlotIndex = 1 as EquipmentComponent.VALID_SLOTS

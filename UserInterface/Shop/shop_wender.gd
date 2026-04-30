@@ -5,10 +5,9 @@ extends Node2D
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	var mouse_local = get_local_mouse_position()
-	var pivot_local = Vector2(right_arm_2.offset_left, right_arm_2.offset_top) + right_arm_2.pivot_offset
+func _process(_delta: float) -> void:
+	var mouse_local = to_local(get_global_mouse_position())
+	var pivot_local = right_arm_2.position + right_arm_2.pivot_offset
 	var direction = mouse_local - pivot_local
 	var angle = atan2(direction.y, direction.x)
-
 	right_arm_2.rotation = clamp(angle, 0.0, PI / 2.0)

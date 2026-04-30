@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://d4jskxl6mg72s"]
+
+[ext_resource type="Texture2D" uid="uid://cjrermebwm86d" path="res://Sprite/item/ironsword/Stick.PNG" id="1_riv1q"]
+
+[node name="Stick" type="Node2D"]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+
+[node name="WeaponBone" type="Bone2D" parent="Skeleton2D"]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Skeleton2D/WeaponBone"]
+texture = ExtResource("1_riv1q")

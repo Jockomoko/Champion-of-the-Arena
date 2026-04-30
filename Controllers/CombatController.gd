@@ -16,65 +16,32 @@ func start_combat(champions: Array[Champion]) -> void:
 	current_turn_index = 0
 
 func register_owner(champion: Champion, steam_id: int) -> void:
-	champion_owners[champion.champion_name] = steam_id
+	champion_owners[champion.combat_id] = steam_id
 
 func sort_by_speed() -> void:
 	turn_order.sort_custom(func(a, b):
-		if a.stats.base_stats["speed"] != b.stats.base_stats["speed"]:
+		if not is_equal_approx(a.stats.base_stats["speed"], b.stats.base_stats["speed"]):
 			return a.stats.base_stats["speed"] > b.stats.base_stats["speed"]
-		return a.champion_name < b.champion_name
+		return a.combat_id < b.combat_id
 	)
 
 func _start_turn() -> void:
 	var champion = get_current_champion()
-	var owner_id = champion_owners.get(champion.champion_name, -1)
+	if champion == null:
+		return
+	var owner_id = champion_owners.get(champion.combat_id, -1)
 	print("Turn: %s (owner: %d)" % [champion.champion_name, owner_id])
 	turn_started.emit(champion)
 
-func request_use_ability(ability_id: String, target_name: String) -> void:
-	if Globals.is_host:
-		_server_use_ability(ability_id, target_name)
-	else:
-		_server_use_ability.rpc_id(1, ability_id, target_name)
-
-@rpc("any_peer", "reliable")
-func _server_use_ability(ability_id: String, target_name: String) -> void:
-	if not Globals.is_host:
-		return
-
-	var attacker = get_current_champion()
-	var ability = AbilitiesDataBase.get_ability(ability_id)
-	var target  = _find_champion_by_name(target_name)
-
-	if not ability:
-		push_error("Ability '%s' does not exist" % ability_id)
-		return
-
-	if not target:
-		push_error("'%s' is not a valid target" % target_name)
-		return
-
-	var result = ability.apply(attacker, target)
-	_apply_ability_result.rpc(attacker.champion_name, target.champion_name, result)
+# Called by arena_scene on the host after ability.apply() finishes.
+# Broadcasts turn_ended to all peers and advances the turn.
+func request_turn_end(attacker_id: String) -> void:
+	_broadcast_turn_ended.rpc(attacker_id)
 
 @rpc("authority", "call_local", "reliable")
-func _apply_ability_result(attacker_name: String, target_name: String, result: Dictionary) -> void:
-	var attacker = _find_champion_by_name(attacker_name)
-	var target   = _find_champion_by_name(target_name)
-
-	if attacker and result.has("mana_change"):
-		attacker.current_mana += result["mana_change"]
-
-	if target and result.get("damage", 0) > 0:
-		target.health.take_damage(result["damage"])
-
-	if target and result.has("stat_bonus"):
-		for stat in result["stat_bonus"].keys():
-			if target.stats.base_stats.has(stat):
-				target.stats.base_stats[stat] += result["stat_bonus"][stat]
-
+func _broadcast_turn_ended(attacker_id: String) -> void:
+	var attacker = _find_champion(attacker_id)
 	turn_ended.emit(attacker)
-
 	if Globals.is_host:
 		_next_turn()
 
@@ -95,15 +62,14 @@ func _next_turn() -> void:
 	if new_index == -1:
 		new_index = current_turn_index - 1  # attacker died; back up so +1 is correct
 	current_turn_index = (new_index + 1) % turn_order.size()
-	_broadcast_turn.rpc(turn_order[current_turn_index].champion_name)
+	_broadcast_turn.rpc(turn_order[current_turn_index].combat_id)
 
 @rpc("authority", "call_local", "reliable")
-func _broadcast_turn(next_champion_name: String) -> void:
-	# Refresh local turn_order so dead champions are removed on every peer
+func _broadcast_turn(next_combat_id: String) -> void:
 	turn_order = _get_alive_champions()
 	if turn_order.is_empty():
 		return
-	var champion = _find_champion_by_name(next_champion_name)
+	var champion = _find_champion(next_combat_id)
 	if not champion:
 		return
 	current_turn_index = turn_order.find(champion)
@@ -114,33 +80,36 @@ func _broadcast_turn(next_champion_name: String) -> void:
 func _check_combat_end() -> bool:
 	if turn_order.is_empty():
 		return true
-	var first_owner = champion_owners.get(turn_order[0].champion_name, -1)
+	var first_owner = champion_owners.get(turn_order[0].combat_id, -1)
 	for champion in turn_order:
-		if champion_owners.get(champion.champion_name, -1) != first_owner:
+		if champion_owners.get(champion.combat_id, -1) != first_owner:
 			return false
-	_broadcast_combat_end.rpc(turn_order[0].champion_name)
+	_broadcast_combat_end.rpc(turn_order[0].combat_id)
 	return true
 
 @rpc("authority", "call_local", "reliable")
-func _broadcast_combat_end(winner_name: String) -> void:
-	var winner = _find_champion_by_name(winner_name)
+func _broadcast_combat_end(winner_id: String) -> void:
+	var winner = _find_champion(winner_id)
 	combat_ended.emit(winner)
 
 func get_current_champion() -> Champion:
+	if turn_order.is_empty() or current_turn_index >= turn_order.size():
+		return null
 	return turn_order[current_turn_index]
 
 func is_my_turn() -> bool:
 	var champion = get_current_champion()
-	return champion_owners.get(champion.champion_name, -1) == Globals.STEAM_ID
+	if champion == null:
+		return false
+	return champion_owners.get(champion.combat_id, -1) == Globals.STEAM_ID
 
-func _find_champion_by_name(champion_name: String) -> Champion:
-	# Search all_champions so dead champions can still be found (e.g. for mana changes)
+func _find_champion(id: String) -> Champion:
 	for champion in all_champions:
-		if champion.champion_name == champion_name:
+		if champion.combat_id == id:
 			return champion
 	return null
 
 func broadcast_first_turn() -> void:
 	if turn_order.is_empty():
 		return
-	_broadcast_turn.rpc(turn_order[0].champion_name)
+	_broadcast_turn.rpc(turn_order[0].combat_id)

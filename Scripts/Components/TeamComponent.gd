@@ -2,7 +2,7 @@ extends Node
 class_name TeamComponent
 
 const CHAMPIONS = preload("uid://d2xtwn0w40ncd")
-const saved_champion_path = Globals.SAVED_CHAMPION_PATH
+const saved_champion_path = "user://champion_stats.json"
 
 var champions: Array[Champion] = []
 var stats_points: int = 6
@@ -30,12 +30,12 @@ func _ready() -> void:
 				print("Failed to load: ", key)
 
 func is_stats_valid_to_load(loaded_stats: Dictionary) -> bool:
-	var stat_points_left := stats_points
+	var stat_points_left: float = stats_points
 	var champion := StatsComponent.new()
-	
+
 	for stat_name in champion.base_stats.keys():
-		var default_value: int = champion.base_stats[stat_name]
-		var loaded_value: int = loaded_stats.get(stat_name, default_value)
+		var default_value: float = champion.base_stats[stat_name]
+		var loaded_value: float = loaded_stats.get(stat_name, default_value)
 		var increase := loaded_value - default_value
 		if increase > 0:
 			stat_points_left -= increase
@@ -82,7 +82,7 @@ func is_appearance_valid_to_load(appearance_data: Dictionary) -> bool:
 			var color = Color(appearance_data[key])
 			if color.a == 0:
 				return false
-		if key in ["hair_style", "eye_id", "mouth_id"]:
+		if key in ["hair_id", "eye_id", "mouth_id"]:
 			if not (appearance_data[key] is int or appearance_data[key] is float):
 				return false
 			if appearance_data[key] < 0:

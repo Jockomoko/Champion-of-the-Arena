@@ -12,5 +12,5 @@ func _register_mouth() -> void:
 	
 func get_mouth(mouths_id: int) -> Mouth:
 	if not mouths.has(mouths_id):
-		return
+		return null
 	return mouths.get(mouths_id)

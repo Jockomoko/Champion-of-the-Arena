@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://caqi87xsclnws"]
+
+[ext_resource type="PackedScene" path="res://UserInterface/house/HouseDisplay.tscn" id="1_lelwy"]
+[ext_resource type="Texture2D" uid="uid://7rplom73ctbh" path="res://Sprite/city/city/Målarlager 7.PNG" id="2_ivgoj"]
+[ext_resource type="Texture2D" uid="uid://b13dp6075n15n" path="res://Sprite/city/city/Målarlager 9.PNG" id="3_2u7w8"]
+[ext_resource type="Texture2D" uid="uid://dgsjv1c063ysc" path="res://Sprite/city/city/Målarlager 8.PNG" id="4_317gc"]
+
+[node name="HouseDisplay" unique_id=809105549 instance=ExtResource("1_lelwy")]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Wall" type="TextureRect" parent="." index="0" unique_id=1263797037]
+layout_mode = 0
+texture = ExtResource("2_ivgoj")
+
+[node name="Roof" type="TextureRect" parent="." index="1" unique_id=1147609326]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -49.0
+offset_right = 334.0
+offset_bottom = 69.0
+texture = ExtResource("3_2u7w8")
+
+[node name="Detail" type="TextureRect" parent="." index="2" unique_id=742260804]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 96.0
+offset_right = 185.0
+offset_bottom = 154.0
+texture = ExtResource("4_317gc")
+expand_mode = 1

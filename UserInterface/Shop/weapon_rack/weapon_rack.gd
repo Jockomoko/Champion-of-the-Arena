@@ -5,7 +5,7 @@ const WeaponHaning = preload("res://UserInterface/Shop/weapon_haning/weapon_hani
 @onready var hbox: HBoxContainer = $HBoxContainer
 
 func add_weapon(item_id: String) -> void:
-	var item = ItemDatabase.get_item(item_id)
+	var item = ItemDataBase.get_item(item_id)
 	if item == null:
 		return
 	if _weapon_exists(item_id):

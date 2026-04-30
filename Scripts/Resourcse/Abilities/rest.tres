@@ -9,17 +9,10 @@ icon = ExtResource("1_umjdj")
 id = "Rest"
 ability_name = "Rest"
 target_mode = 1
-mana_restore = 10
 stat_scaling = {
 "attack": 0.0,
-"defense": 0.0,
-"mana": 0.1,
+"defense": 0.2,
+"mana": 0.0,
 "speed": 0.0
-}
-stat_bonus = {
-"attack": 2,
-"defense": 2,
-"mana": 0,
-"speed": 0
 }
 metadata/_custom_type_script = "uid://1earqwnlamir"

@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://knyry0vksnx0" path="res://Sprite/button/Sign1.PNG" id="5_csyuu"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="6_18gv8"]
 
-
 [node name="LobbyScene" type="Node2D" unique_id=1733333752]
 script = ExtResource("1_ayjqp")
 

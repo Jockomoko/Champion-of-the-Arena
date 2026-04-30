@@ -4,10 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://dqnc3tbvl440i" path="res://Sprite/Animation/sky/sky_animation.tscn" id="2_bley2"]
 [ext_resource type="Texture2D" uid="uid://cianv52mpahjd" path="res://Sprite/city/Grass.PNG" id="3_bley2"]
 [ext_resource type="Texture2D" uid="uid://cyrv85ajmde5b" path="res://Sprite/city/road.PNG" id="4_uv2kv"]
-[ext_resource type="Texture2D" uid="uid://dtvbu43e40nkq" path="res://Sprite/city/smith.PNG" id="6_36o41"]
-[ext_resource type="PackedScene" uid="uid://h4tesmcf3o0a" path="res://UserInterface/house/HouseScene.tscn" id="7_bsw3j"]
+[ext_resource type="PackedScene" uid="uid://ubedwx8hwic7" path="res://UserInterface/house/HouseInteractable.tscn" id="5_hint"]
+[ext_resource type="PackedScene" uid="uid://b82b16imxl45y" path="res://UserInterface/house/WeaponHouse/ShopHouseDisplay.tscn" id="6_shd"]
 [ext_resource type="PackedScene" uid="uid://b8nm6ef7nlesr" path="res://UserInterface/Clock/Timer.tscn" id="8_mro6r"]
 [ext_resource type="PackedScene" uid="uid://b5uydwffsvleq" path="res://UserInterface/Money/display_money.tscn" id="9_bley2"]
+[ext_resource type="PackedScene" uid="uid://caqi87xsclnws" path="res://UserInterface/house/ArmoryHouse/ArmoryHouseDisplay.tscn" id="9_uv2kv"]
 
 [node name="CityScene" type="Node2D" unique_id=394205669]
 script = ExtResource("1_bsw3j")
@@ -49,9 +50,42 @@ offset_right = -702.0
 offset_bottom = -403.0
 grow_vertical = 1
 
-[node name="Weapon_smith" parent="." unique_id=1116255191 instance=ExtResource("7_bsw3j")]
-offset_left = -816.0
-offset_top = 147.0
-offset_right = -816.0
-offset_bottom = 147.0
-texture = ExtResource("6_36o41")
+[node name="Weapon_smith" parent="." unique_id=1838197123 instance=ExtResource("5_hint")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+display_scene = ExtResource("6_shd")
+
+[node name="Display" type="Control" parent="Weapon_smith" unique_id=1956578259 instance=ExtResource("6_shd")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -796.0
+offset_top = 114.0
+offset_right = -796.0
+offset_bottom = 114.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Armory_smith" parent="." unique_id=637026124 instance=ExtResource("5_hint")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 369.0
+offset_bottom = 248.0
+grow_horizontal = 2
+grow_vertical = 2
+display_scene = ExtResource("9_uv2kv")
+
+[node name="Display" type="Control" parent="Armory_smith" unique_id=809105549 instance=ExtResource("9_uv2kv")]
+anchors_preset = 0
+offset_left = 340.0
+offset_top = -10.0
+offset_right = 340.0
+offset_bottom = -10.0
+

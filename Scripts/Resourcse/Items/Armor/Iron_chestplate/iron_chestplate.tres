@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://iron_chestplate_resource"]
+
+[ext_resource type="Script" uid="uid://chjhub7tchfkn" path="res://Scripts/Resourcse/Items/Item.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://iron_chestplate_scene" path="res://Scripts/Resourcse/Items/Armor/Iron_chestplate/iron_chestplate.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Iron Chestplate"
+description = "A sturdy chestplate made of iron"
+item_scene = ExtResource("2_scene")
+validSlotIndex = 1
+cost = 3
+metadata/_custom_type_script = "uid://chjhub7tchfkn"
